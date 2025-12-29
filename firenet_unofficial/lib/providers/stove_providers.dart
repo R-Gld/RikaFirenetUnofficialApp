@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/repositories/stove_repository.dart';
 import '../data/models/stove.dart';
-import '../data/models/stove_state.dart';
+import '../data/models/stove_state.dart'; // Exports StoveData
 import '../data/models/stove_controls.dart';
 import 'api_client_provider.dart';
 import 'auth_providers.dart';
@@ -59,7 +59,7 @@ class StoveListNotifier extends StateNotifier<AsyncValue<List<Stove>>> {
 /// This is a family provider, meaning each stove ID gets its own provider instance
 final stoveStateProvider = StateNotifierProvider.family<
     StoveStateNotifier,
-    AsyncValue<StoveState>,
+    AsyncValue<StoveData>,
     String>((ref, stoveId) {
   return StoveStateNotifier(
     stoveId: stoveId,
@@ -68,7 +68,7 @@ final stoveStateProvider = StateNotifierProvider.family<
 });
 
 /// State notifier for individual stove state
-class StoveStateNotifier extends StateNotifier<AsyncValue<StoveState>> {
+class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
   final String _stoveId;
   final StoveRepository _stoveRepository;
 
@@ -91,8 +91,8 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveState>> {
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
-      (stoveState) {
-        state = AsyncValue.data(stoveState);
+      (stoveData) {
+        state = AsyncValue.data(stoveData);
       },
     );
   }
