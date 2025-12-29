@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/foundation.dart';
 import '../../core/constants/api_constants.dart';
 import '../../core/errors/exceptions.dart';
 
@@ -31,7 +32,7 @@ class RikaApiClient {
       LogInterceptor(
         requestBody: true,
         responseBody: true,
-        logPrint: (obj) => print('[RikaAPI] $obj'),
+        logPrint: (obj) => debugPrint('[RikaAPI] $obj'),
       ),
     );
   }

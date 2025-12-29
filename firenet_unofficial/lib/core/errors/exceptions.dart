@@ -12,25 +12,25 @@ abstract class RikaException implements Exception {
 /// Thrown when authentication fails
 class AuthenticationException extends RikaException {
   const AuthenticationException([
-    String message = 'Authentication failed',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Authentication failed',
+    super.originalError,
+  ]);
 }
 
 /// Thrown when session has expired
 class SessionExpiredException extends RikaException {
   const SessionExpiredException([
-    String message = 'Session expired',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Session expired',
+    super.originalError,
+  ]);
 }
 
 /// Thrown when network request fails
 class NetworkException extends RikaException {
   const NetworkException([
-    String message = 'Network error',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Network error',
+    super.originalError,
+  ]);
 }
 
 /// Thrown when API returns unexpected response
@@ -38,32 +38,32 @@ class ApiException extends RikaException {
   final int? statusCode;
 
   const ApiException([
-    String message = 'API error',
+    super.message = 'API error',
     this.statusCode,
-    dynamic error,
-  ]) : super(message, error);
+    super.originalError,
+  ]);
 }
 
 /// Thrown when parsing fails
 class ParsingException extends RikaException {
   const ParsingException([
-    String message = 'Failed to parse response',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Failed to parse response',
+    super.originalError,
+  ]);
 }
 
 /// Thrown when control update times out
 class ControlUpdateException extends RikaException {
   const ControlUpdateException([
-    String message = 'Control update failed',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Control update failed',
+    super.originalError,
+  ]);
 }
 
 /// Thrown when timeout occurs
 class TimeoutException extends RikaException {
   const TimeoutException([
-    String message = 'Request timeout',
-    dynamic error,
-  ]) : super(message, error);
+    super.message = 'Request timeout',
+    super.originalError,
+  ]);
 }
