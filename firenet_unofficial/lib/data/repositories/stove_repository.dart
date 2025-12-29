@@ -43,13 +43,11 @@ class StoveRepository {
 
   /// Gets current state of a stove
   ///
-  /// Returns [StoveState] or [Failure] on error
-  Future<Either<Failure, StoveState>> getStoveState(String stoveId) async {
+  /// Returns [StoveData] or [Failure] on error
+  Future<Either<Failure, StoveData>> getStoveState(String stoveId) async {
     try {
       final json = await _apiClient.getStoveStatus(stoveId);
-      final state = StoveState.fromJson(json).copyWith(
-        lastUpdated: DateTime.now(),
-      );
+      final state = StoveData.fromJson(json);
       return Right(state);
     } on SessionExpiredException {
       return const Left(AuthFailure('Session expired'));
@@ -65,8 +63,8 @@ class StoveRepository {
   /// CRITICAL: Must send complete controls object, not partial updates.
   /// After sending controls, polls for confirmation up to 10 times with 2s delays.
   ///
-  /// Returns updated [StoveState] or [Failure] on error/timeout
-  Future<Either<Failure, StoveState>> updateStoveControls({
+  /// Returns updated [StoveData] or [Failure] on error/timeout
+  Future<Either<Failure, StoveData>> updateStoveControls({
     required String stoveId,
     required StoveControls controls,
   }) async {
@@ -113,7 +111,7 @@ class StoveRepository {
   /// Convenience method to turn stove on/off
   ///
   /// Gets current state, modifies only the power setting, then updates
-  Future<Either<Failure, StoveState>> setStovePower({
+  Future<Either<Failure, StoveData>> setStovePower({
     required String stoveId,
     required bool power,
   }) async {
@@ -136,7 +134,7 @@ class StoveRepository {
   /// Convenience method to set target temperature
   ///
   /// Validates temperature range (16-30°C) and that stove is on
-  Future<Either<Failure, StoveState>> setTargetTemperature({
+  Future<Either<Failure, StoveData>> setTargetTemperature({
     required String stoveId,
     required int temperature,
   }) async {
