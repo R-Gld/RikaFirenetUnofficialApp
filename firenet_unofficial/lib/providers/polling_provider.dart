@@ -59,10 +59,11 @@ final stovePollingProvider = Provider.family<void, String>((ref, stoveId) {
   Timer? timer;
 
   void poll() {
-    ref.read(stoveStateProvider(stoveId).notifier).refreshState();
+    // Use silent refresh to avoid showing loading state during background updates
+    ref.read(stoveStateProvider(stoveId).notifier).refreshState(silent: true);
   }
 
-  // Initial poll
+  // Initial poll (silent to avoid disrupting UI if already loaded)
   poll();
 
   // Start periodic polling

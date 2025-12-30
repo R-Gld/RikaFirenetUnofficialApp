@@ -82,13 +82,24 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
   }
 
   /// Refreshes the stove state from the API
-  Future<void> refreshState() async {
-    state = const AsyncValue.loading();
+  ///
+  /// If [silent] is true, keeps existing data visible during refresh (for polling).
+  /// If [silent] is false, shows loading state (for manual refresh).
+  Future<void> refreshState({bool silent = false}) async {
+    // Only show loading if we don't have data yet or it's a manual refresh
+    if (!silent || state.valueOrNull == null) {
+      state = const AsyncValue.loading();
+    }
 
     final result = await _stoveRepository.getStoveState(_stoveId);
 
     result.fold(
       (failure) {
+        // Keep old data if silent refresh fails, otherwise show error
+        if (silent && state.valueOrNull != null) {
+          // Silently keep old data on background refresh error
+          return;
+        }
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
       (stoveData) {
