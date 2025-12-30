@@ -24,8 +24,10 @@ class RikaApiClient {
       ),
     );
 
-    // Add cookie manager for session handling
-    _dio.interceptors.add(CookieManager(_cookieJar));
+    // Add cookie manager for session handling (not supported on web)
+    if (!kIsWeb) {
+      _dio.interceptors.add(CookieManager(_cookieJar));
+    }
 
     // Add logging in debug mode
     _dio.interceptors.add(
@@ -69,7 +71,7 @@ class RikaApiClient {
       }
 
       // Follow the redirect manually to establish the session properly
-      await _dio.get(
+      final summaryResponse = await _dio.get(
         ApiConstants.summaryEndpoint,
         options: Options(
           followRedirects: true,
@@ -77,19 +79,42 @@ class RikaApiClient {
         ),
       );
 
-      // Verify cookie was saved
-      final cookies = await _cookieJar.loadForRequest(
-        Uri.parse(ApiConstants.baseUrl),
-      );
+      // Extract session cookie
+      String sessionCookieValue;
 
-      final sessionCookie = cookies.firstWhere(
-        (cookie) => cookie.name == ApiConstants.sessionCookieName,
-        orElse: () => throw const AuthenticationException(
-          'Session cookie not found',
-        ),
-      );
+      if (kIsWeb) {
+        // On web, cookies are managed by the browser
+        // Extract from response headers (first response that set the cookie)
+        final setCookieHeaders = loginResponse.headers['set-cookie'] ?? [];
+        final sessionCookieHeader = setCookieHeaders.firstWhere(
+          (header) => header.contains(ApiConstants.sessionCookieName),
+          orElse: () => throw const AuthenticationException(
+            'Session cookie not found in headers',
+          ),
+        );
 
-      return sessionCookie.value;
+        // Parse cookie value from header (format: "connect.sid=s%3A...")
+        final cookieParts = sessionCookieHeader.split(';').first.split('=');
+        if (cookieParts.length != 2) {
+          throw const AuthenticationException('Invalid cookie format');
+        }
+        sessionCookieValue = cookieParts[1];
+      } else {
+        // On mobile/desktop, use CookieJar
+        final cookies = await _cookieJar.loadForRequest(
+          Uri.parse(ApiConstants.baseUrl),
+        );
+
+        final sessionCookie = cookies.firstWhere(
+          (cookie) => cookie.name == ApiConstants.sessionCookieName,
+          orElse: () => throw const AuthenticationException(
+            'Session cookie not found',
+          ),
+        );
+        sessionCookieValue = sessionCookie.value;
+      }
+
+      return sessionCookieValue;
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
@@ -172,7 +197,11 @@ class RikaApiClient {
 
   /// Clears all cookies (for logout)
   Future<void> clearSession() async {
-    await _cookieJar.deleteAll();
+    if (!kIsWeb) {
+      await _cookieJar.deleteAll();
+    }
+    // On web, cookies are managed by the browser
+    // They will be cleared by the browser when needed
   }
 
   /// Converts DioException to appropriate RikaException
