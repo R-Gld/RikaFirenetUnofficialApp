@@ -186,7 +186,7 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
     // Extract time strings for display
     String startTimeText = '--:--';
     String endTimeText = '--:--';
-    if (hasTime && timeRange != null) {
+    if (hasTime) {
       startTimeText = timeRange.start.formatHHMM;
       endTimeText = timeRange.end.formatHHMM;
     }
