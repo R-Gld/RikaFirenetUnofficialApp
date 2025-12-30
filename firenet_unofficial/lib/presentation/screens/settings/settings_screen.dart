@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/app_colors.dart';
 import '../../../providers/settings_provider.dart';
+import '../../../providers/notification_settings_provider.dart';
+import '../../../services/stove_field_descriptor_service.dart';
 
 /// Settings screen for customizing the UI
 class SettingsScreen extends ConsumerWidget {
@@ -111,6 +113,12 @@ class SettingsScreen extends ConsumerWidget {
 
           const Divider(height: 32),
 
+          // Notifications section
+          _buildSectionHeader(context, 'Notifications en arrière-plan'),
+          _buildNotificationSection(context, ref),
+
+          const Divider(height: 32),
+
           // Info panels section
           _buildSectionHeader(context, 'Panneaux d\'information'),
           _buildSwitchTile(
@@ -211,7 +219,369 @@ class SettingsScreen extends ConsumerWidget {
       ),
       value: value,
       onChanged: onChanged,
-      activeColor: AppColors.primary,
+    );
+  }
+
+  Widget _buildNotificationSection(BuildContext context, WidgetRef ref) {
+    final notifSettings = ref.watch(notificationSettingsProvider);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Master toggle
+        _buildSwitchTile(
+          context,
+          ref,
+          title: 'Activer les notifications',
+          subtitle: 'Surveiller les changements même quand l\'app est fermée',
+          value: notifSettings.enabled,
+          onChanged: (value) {
+            ref.read(notificationSettingsProvider.notifier).setEnabled(value);
+          },
+        ),
+
+        // Polling interval slider
+        if (notifSettings.enabled) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Intervalle de vérification : ${notifSettings.pollingIntervalMinutes} min',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                Slider(
+                  value: notifSettings.pollingIntervalMinutes.toDouble(),
+                  min: 15,
+                  max: 60,
+                  divisions: 3, // 15, 30, 45, 60
+                  label: '${notifSettings.pollingIntervalMinutes} min',
+                  activeColor: AppColors.primary,
+                  onChanged: (value) {
+                    ref
+                        .read(notificationSettingsProvider.notifier)
+                        .setPollingInterval(value.toInt());
+                  },
+                ),
+                Text(
+                  'Les notifications peuvent être retardées selon l\'optimisation batterie',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
+              ],
+            ),
+          ),
+
+          const Divider(indent: 16, endIndent: 16),
+
+          // Field selector header
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Text(
+              'Champs à surveiller (${notifSettings.watchedFields.length} sélectionnés)',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+
+          // Field selector by category
+          ..._buildFieldSelector(context, ref, notifSettings),
+
+          const Divider(indent: 16, endIndent: 16, height: 24),
+
+          // Test now button
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: OutlinedButton.icon(
+              onPressed: () {
+                // TODO: Implement test now functionality in Phase 8
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Fonction de test disponible après l\'intégration'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.play_arrow),
+              label: const Text('Tester maintenant'),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppColors.primary,
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  List<Widget> _buildFieldSelector(
+    BuildContext context,
+    WidgetRef ref,
+    notifSettings,
+  ) {
+    final fieldsByCategory = StoveFieldDescriptorService.getFieldsByCategory();
+    final categories = [
+      FieldCategory.status,
+      FieldCategory.temperature,
+      FieldCategory.safety,
+      FieldCategory.motors,
+      FieldCategory.consumption,
+    ];
+
+    return categories.map((category) {
+      final fields = fieldsByCategory[category] ?? [];
+      if (fields.isEmpty) return const SizedBox.shrink();
+
+      return ExpansionTile(
+        title: Text(
+          StoveFieldDescriptorService.getCategoryName(category),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
+        ),
+        initiallyExpanded: false,
+        children: fields.map((field) {
+          final isWatched = notifSettings.watchedFields.contains(field.fieldName);
+          final hasThreshold = notifSettings.fieldThresholds.containsKey(field.fieldName);
+
+          return CheckboxListTile(
+            title: Text(field.displayName),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  field.description,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                ),
+                if (isWatched && field.supportsThreshold)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: TextButton.icon(
+                      onPressed: () => _showThresholdDialog(
+                        context,
+                        ref,
+                        field,
+                        notifSettings,
+                      ),
+                      icon: Icon(
+                        hasThreshold ? Icons.tune : Icons.add_circle_outline,
+                        size: 16,
+                      ),
+                      label: Text(
+                        hasThreshold ? 'Modifier le seuil' : 'Configurer un seuil',
+                        style: const TextStyle(fontSize: 12),
+                      ),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppColors.primary,
+                        padding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            value: isWatched,
+            activeColor: AppColors.primary,
+            controlAffinity: ListTileControlAffinity.leading,
+            onChanged: (value) {
+              if (value == true) {
+                ref
+                    .read(notificationSettingsProvider.notifier)
+                    .addWatchedField(field.fieldName);
+              } else {
+                ref
+                    .read(notificationSettingsProvider.notifier)
+                    .removeWatchedField(field.fieldName);
+              }
+            },
+          );
+        }).toList(),
+      );
+    }).toList();
+  }
+
+  void _showThresholdDialog(
+    BuildContext context,
+    WidgetRef ref,
+    StoveFieldDescriptor field,
+    notifSettings,
+  ) {
+    // Get current threshold or defaults
+    final currentThreshold = notifSettings.fieldThresholds[field.fieldName];
+    double minValue = (currentThreshold?['min'] as num?)?.toDouble() ?? 0.0;
+    double maxValue = (currentThreshold?['max'] as num?)?.toDouble() ?? 100.0;
+
+    // Determine sensible ranges based on field type
+    double rangeMin = 0.0;
+    double rangeMax = 100.0;
+    int divisions = 100;
+
+    if (field.fieldName.contains('Temperature')) {
+      rangeMin = 0.0;
+      rangeMax = 100.0;
+      divisions = 100;
+    } else if (field.fieldName.contains('Fan') || field.fieldName.contains('Motor')) {
+      rangeMin = 0.0;
+      rangeMax = 5000.0;
+      divisions = 50;
+    } else if (field.fieldName.contains('Pressure')) {
+      rangeMin = -100.0;
+      rangeMax = 100.0;
+      divisions = 40;
+    } else if (field.fieldName.contains('Service')) {
+      rangeMin = 0.0;
+      rangeMax = 1000.0;
+      divisions = 100;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => _ThresholdDialog(
+        field: field,
+        initialMin: minValue,
+        initialMax: maxValue,
+        rangeMin: rangeMin,
+        rangeMax: rangeMax,
+        divisions: divisions,
+        onSave: (min, max) {
+          ref
+              .read(notificationSettingsProvider.notifier)
+              .setFieldThreshold(field.fieldName, min, max);
+        },
+        onRemove: () {
+          ref
+              .read(notificationSettingsProvider.notifier)
+              .removeFieldThreshold(field.fieldName);
+        },
+      ),
+    );
+  }
+}
+
+/// Threshold configuration dialog
+class _ThresholdDialog extends StatefulWidget {
+  final StoveFieldDescriptor field;
+  final double initialMin;
+  final double initialMax;
+  final double rangeMin;
+  final double rangeMax;
+  final int divisions;
+  final void Function(double min, double max) onSave;
+  final VoidCallback onRemove;
+
+  const _ThresholdDialog({
+    required this.field,
+    required this.initialMin,
+    required this.initialMax,
+    required this.rangeMin,
+    required this.rangeMax,
+    required this.divisions,
+    required this.onSave,
+    required this.onRemove,
+  });
+
+  @override
+  State<_ThresholdDialog> createState() => _ThresholdDialogState();
+}
+
+class _ThresholdDialogState extends State<_ThresholdDialog> {
+  late double _minValue;
+  late double _maxValue;
+
+  @override
+  void initState() {
+    super.initState();
+    _minValue = widget.initialMin;
+    _maxValue = widget.initialMax;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Seuil pour ${widget.field.displayName}'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.field.description,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Notifier si la valeur sort de cette plage :',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 16),
+          Text('Minimum : ${_minValue.toStringAsFixed(1)}'),
+          Slider(
+            value: _minValue,
+            min: widget.rangeMin,
+            max: widget.rangeMax,
+            divisions: widget.divisions,
+            label: _minValue.toStringAsFixed(1),
+            activeColor: AppColors.primary,
+            onChanged: (value) {
+              setState(() {
+                _minValue = value;
+                if (_minValue > _maxValue) {
+                  _maxValue = _minValue;
+                }
+              });
+            },
+          ),
+          const SizedBox(height: 8),
+          Text('Maximum : ${_maxValue.toStringAsFixed(1)}'),
+          Slider(
+            value: _maxValue,
+            min: widget.rangeMin,
+            max: widget.rangeMax,
+            divisions: widget.divisions,
+            label: _maxValue.toStringAsFixed(1),
+            activeColor: AppColors.primary,
+            onChanged: (value) {
+              setState(() {
+                _maxValue = value;
+                if (_maxValue < _minValue) {
+                  _minValue = _maxValue;
+                }
+              });
+            },
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            widget.onRemove();
+            Navigator.of(context).pop();
+          },
+          child: const Text('Supprimer seuil'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Annuler'),
+        ),
+        FilledButton(
+          onPressed: () {
+            widget.onSave(_minValue, _maxValue);
+            Navigator.of(context).pop();
+          },
+          style: FilledButton.styleFrom(
+            backgroundColor: AppColors.primary,
+          ),
+          child: const Text('Enregistrer'),
+        ),
+      ],
     );
   }
 }
