@@ -71,7 +71,8 @@ class RikaApiClient {
       }
 
       // Follow the redirect manually to establish the session properly
-      final summaryResponse = await _dio.get(
+      // Response not needed, just making the request to set up session cookies
+      await _dio.get(
         ApiConstants.summaryEndpoint,
         options: Options(
           followRedirects: true,
