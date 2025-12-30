@@ -125,43 +125,38 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ExpansionTile(
-        initiallyExpanded: false,
-        leading: const Icon(Icons.event, color: AppColors.secondary),
-        title: const Text(
-          'Programmation horaires détaillée',
-          style: TextStyle(fontWeight: FontWeight.w600),
-        ),
-        subtitle: const Text(
-          'Configurer les plages horaires par jour',
-          style: TextStyle(fontSize: 13),
-        ),
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                for (final day in _days) ...[
-                  _buildDaySchedule(day),
-                  if (day != _days.last) const Divider(height: 24),
-                ],
-                if (!widget.enabled) ...[
-                  const SizedBox(height: 16),
-                  Text(
-                    'Activez les plages horaires pour éditer la programmation',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: AppColors.textSecondary,
-                          fontStyle: FontStyle.italic,
-                        ),
-                    textAlign: TextAlign.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            const Icon(Icons.event, color: AppColors.secondary, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Programmation horaires détaillée',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                ],
-              ],
             ),
+          ],
+        ),
+        const SizedBox(height: 16),
+        for (final day in _days) ...[
+          _buildDaySchedule(day),
+          if (day != _days.last) const Divider(height: 24),
+        ],
+        if (!widget.enabled) ...[
+          const SizedBox(height: 16),
+          Text(
+            'Activez les plages horaires pour éditer la programmation',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                  fontStyle: FontStyle.italic,
+                ),
+            textAlign: TextAlign.center,
           ),
         ],
-      ),
+      ],
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
+import 'heating_schedule_editor.dart';
 
 /// Configuration panel for heating time schedules
 ///
@@ -7,16 +8,20 @@ import '../../theme/app_colors.dart';
 class HeatingTimesConfig extends StatefulWidget {
   final bool active;
   final int setBackTemperature; // 14-30°C
+  final Map<String, String> schedule; // Heating schedule map
   final ValueChanged<bool>? onActiveChanged;
   final ValueChanged<int>? onSetBackTempChanged;
+  final ValueChanged<Map<String, String>>? onScheduleChanged;
   final bool enabled;
 
   const HeatingTimesConfig({
     super.key,
     required this.active,
     required this.setBackTemperature,
+    required this.schedule,
     this.onActiveChanged,
     this.onSetBackTempChanged,
+    this.onScheduleChanged,
     this.enabled = true,
   });
 
@@ -153,6 +158,16 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
                 ),
               ),
 
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 16),
+
+              // Detailed schedule editor
+              HeatingScheduleEditor(
+                schedule: widget.schedule,
+                onChanged: widget.onScheduleChanged,
+                enabled: widget.enabled,
+              ),
             ],
 
             if (!widget.enabled) ...[

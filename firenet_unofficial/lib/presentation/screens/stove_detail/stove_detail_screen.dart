@@ -15,7 +15,6 @@ import '../../widgets/controls/frost_protection_control.dart';
 import '../../widgets/controls/convection_fans_control.dart';
 import '../../widgets/controls/temperature_offset_control.dart';
 import '../../widgets/controls/bake_temperature_control.dart';
-import '../../widgets/controls/heating_schedule_editor.dart';
 import '../../widgets/info/sensor_info_panel.dart';
 import '../../widgets/info/outputs_info_panel.dart';
 import '../../widgets/info/statistics_panel.dart';
@@ -252,13 +251,23 @@ class StoveDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  // Temperature slider
-                  TemperatureSlider(
-                    value: int.tryParse(data.controls.targetTemperature) ?? 20,
-                    onChanged: null, // Only update on change end
-                    onChangeEnd: (value) => _handleTemperatureChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
+                  // Temperature control (Comfort mode) OR Power control (Auto/Manual mode)
+                  if (data.controls.operatingMode == 2) ...[
+                    // Comfort mode: Temperature slider
+                    TemperatureSlider(
+                      value: int.tryParse(data.controls.targetTemperature) ?? 20,
+                      onChanged: null, // Only update on change end
+                      onChangeEnd: (value) => _handleTemperatureChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                  ] else ...[
+                    // Auto/Manual mode: Heating power slider
+                    HeatingPowerControl(
+                      power: data.controls.heatingPower,
+                      onChangeEnd: (value) => _handleHeatingPowerChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
@@ -285,13 +294,6 @@ class StoveDetailScreen extends ConsumerWidget {
                   EcoModeToggle(
                     isActive: data.controls.ecoMode,
                     onChanged: (value) => _handleEcoModeChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
-
-                  HeatingPowerControl(
-                    power: data.controls.heatingPower,
-                    onChangeEnd: (value) => _handleHeatingPowerChange(ref, value),
                     enabled: data.controls.onOff && data.isOnline,
                   ),
                   const SizedBox(height: 8),
@@ -373,18 +375,10 @@ class StoveDetailScreen extends ConsumerWidget {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  // Heating times configuration
+                  // Heating times configuration with detailed schedule editor
                   HeatingTimesConfig(
                     active: data.controls.heatingTimesActiveForComfort,
                     setBackTemperature: int.tryParse(data.controls.setBackTemperature) ?? 16,
-                    onActiveChanged: (value) => _handleHeatingTimesActiveChanged(ref, value),
-                    onSetBackTempChanged: (value) => _handleSetBackTempChanged(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Detailed heating schedule editor (14 time slots)
-                  HeatingScheduleEditor(
                     schedule: {
                       'Mon1': data.controls.heatingTimeMon1,
                       'Mon2': data.controls.heatingTimeMon2,
@@ -401,8 +395,10 @@ class StoveDetailScreen extends ConsumerWidget {
                       'Sun1': data.controls.heatingTimeSun1,
                       'Sun2': data.controls.heatingTimeSun2,
                     },
-                    onChanged: (schedule) => _handleScheduleChange(ref, schedule),
-                    enabled: data.controls.heatingTimesActiveForComfort && data.controls.onOff && data.isOnline,
+                    onActiveChanged: (value) => _handleHeatingTimesActiveChanged(ref, value),
+                    onSetBackTempChanged: (value) => _handleSetBackTempChanged(ref, value),
+                    onScheduleChanged: (schedule) => _handleScheduleChange(ref, schedule),
+                    enabled: data.controls.onOff && data.isOnline,
                   ),
                 ],
               ),
