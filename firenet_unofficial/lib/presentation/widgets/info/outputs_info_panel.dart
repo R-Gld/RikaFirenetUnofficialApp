@@ -165,7 +165,7 @@ class OutputsInfoPanel extends StatelessWidget {
                     ),
               ),
               Text(
-                isDifferent ? '$currentRpm / $targetRpm RPM' : '$currentRpm RPM',
+                isDifferent ? '$currentRpm → $targetRpm RPM' : '$currentRpm RPM',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,
@@ -212,7 +212,7 @@ class OutputsInfoPanel extends StatelessWidget {
                     ),
               ),
               Text(
-                isDifferent ? '$currentPercent% / $targetPercent%' : '$currentPercent%',
+                isDifferent ? '$currentPercent% → $targetPercent%' : '$currentPercent%',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,
