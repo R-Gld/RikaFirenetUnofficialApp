@@ -46,6 +46,7 @@ dependencies:
   # Secure Storage
   flutter_secure_storage: ^9.2.2
   shared_preferences: ^2.3.3
+  path_provider: ^2.1.4
 
   # HTML Parsing
   html: ^0.15.4

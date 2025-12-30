@@ -22,9 +22,8 @@ class ApiConstants {
   static const String sessionCookieName = 'connect.sid';
 
   // Polling Configuration
-  static const Duration foregroundPollingInterval = Duration(seconds: 15);
+  static const Duration foregroundPollingInterval = Duration(seconds: 5);
   static const Duration backgroundPollingInterval = Duration(seconds: 60);
-  static const Duration minPollingInterval = Duration(seconds: 10);
 
   // Retry Configuration
   static const int maxControlUpdateRetries = 10;
