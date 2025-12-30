@@ -48,6 +48,10 @@ dependencies:
   shared_preferences: ^2.3.3
   path_provider: ^2.1.4
 
+  # Background Tasks & Notifications
+  workmanager: ^0.5.2
+  flutter_local_notifications: ^17.0.0
+
   # HTML Parsing
   html: ^0.15.4
 

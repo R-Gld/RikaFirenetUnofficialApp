@@ -37,24 +37,6 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
     }
   }
 
-  void _incrementPower() {
-    if (_currentPower < 100) {
-      setState(() {
-        _currentPower++;
-      });
-      widget.onChangeEnd?.call(_currentPower);
-    }
-  }
-
-  void _decrementPower() {
-    if (_currentPower > 0) {
-      setState(() {
-        _currentPower--;
-      });
-      widget.onChangeEnd?.call(_currentPower);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
