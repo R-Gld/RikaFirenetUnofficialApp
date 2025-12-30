@@ -5,8 +5,9 @@ import '../data/datasources/html_parser_service.dart';
 /// Provides singleton RikaApiClient
 ///
 /// This is the main HTTP client for all Rika Firenet API requests
+/// The cookie jar will be provided via override in main()
 final rikaApiClientProvider = Provider<RikaApiClient>((ref) {
-  return RikaApiClient();
+  throw UnimplementedError('rikaApiClientProvider must be overridden in main()');
 });
 
 /// Provides singleton HtmlParserService
