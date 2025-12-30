@@ -8,12 +8,12 @@ part 'app_settings.g.dart';
 class AppSettings with _$AppSettings {
   const factory AppSettings({
     // Advanced controls visibility
-    @Default(true) bool showEcoMode,
-    @Default(true) bool showRoomPowerRequest,
+    @Default(false) bool showEcoMode,
+    @Default(false) bool showRoomPowerRequest,
     @Default(false) bool showConvectionFans,
     @Default(false) bool showFrostProtection,
     @Default(false) bool showTemperatureOffset,
-    @Default(true) bool showBakeTemperature,
+    @Default(false) bool showBakeTemperature,
 
     // Info panels visibility
     @Default(true) bool showErrorWarningPanel,
