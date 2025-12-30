@@ -49,7 +49,7 @@ dependencies:
   path_provider: ^2.1.4
 
   # Background Tasks & Notifications
-  workmanager: ^0.5.2
+  workmanager: ^0.9.0+3
   flutter_local_notifications: ^17.0.0
 
   # HTML Parsing
