@@ -22,6 +22,8 @@ import '../../widgets/info/safety_status_panel.dart';
 import '../../widgets/info/error_warning_panel.dart';
 import '../../../providers/stove_providers.dart';
 import '../../../providers/polling_provider.dart';
+import '../../../providers/settings_provider.dart';
+import '../settings/settings_screen.dart';
 
 /// Stove detail and control screen
 class StoveDetailScreen extends ConsumerWidget {
@@ -205,6 +207,18 @@ class StoveDetailScreen extends ConsumerWidget {
         title: Text(stoveName),
         actions: [
           IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsScreen(),
+                ),
+              );
+            },
+            tooltip: 'Paramètres',
+          ),
+          IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => _handleRefresh(ref),
             tooltip: 'Actualiser',
@@ -219,15 +233,19 @@ class StoveDetailScreen extends ConsumerWidget {
           errorMessage: error.toString(),
           onRetry: () => _handleRefresh(ref),
         ),
-        data: (data) => RefreshIndicator(
-          onRefresh: () => _handleRefresh(ref),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+        data: (data) {
+          // Watch settings to show/hide widgets
+          final settings = ref.watch(settingsProvider);
+
+          return RefreshIndicator(
+            onRefresh: () => _handleRefresh(ref),
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
                   // Header with status and temperatures
                   _buildHeader(context, data),
                   const SizedBox(height: 16),
@@ -291,50 +309,60 @@ class StoveDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 16),
 
-                  EcoModeToggle(
-                    isActive: data.controls.ecoMode,
-                    onChanged: (value) => _handleEcoModeChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
+                  if (settings.showEcoMode) ...[
+                    EcoModeToggle(
+                      isActive: data.controls.ecoMode,
+                      onChanged: (value) => _handleEcoModeChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
 
-                  RoomPowerRequestControl(
-                    level: data.controls.roomPowerRequest,
-                    onChanged: (value) => _handleRoomPowerRequestChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
+                  if (settings.showRoomPowerRequest) ...[
+                    RoomPowerRequestControl(
+                      level: data.controls.roomPowerRequest,
+                      onChanged: (value) => _handleRoomPowerRequestChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
 
-                  ConvectionFansControl(
-                    fan1Active: data.controls.convectionFan1Active,
-                    fan1Level: data.controls.convectionFan1Level,
-                    fan1Area: data.controls.convectionFan1Area,
-                    fan2Active: data.controls.convectionFan2Active,
-                    fan2Level: data.controls.convectionFan2Level,
-                    fan2Area: data.controls.convectionFan2Area,
-                    onChanged: (settings) => _handleConvectionFansChange(ref, settings),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
+                  if (settings.showConvectionFans) ...[
+                    ConvectionFansControl(
+                      fan1Active: data.controls.convectionFan1Active,
+                      fan1Level: data.controls.convectionFan1Level,
+                      fan1Area: data.controls.convectionFan1Area,
+                      fan2Active: data.controls.convectionFan2Active,
+                      fan2Level: data.controls.convectionFan2Level,
+                      fan2Area: data.controls.convectionFan2Area,
+                      onChanged: (settings) => _handleConvectionFansChange(ref, settings),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
 
-                  FrostProtectionControl(
-                    active: data.controls.frostProtectionActive,
-                    temperature: int.tryParse(data.controls.frostProtectionTemperature) ?? 4,
-                    onActiveChanged: (value) => _handleFrostProtectionActiveChange(ref, value),
-                    onTemperatureChanged: (value) => _handleFrostProtectionTempChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
+                  if (settings.showFrostProtection) ...[
+                    FrostProtectionControl(
+                      active: data.controls.frostProtectionActive,
+                      temperature: int.tryParse(data.controls.frostProtectionTemperature) ?? 4,
+                      onActiveChanged: (value) => _handleFrostProtectionActiveChange(ref, value),
+                      onTemperatureChanged: (value) => _handleFrostProtectionTempChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
 
-                  TemperatureOffsetControl(
-                    offset: int.tryParse(data.controls.temperatureOffset) ?? 0,
-                    onChangeEnd: (value) => _handleTemperatureOffsetChange(ref, value),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-                  const SizedBox(height: 8),
+                  if (settings.showTemperatureOffset) ...[
+                    TemperatureOffsetControl(
+                      offset: int.tryParse(data.controls.temperatureOffset) ?? 0,
+                      onChangeEnd: (value) => _handleTemperatureOffsetChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
 
-                  // Bake temperature control (conditional - only if oven available)
-                  if (data.sensors.inputBakeTemperature != "1024") ...[
+                  // Bake temperature control (conditional - only if oven available and enabled in settings)
+                  if (settings.showBakeTemperature && data.sensors.inputBakeTemperature != "1024") ...[
                     BakeTemperatureControl(
                       temperature: int.tryParse(data.controls.bakeTemperature) ?? 180,
                       onChangeEnd: (value) => _handleBakeTemperatureChange(ref, value),
@@ -347,8 +375,8 @@ class StoveDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
 
                   // Information panels (expandable)
-                  // Error/Warning panel (conditional - visible only if active)
-                  if (data.sensors.statusError != 0 || data.sensors.statusWarning != 0) ...[
+                  // Error/Warning panel (conditional - visible only if active and enabled in settings)
+                  if (settings.showErrorWarningPanel && (data.sensors.statusError != 0 || data.sensors.statusWarning != 0)) ...[
                     ErrorWarningPanel(
                       errorCode: data.sensors.statusError,
                       subErrorCode: data.sensors.statusSubError,
@@ -357,20 +385,28 @@ class StoveDetailScreen extends ConsumerWidget {
                     const SizedBox(height: 8),
                   ],
 
-                  SafetyStatusPanel(sensors: data.sensors),
-                  const SizedBox(height: 8),
+                  if (settings.showSafetyStatusPanel) ...[
+                    SafetyStatusPanel(sensors: data.sensors),
+                    const SizedBox(height: 8),
+                  ],
 
-                  SensorInfoPanel(sensors: data.sensors),
-                  const SizedBox(height: 8),
+                  if (settings.showSensorInfoPanel) ...[
+                    SensorInfoPanel(sensors: data.sensors),
+                    const SizedBox(height: 8),
+                  ],
 
-                  OutputsInfoPanel(sensors: data.sensors),
-                  const SizedBox(height: 8),
+                  if (settings.showOutputsInfoPanel) ...[
+                    OutputsInfoPanel(sensors: data.sensors),
+                    const SizedBox(height: 8),
+                  ],
 
-                  StatisticsPanel(
-                    sensors: data.sensors,
-                    stoveType: data.stoveType,
-                    oem: data.oem,
-                  ),
+                  if (settings.showStatisticsPanel) ...[
+                    StatisticsPanel(
+                      sensors: data.sensors,
+                      stoveType: data.stoveType,
+                      oem: data.oem,
+                    ),
+                  ],
                   const SizedBox(height: 16),
                   const Divider(),
                   const SizedBox(height: 16),
@@ -400,11 +436,12 @@ class StoveDetailScreen extends ConsumerWidget {
                     onScheduleChanged: (schedule) => _handleScheduleChange(ref, schedule),
                     enabled: data.controls.onOff && data.isOnline,
                   ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
