@@ -8,9 +8,19 @@ import '../../widgets/controls/power_toggle.dart';
 import '../../widgets/controls/temperature_slider.dart';
 import '../../widgets/controls/mode_selector.dart';
 import '../../widgets/controls/heating_times_config.dart';
+import '../../widgets/controls/eco_mode_toggle.dart';
+import '../../widgets/controls/heating_power_control.dart';
+import '../../widgets/controls/room_power_request_control.dart';
+import '../../widgets/controls/frost_protection_control.dart';
+import '../../widgets/controls/convection_fans_control.dart';
+import '../../widgets/controls/temperature_offset_control.dart';
+import '../../widgets/controls/bake_temperature_control.dart';
+import '../../widgets/controls/heating_schedule_editor.dart';
 import '../../widgets/info/sensor_info_panel.dart';
 import '../../widgets/info/outputs_info_panel.dart';
 import '../../widgets/info/statistics_panel.dart';
+import '../../widgets/info/safety_status_panel.dart';
+import '../../widgets/info/error_warning_panel.dart';
 import '../../../providers/stove_providers.dart';
 import '../../../providers/polling_provider.dart';
 
@@ -79,6 +89,108 @@ class StoveDetailScreen extends ConsumerWidget {
 
     await ref.read(stoveStateProvider(stoveId).notifier)
        .updateControls(updatedControls);
+  }
+
+  // Advanced controls handlers
+
+  Future<void> _handleEcoModeChange(WidgetRef ref, bool active) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(ecoMode: active);
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleHeatingPowerChange(WidgetRef ref, int power) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(heatingPower: power);
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleRoomPowerRequestChange(WidgetRef ref, int level) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(roomPowerRequest: level);
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleFrostProtectionActiveChange(WidgetRef ref, bool active) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(frostProtectionActive: active);
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleFrostProtectionTempChange(WidgetRef ref, int temperature) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(
+      frostProtectionTemperature: temperature.toString(), // STRING!
+    );
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleConvectionFansChange(WidgetRef ref, ConvectionFanSettings settings) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(
+      convectionFan1Active: settings.fan1Active,
+      convectionFan1Level: settings.fan1Level,
+      convectionFan1Area: settings.fan1Area,
+      convectionFan2Active: settings.fan2Active,
+      convectionFan2Level: settings.fan2Level,
+      convectionFan2Area: settings.fan2Area,
+    );
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleTemperatureOffsetChange(WidgetRef ref, int offset) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(
+      temperatureOffset: offset.toString(), // STRING!
+    );
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleBakeTemperatureChange(WidgetRef ref, int temperature) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(
+      bakeTemperature: temperature.toString(), // STRING!
+    );
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
+  }
+
+  Future<void> _handleScheduleChange(WidgetRef ref, Map<String, String> schedule) async {
+    final currentState = ref.read(stoveStateProvider(stoveId)).valueOrNull;
+    if (currentState == null) return;
+
+    final updatedControls = currentState.controls.copyWith(
+      heatingTimeMon1: schedule['Mon1'] ?? "00000000",
+      heatingTimeMon2: schedule['Mon2'] ?? "00000000",
+      heatingTimeTue1: schedule['Tue1'] ?? "00000000",
+      heatingTimeTue2: schedule['Tue2'] ?? "00000000",
+      heatingTimeWed1: schedule['Wed1'] ?? "00000000",
+      heatingTimeWed2: schedule['Wed2'] ?? "00000000",
+      heatingTimeThu1: schedule['Thu1'] ?? "00000000",
+      heatingTimeThu2: schedule['Thu2'] ?? "00000000",
+      heatingTimeFri1: schedule['Fri1'] ?? "00000000",
+      heatingTimeFri2: schedule['Fri2'] ?? "00000000",
+      heatingTimeSat1: schedule['Sat1'] ?? "00000000",
+      heatingTimeSat2: schedule['Sat2'] ?? "00000000",
+      heatingTimeSun1: schedule['Sun1'] ?? "00000000",
+      heatingTimeSun2: schedule['Sun2'] ?? "00000000",
+    );
+    await ref.read(stoveStateProvider(stoveId).notifier).updateControls(updatedControls);
   }
 
   @override
@@ -161,7 +273,91 @@ class StoveDetailScreen extends ConsumerWidget {
                   const Divider(),
                   const SizedBox(height: 16),
 
+                  // Advanced controls section
+                  Text(
+                    'Contrôles Avancés',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  EcoModeToggle(
+                    isActive: data.controls.ecoMode,
+                    onChanged: (value) => _handleEcoModeChange(ref, value),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  HeatingPowerControl(
+                    power: data.controls.heatingPower,
+                    onChangeEnd: (value) => _handleHeatingPowerChange(ref, value),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  RoomPowerRequestControl(
+                    level: data.controls.roomPowerRequest,
+                    onChanged: (value) => _handleRoomPowerRequestChange(ref, value),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  ConvectionFansControl(
+                    fan1Active: data.controls.convectionFan1Active,
+                    fan1Level: data.controls.convectionFan1Level,
+                    fan1Area: data.controls.convectionFan1Area,
+                    fan2Active: data.controls.convectionFan2Active,
+                    fan2Level: data.controls.convectionFan2Level,
+                    fan2Area: data.controls.convectionFan2Area,
+                    onChanged: (settings) => _handleConvectionFansChange(ref, settings),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  FrostProtectionControl(
+                    active: data.controls.frostProtectionActive,
+                    temperature: int.tryParse(data.controls.frostProtectionTemperature) ?? 4,
+                    onActiveChanged: (value) => _handleFrostProtectionActiveChange(ref, value),
+                    onTemperatureChanged: (value) => _handleFrostProtectionTempChange(ref, value),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  TemperatureOffsetControl(
+                    offset: int.tryParse(data.controls.temperatureOffset) ?? 0,
+                    onChangeEnd: (value) => _handleTemperatureOffsetChange(ref, value),
+                    enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Bake temperature control (conditional - only if oven available)
+                  if (data.sensors.inputBakeTemperature != "1024") ...[
+                    BakeTemperatureControl(
+                      temperature: int.tryParse(data.controls.bakeTemperature) ?? 180,
+                      onChangeEnd: (value) => _handleBakeTemperatureChange(ref, value),
+                      enabled: data.controls.onOff && data.isOnline,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  const Divider(),
+                  const SizedBox(height: 16),
+
                   // Information panels (expandable)
+                  // Error/Warning panel (conditional - visible only if active)
+                  if (data.sensors.statusError != 0 || data.sensors.statusWarning != 0) ...[
+                    ErrorWarningPanel(
+                      errorCode: data.sensors.statusError,
+                      subErrorCode: data.sensors.statusSubError,
+                      warningCode: data.sensors.statusWarning,
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+
+                  SafetyStatusPanel(sensors: data.sensors),
+                  const SizedBox(height: 8),
+
                   SensorInfoPanel(sensors: data.sensors),
                   const SizedBox(height: 8),
 
@@ -184,6 +380,29 @@ class StoveDetailScreen extends ConsumerWidget {
                     onActiveChanged: (value) => _handleHeatingTimesActiveChanged(ref, value),
                     onSetBackTempChanged: (value) => _handleSetBackTempChanged(ref, value),
                     enabled: data.controls.onOff && data.isOnline,
+                  ),
+                  const SizedBox(height: 8),
+
+                  // Detailed heating schedule editor (14 time slots)
+                  HeatingScheduleEditor(
+                    schedule: {
+                      'Mon1': data.controls.heatingTimeMon1,
+                      'Mon2': data.controls.heatingTimeMon2,
+                      'Tue1': data.controls.heatingTimeTue1,
+                      'Tue2': data.controls.heatingTimeTue2,
+                      'Wed1': data.controls.heatingTimeWed1,
+                      'Wed2': data.controls.heatingTimeWed2,
+                      'Thu1': data.controls.heatingTimeThu1,
+                      'Thu2': data.controls.heatingTimeThu2,
+                      'Fri1': data.controls.heatingTimeFri1,
+                      'Fri2': data.controls.heatingTimeFri2,
+                      'Sat1': data.controls.heatingTimeSat1,
+                      'Sat2': data.controls.heatingTimeSat2,
+                      'Sun1': data.controls.heatingTimeSun1,
+                      'Sun2': data.controls.heatingTimeSun2,
+                    },
+                    onChanged: (schedule) => _handleScheduleChange(ref, schedule),
+                    enabled: data.controls.heatingTimesActiveForComfort && data.controls.onOff && data.isOnline,
                   ),
                 ],
               ),
