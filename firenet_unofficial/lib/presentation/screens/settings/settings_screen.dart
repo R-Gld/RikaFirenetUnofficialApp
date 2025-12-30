@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/app_colors.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
+import '../../../providers/stove_providers.dart';
 import '../../../services/stove_field_descriptor_service.dart';
+import '../../../services/background_task_handler.dart';
 
 /// Settings screen for customizing the UI
 class SettingsScreen extends ConsumerWidget {
@@ -297,15 +299,7 @@ class SettingsScreen extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: OutlinedButton.icon(
-              onPressed: () {
-                // TODO: Implement test now functionality in Phase 8
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Fonction de test disponible après l\'intégration'),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
+              onPressed: () => _testNow(context, ref),
               icon: const Icon(Icons.play_arrow),
               label: const Text('Tester maintenant'),
               style: OutlinedButton.styleFrom(
@@ -403,6 +397,89 @@ class SettingsScreen extends ConsumerWidget {
         }).toList(),
       );
     }).toList();
+  }
+
+  Future<void> _testNow(BuildContext context, WidgetRef ref) async {
+    final stoveListAsync = ref.read(stoveListProvider);
+
+    stoveListAsync.when(
+      data: (stoves) async {
+        if (stoves.isEmpty) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Aucun poêle configuré'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+          return;
+        }
+
+        // Show loading indicator
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Exécution du test en cours...'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+
+        // Execute background task for first stove
+        final firstStoveId = stoves.first.id;
+        final handler = BackgroundTaskHandler();
+
+        try {
+          final success = await handler.execute(firstStoveId);
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  success
+                      ? 'Test réussi ! Vérifiez les notifications.'
+                      : 'Échec du test. Vérifiez les logs.',
+                ),
+                duration: const Duration(seconds: 3),
+                backgroundColor: success ? Colors.green : Colors.red,
+              ),
+            );
+          }
+        } catch (e) {
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Erreur : $e'),
+                duration: const Duration(seconds: 3),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      },
+      loading: () {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Chargement de la liste des poêles...'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      },
+      error: (error, stack) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Erreur : $error'),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+    );
   }
 
   void _showThresholdDialog(
