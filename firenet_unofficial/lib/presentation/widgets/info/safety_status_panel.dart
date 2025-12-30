@@ -1,0 +1,279 @@
+import 'package:flutter/material.dart';
+import '../../../data/models/stove_sensors.dart';
+import '../../theme/app_colors.dart';
+
+/// Panel displaying safety and diagnostic information
+class SafetyStatusPanel extends StatelessWidget {
+  final StoveSensors sensors;
+
+  const SafetyStatusPanel({
+    super.key,
+    required this.sensors,
+  });
+
+  /// Get WiFi signal strength bars (1-5) from dBm
+  int _getWifiSignalBars(int dBm) {
+    if (dBm >= -50) return 5;
+    if (dBm >= -60) return 4;
+    if (dBm >= -70) return 3;
+    if (dBm >= -80) return 2;
+    return 1;
+  }
+
+  /// Get WiFi signal color based on strength
+  Color _getWifiSignalColor(int dBm) {
+    if (dBm >= -60) return AppColors.statusActive; // Excellent/Good
+    if (dBm >= -70) return Colors.orange; // Medium
+    return AppColors.statusWarning; // Weak/Very weak
+  }
+
+  /// Get pressure health color (normal range: 20-100 Pa)
+  Color _getPressureColor(int pressurePa) {
+    if (pressurePa >= 20 && pressurePa <= 100) {
+      return AppColors.statusActive; // Normal
+    } else if (pressurePa >= 10 && pressurePa <= 150) {
+      return Colors.orange; // Warning
+    }
+    return AppColors.statusWarning; // Error
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final wifiBars = _getWifiSignalBars(sensors.statusWifiStrength);
+    final wifiColor = _getWifiSignalColor(sensors.statusWifiStrength);
+    final pressureColor = _getPressureColor(sensors.inputPressureSensor);
+
+    return Card(
+      child: ExpansionTile(
+        initiallyExpanded: false,
+        leading: const Icon(Icons.security, color: AppColors.primary),
+        title: const Text(
+          'Sécurité & Diagnostics',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Column(
+              children: [
+                // Door status
+                _buildStatusRow(
+                  context,
+                  icon: Icons.door_front_door,
+                  label: 'Porte',
+                  value: sensors.inputDoor ? 'Fermée' : 'Ouverte',
+                  isGood: sensors.inputDoor,
+                  goodColor: AppColors.statusActive,
+                  badColor: AppColors.statusWarning,
+                ),
+                const Divider(),
+
+                // Cover status
+                _buildStatusRow(
+                  context,
+                  icon: Icons.cover,
+                  label: 'Capot',
+                  value: sensors.inputCover ? 'Fermé' : 'Ouvert',
+                  isGood: sensors.inputCover,
+                  goodColor: AppColors.statusActive,
+                  badColor: AppColors.statusWarning,
+                ),
+                const Divider(),
+
+                // WiFi signal
+                _buildWifiRow(
+                  context,
+                  dBm: sensors.statusWifiStrength,
+                  bars: wifiBars,
+                  color: wifiColor,
+                ),
+                const Divider(),
+
+                // Pressure sensor
+                _buildPressureRow(
+                  context,
+                  pressurePa: sensors.inputPressureSensor,
+                  color: pressureColor,
+                ),
+                const Divider(),
+
+                // Upper temperature limiter
+                _buildStatusRow(
+                  context,
+                  icon: Icons.thermostat,
+                  label: 'Limiteur température',
+                  value: sensors.inputUpperTemperatureLimiter ? 'Actif' : 'Inactif',
+                  isGood: !sensors.inputUpperTemperatureLimiter, // Inactive is good
+                  goodColor: AppColors.statusActive,
+                  badColor: AppColors.statusWarning,
+                ),
+                const Divider(),
+
+                // Pressure switch
+                _buildStatusRow(
+                  context,
+                  icon: Icons.toggle_on,
+                  label: 'Contacteur pression',
+                  value: sensors.inputPressureSwitch ? 'Actif' : 'Inactif',
+                  isGood: sensors.inputPressureSwitch,
+                  goodColor: AppColors.statusActive,
+                  badColor: AppColors.textSecondary,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatusRow(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String value,
+    required bool isGood,
+    required Color goodColor,
+    required Color badColor,
+  }) {
+    final color = isGood ? goodColor : badColor;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 24),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              label,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWifiRow(
+    BuildContext context, {
+    required int dBm,
+    required int bars,
+    required Color color,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(Icons.wifi, color: color, size: 24),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Signal WiFi',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ),
+          Row(
+            children: List.generate(
+              5,
+              (index) => Container(
+                margin: const EdgeInsets.only(right: 2),
+                width: 4,
+                height: (index + 1) * 3.0,
+                decoration: BoxDecoration(
+                  color: index < bars ? color : AppColors.textSecondary.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            '$dBm dBm',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: color,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPressureRow(
+    BuildContext context, {
+    required int pressurePa,
+    required Color color,
+  }) {
+    // Determine status text
+    String status;
+    if (pressurePa >= 20 && pressurePa <= 100) {
+      status = 'Normal';
+    } else if (pressurePa >= 10 && pressurePa <= 150) {
+      status = 'Attention';
+    } else {
+      status = 'Anormal';
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          Icon(Icons.speed, color: color, size: 24),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Pression',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+                Text(
+                  '$pressurePa Pa',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              status,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
