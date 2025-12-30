@@ -251,12 +251,12 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AppSettingsImpl implements _AppSettings {
   const _$AppSettingsImpl({
-    this.showEcoMode = true,
-    this.showRoomPowerRequest = true,
+    this.showEcoMode = false,
+    this.showRoomPowerRequest = false,
     this.showConvectionFans = false,
     this.showFrostProtection = false,
     this.showTemperatureOffset = false,
-    this.showBakeTemperature = true,
+    this.showBakeTemperature = false,
     this.showErrorWarningPanel = true,
     this.showSafetyStatusPanel = true,
     this.showSensorInfoPanel = true,

@@ -8,12 +8,12 @@ part of 'app_settings.dart';
 
 _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
     _$AppSettingsImpl(
-      showEcoMode: json['showEcoMode'] as bool? ?? true,
-      showRoomPowerRequest: json['showRoomPowerRequest'] as bool? ?? true,
+      showEcoMode: json['showEcoMode'] as bool? ?? false,
+      showRoomPowerRequest: json['showRoomPowerRequest'] as bool? ?? false,
       showConvectionFans: json['showConvectionFans'] as bool? ?? false,
       showFrostProtection: json['showFrostProtection'] as bool? ?? false,
       showTemperatureOffset: json['showTemperatureOffset'] as bool? ?? false,
-      showBakeTemperature: json['showBakeTemperature'] as bool? ?? true,
+      showBakeTemperature: json['showBakeTemperature'] as bool? ?? false,
       showErrorWarningPanel: json['showErrorWarningPanel'] as bool? ?? true,
       showSafetyStatusPanel: json['showSafetyStatusPanel'] as bool? ?? true,
       showSensorInfoPanel: json['showSensorInfoPanel'] as bool? ?? true,
