@@ -53,12 +53,45 @@ class SensorInfoPanel extends StatelessWidget {
                       ? AppColors.statusActive
                       : AppColors.statusOff,
                 ),
+                const Divider(),
+
+                // Température carte électronique
+                _buildInfoRow(
+                  context,
+                  icon: Icons.developer_board,
+                  label: 'Temp. carte électronique',
+                  value: '${sensors.inputBoardTemperature}°C',
+                  iconColor: _getBoardTempColor(sensors.inputBoardTemperature),
+                ),
+
+                // Température four (si disponible)
+                if (sensors.inputBakeTemperature != "1024") ...[
+                  const Divider(),
+                  _buildInfoRow(
+                    context,
+                    icon: Icons.bakery_dining,
+                    label: 'Temp. four',
+                    value: '${sensors.inputBakeTemperature}°C',
+                    iconColor: AppColors.secondary,
+                  ),
+                ],
               ],
             ),
           ),
         ],
       ),
     );
+  }
+
+  /// Get color for board temperature (normal < 60°C, warning < 70°C, danger >= 70°C)
+  Color _getBoardTempColor(String tempStr) {
+    final temp = double.tryParse(tempStr) ?? 0.0;
+    if (temp >= 70) {
+      return AppColors.statusWarning;
+    } else if (temp >= 60) {
+      return Colors.orange;
+    }
+    return AppColors.statusActive;
   }
 
   Widget _buildInfoRow(

@@ -49,6 +49,11 @@ class StatisticsPanel extends StatelessWidget {
                   label: 'Cycles ON/OFF',
                   value: '${sensors.parameterOnOffCycleCount}',
                 ),
+                _buildStatRow(
+                  context,
+                  label: 'Nombre d\'allumages',
+                  value: '${sensors.parameterIgnitionCount}',
+                ),
                 const SizedBox(height: 16),
                 const Divider(),
                 const SizedBox(height: 16),
@@ -64,7 +69,7 @@ class StatisticsPanel extends StatelessWidget {
                 _buildStatRow(
                   context,
                   label: 'Avant entretien',
-                  value: '${sensors.parameterServiceCountdownKg} kg',
+                  value: '${sensors.parameterServiceCountdownKg} kg (${sensors.parameterServiceCountdownTime} h)',
                   valueColor: sensors.parameterServiceCountdownKg < 50
                       ? AppColors.statusWarning
                       : null,
