@@ -253,9 +253,9 @@ class _$AppSettingsImpl implements _AppSettings {
   const _$AppSettingsImpl({
     this.showEcoMode = true,
     this.showRoomPowerRequest = true,
-    this.showConvectionFans = true,
-    this.showFrostProtection = true,
-    this.showTemperatureOffset = true,
+    this.showConvectionFans = false,
+    this.showFrostProtection = false,
+    this.showTemperatureOffset = false,
     this.showBakeTemperature = true,
     this.showErrorWarningPanel = true,
     this.showSafetyStatusPanel = true,

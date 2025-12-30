@@ -10,9 +10,9 @@ _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
     _$AppSettingsImpl(
       showEcoMode: json['showEcoMode'] as bool? ?? true,
       showRoomPowerRequest: json['showRoomPowerRequest'] as bool? ?? true,
-      showConvectionFans: json['showConvectionFans'] as bool? ?? true,
-      showFrostProtection: json['showFrostProtection'] as bool? ?? true,
-      showTemperatureOffset: json['showTemperatureOffset'] as bool? ?? true,
+      showConvectionFans: json['showConvectionFans'] as bool? ?? false,
+      showFrostProtection: json['showFrostProtection'] as bool? ?? false,
+      showTemperatureOffset: json['showTemperatureOffset'] as bool? ?? false,
       showBakeTemperature: json['showBakeTemperature'] as bool? ?? true,
       showErrorWarningPanel: json['showErrorWarningPanel'] as bool? ?? true,
       showSafetyStatusPanel: json['showSafetyStatusPanel'] as bool? ?? true,

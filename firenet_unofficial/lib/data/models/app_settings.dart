@@ -10,9 +10,9 @@ class AppSettings with _$AppSettings {
     // Advanced controls visibility
     @Default(true) bool showEcoMode,
     @Default(true) bool showRoomPowerRequest,
-    @Default(true) bool showConvectionFans,
-    @Default(true) bool showFrostProtection,
-    @Default(true) bool showTemperatureOffset,
+    @Default(false) bool showConvectionFans,
+    @Default(false) bool showFrostProtection,
+    @Default(false) bool showTemperatureOffset,
     @Default(true) bool showBakeTemperature,
 
     // Info panels visibility
