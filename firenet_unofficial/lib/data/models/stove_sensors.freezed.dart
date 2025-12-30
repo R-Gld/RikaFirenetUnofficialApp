@@ -92,7 +92,8 @@ mixin _$StoveSensors {
       throw _privateConstructorUsedError; // Runtime & Consumption Statistics
   int get parameterRuntimePellets =>
       throw _privateConstructorUsedError; // hours
-  int get parameterRuntimeLogs => throw _privateConstructorUsedError; // hours
+  int get parameterRuntimeLogs =>
+      throw _privateConstructorUsedError; // minutes (API returns in minutes)
   int get parameterFeedRateTotal => throw _privateConstructorUsedError; // kg
   int get parameterFeedRateService =>
       throw _privateConstructorUsedError; // kg since last service
@@ -1504,7 +1505,7 @@ class _$StoveSensorsImpl extends _StoveSensors {
   // hours
   @override
   final int parameterRuntimeLogs;
-  // hours
+  // minutes (API returns in minutes)
   @override
   final int parameterFeedRateTotal;
   // kg
@@ -2172,7 +2173,7 @@ abstract class _StoveSensors extends StoveSensors {
   @override
   int get parameterRuntimePellets; // hours
   @override
-  int get parameterRuntimeLogs; // hours
+  int get parameterRuntimeLogs; // minutes (API returns in minutes)
   @override
   int get parameterFeedRateTotal; // kg
   @override

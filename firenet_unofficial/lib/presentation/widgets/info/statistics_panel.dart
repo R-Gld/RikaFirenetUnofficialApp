@@ -42,7 +42,7 @@ class StatisticsPanel extends StatelessWidget {
                 _buildStatRow(
                   context,
                   label: 'Heures bois',
-                  value: '${sensors.parameterRuntimeLogs} h',
+                  value: '${(sensors.parameterRuntimeLogs / 60).toStringAsFixed(1)} h',
                 ),
                 _buildStatRow(
                   context,
