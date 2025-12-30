@@ -70,7 +70,7 @@ class StoveSensors with _$StoveSensors {
 
     // Runtime & Consumption Statistics
     required int parameterRuntimePellets, // hours
-    required int parameterRuntimeLogs, // hours
+    required int parameterRuntimeLogs, // minutes (API returns in minutes)
     required int parameterFeedRateTotal, // kg
     required int parameterFeedRateService, // kg since last service
     required int parameterServiceCountdownKg, // kg until service due
