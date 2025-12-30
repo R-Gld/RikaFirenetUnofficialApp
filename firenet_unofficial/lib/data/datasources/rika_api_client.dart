@@ -46,7 +46,8 @@ class RikaApiClient {
     required String password,
   }) async {
     try {
-      final response = await _dio.post(
+      // First request: login with credentials (don't follow redirects to detect success)
+      final loginResponse = await _dio.post(
         ApiConstants.loginEndpoint,
         data: {
           'email': email,
@@ -54,28 +55,41 @@ class RikaApiClient {
         },
         options: Options(
           contentType: Headers.formUrlEncodedContentType,
+          followRedirects: false,
+          validateStatus: (status) => status != null && status < 500,
         ),
       );
 
-      // Check for success indicator in response body
-      if (response.statusCode == 200 &&
-          response.data.toString().contains(ApiConstants.loginSuccessIndicator)) {
-        // Cookie is automatically stored by CookieManager
-        final cookies = await _cookieJar.loadForRequest(
-          Uri.parse(ApiConstants.baseUrl),
-        );
+      // Check if login was successful (302 redirect to /web/summary)
+      final isSuccess = loginResponse.statusCode == 302 &&
+          loginResponse.headers.value('location')?.contains('/web/summary') == true;
 
-        final sessionCookie = cookies.firstWhere(
-          (cookie) => cookie.name == ApiConstants.sessionCookieName,
-          orElse: () => throw const AuthenticationException(
-            'Session cookie not found',
-          ),
-        );
-
-        return sessionCookie.value;
+      if (!isSuccess) {
+        throw const AuthenticationException('Invalid credentials');
       }
 
-      throw const AuthenticationException('Invalid credentials');
+      // Follow the redirect manually to establish the session properly
+      await _dio.get(
+        ApiConstants.summaryEndpoint,
+        options: Options(
+          followRedirects: true,
+          validateStatus: (status) => status != null && status < 500,
+        ),
+      );
+
+      // Verify cookie was saved
+      final cookies = await _cookieJar.loadForRequest(
+        Uri.parse(ApiConstants.baseUrl),
+      );
+
+      final sessionCookie = cookies.firstWhere(
+        (cookie) => cookie.name == ApiConstants.sessionCookieName,
+        orElse: () => throw const AuthenticationException(
+          'Session cookie not found',
+        ),
+      );
+
+      return sessionCookie.value;
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
