@@ -56,7 +56,7 @@ class TimeRange {
 
   @override
   String toString() {
-    return '${start.format} - ${end.format}';
+    return '${start.formatHHMM} - ${end.formatHHMM}';
   }
 
   @override
@@ -73,7 +73,7 @@ class TimeRange {
 
 /// Extension to format TimeOfDay without BuildContext
 extension TimeOfDayFormat on TimeOfDay {
-  String get format {
+  String get formatHHMM {
     final h = hour.toString().padLeft(2, '0');
     final m = minute.toString().padLeft(2, '0');
     return '$h:$m';

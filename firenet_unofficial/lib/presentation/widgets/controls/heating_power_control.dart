@@ -73,6 +73,7 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
                       ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.remove_circle_outline),
@@ -81,6 +82,7 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
                       color: AppColors.secondary,
                     ),
                     Container(
+                      constraints: const BoxConstraints(minWidth: 80),
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 8,
@@ -89,12 +91,14 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
                         color: AppColors.primary.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(
-                        '$_currentPower%',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
+                      child: Center(
+                        child: Text(
+                          '$_currentPower%',
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                              ),
+                        ),
                       ),
                     ),
                     IconButton(

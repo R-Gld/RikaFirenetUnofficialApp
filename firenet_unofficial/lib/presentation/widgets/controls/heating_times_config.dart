@@ -153,34 +153,6 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
                 ),
               ),
 
-              const SizedBox(height: 16),
-
-              // Information note
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.info_outline,
-                      size: 20,
-                      color: AppColors.primary,
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Programmation détaillée des horaires disponible prochainement',
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: AppColors.primary,
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
 
             if (!widget.enabled) ...[
