@@ -243,4 +243,28 @@ class NotificationService {
   void _recordNotification(String stoveId) {
     _lastNotificationTimes[stoveId] = DateTime.now();
   }
+
+  /// Send special notification for authentication error
+  Future<void> sendAuthErrorNotification() async {
+    const androidDetails = AndroidNotificationDetails(
+      _highPriorityChannel,
+      'Alertes critiques',
+      importance: Importance.max,
+      priority: Priority.max,
+    );
+
+    const iosDetails = DarwinNotificationDetails();
+
+    const details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+
+    await _plugin.show(
+      999, // Fixed ID for auth error
+      'Reconnexion nécessaire',
+      'Vos identifiants ont expiré. Veuillez ouvrir l\'app pour vous reconnecter.',
+      details,
+    );
+  }
 }
