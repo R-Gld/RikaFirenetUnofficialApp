@@ -6,6 +6,7 @@ import '../../../providers/notification_settings_provider.dart';
 import '../../../providers/stove_providers.dart';
 import '../../../services/stove_field_descriptor_service.dart';
 import '../../../services/background_task_handler.dart';
+import '../../../services/permission_service.dart';
 
 /// Settings screen for customizing the UI
 class SettingsScreen extends ConsumerWidget {
@@ -237,9 +238,7 @@ class SettingsScreen extends ConsumerWidget {
           title: 'Activer les notifications',
           subtitle: 'Surveiller les changements même quand l\'app est fermée',
           value: notifSettings.enabled,
-          onChanged: (value) {
-            ref.read(notificationSettingsProvider.notifier).setEnabled(value);
-          },
+          onChanged: (value) => _handleNotificationToggle(context, ref, value),
         ),
 
         // Polling interval slider
@@ -397,6 +396,59 @@ class SettingsScreen extends ConsumerWidget {
         }).toList(),
       );
     }).toList();
+  }
+
+  Future<void> _handleNotificationToggle(
+    BuildContext context,
+    WidgetRef ref,
+    bool value,
+  ) async {
+    if (value) {
+      // Enabling notifications - request permission first
+      final permissionService = PermissionService();
+      final granted = await permissionService.requestNotificationPermission();
+
+      if (!granted) {
+        // Permission denied
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Permission refusée. Activez les notifications dans les paramètres Android.',
+              ),
+              duration: Duration(seconds: 4),
+              backgroundColor: Colors.orange,
+            ),
+          );
+        }
+        return; // Don't enable notifications
+      }
+
+      // Permission granted - enable notifications
+      ref.read(notificationSettingsProvider.notifier).setEnabled(true);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Notifications activées avec succès'),
+            duration: Duration(seconds: 2),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } else {
+      // Disabling notifications - no permission needed
+      ref.read(notificationSettingsProvider.notifier).setEnabled(false);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Notifications désactivées'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    }
   }
 
   Future<void> _testNow(BuildContext context, WidgetRef ref) async {
