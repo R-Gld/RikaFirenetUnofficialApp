@@ -63,62 +63,11 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Puissance de chauffe',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.remove_circle_outline),
-                      onPressed: widget.enabled ? _decrementPower : null,
-                      iconSize: 28,
-                      color: AppColors.secondary,
-                    ),
-                    Container(
-                      constraints: const BoxConstraints(minWidth: 80),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: Text(
-                          '$_currentPower%',
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.add_circle_outline),
-                      onPressed: widget.enabled ? _incrementPower : null,
-                      iconSize: 28,
-                      color: AppColors.secondary,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-
-            // Linear progress indicator
-            LinearProgressIndicator(
-              value: _currentPower / 100,
-              backgroundColor: AppColors.textSecondary.withOpacity(0.2),
-              color: AppColors.primary,
-              minHeight: 8,
+            Text(
+              'Puissance de chauffe',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
             ),
             const SizedBox(height: 16),
 
@@ -145,7 +94,6 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
               activeColor: AppColors.primary,
               inactiveColor: AppColors.textSecondary.withOpacity(0.3),
             ),
-            const SizedBox(height: 8),
 
             // Labels
             Row(
