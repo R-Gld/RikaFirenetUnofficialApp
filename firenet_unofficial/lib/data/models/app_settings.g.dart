@@ -8,6 +8,9 @@ part of 'app_settings.dart';
 
 _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
     _$AppSettingsImpl(
+      themeMode:
+          $enumDecodeNullable(_$AppThemeModeEnumMap, json['themeMode']) ??
+          AppThemeMode.system,
       showEcoMode: json['showEcoMode'] as bool? ?? false,
       showRoomPowerRequest: json['showRoomPowerRequest'] as bool? ?? false,
       showConvectionFans: json['showConvectionFans'] as bool? ?? false,
@@ -23,6 +26,7 @@ _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$AppSettingsImplToJson(_$AppSettingsImpl instance) =>
     <String, dynamic>{
+      'themeMode': _$AppThemeModeEnumMap[instance.themeMode]!,
       'showEcoMode': instance.showEcoMode,
       'showRoomPowerRequest': instance.showRoomPowerRequest,
       'showConvectionFans': instance.showConvectionFans,
@@ -35,3 +39,9 @@ Map<String, dynamic> _$$AppSettingsImplToJson(_$AppSettingsImpl instance) =>
       'showOutputsInfoPanel': instance.showOutputsInfoPanel,
       'showStatisticsPanel': instance.showStatisticsPanel,
     };
+
+const _$AppThemeModeEnumMap = {
+  AppThemeMode.light: 'light',
+  AppThemeMode.dark: 'dark',
+  AppThemeMode.system: 'system',
+};
