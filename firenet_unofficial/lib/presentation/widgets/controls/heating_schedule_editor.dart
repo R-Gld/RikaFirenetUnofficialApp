@@ -189,8 +189,12 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
     final hasTime = timeRange != null;
 
     // Extract time strings for display
-    final startTimeText = hasTime ? (timeRange.start.format as String) : '--:--';
-    final endTimeText = hasTime ? (timeRange.end.format as String) : '--:--';
+    String startTimeText = '--:--';
+    String endTimeText = '--:--';
+    if (hasTime && timeRange != null) {
+      startTimeText = timeRange.start.formatHHMM;
+      endTimeText = timeRange.end.formatHHMM;
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
