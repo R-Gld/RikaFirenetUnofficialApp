@@ -1,4 +1,4 @@
-package com.example.firenet_unofficial
+package fr.Rgld_.firenet_unofficial
 
 import io.flutter.embedding.android.FlutterActivity
 
