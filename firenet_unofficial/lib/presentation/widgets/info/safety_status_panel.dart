@@ -71,7 +71,7 @@ class SafetyStatusPanel extends StatelessWidget {
                 // Cover status
                 _buildStatusRow(
                   context,
-                  icon: Icons.cover,
+                  icon: Icons.shield,
                   label: 'Capot',
                   value: sensors.inputCover ? 'Fermé' : 'Ouvert',
                   isGood: sensors.inputCover,
