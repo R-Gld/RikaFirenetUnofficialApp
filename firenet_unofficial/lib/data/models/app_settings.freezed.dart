@@ -21,7 +21,9 @@ AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AppSettings {
-  // Advanced controls visibility
+  // Theme settings
+  AppThemeMode get themeMode =>
+      throw _privateConstructorUsedError; // Advanced controls visibility
   bool get showEcoMode => throw _privateConstructorUsedError;
   bool get showRoomPowerRequest => throw _privateConstructorUsedError;
   bool get showConvectionFans => throw _privateConstructorUsedError;
@@ -53,6 +55,7 @@ abstract class $AppSettingsCopyWith<$Res> {
   ) = _$AppSettingsCopyWithImpl<$Res, AppSettings>;
   @useResult
   $Res call({
+    AppThemeMode themeMode,
     bool showEcoMode,
     bool showRoomPowerRequest,
     bool showConvectionFans,
@@ -82,6 +85,7 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? themeMode = null,
     Object? showEcoMode = null,
     Object? showRoomPowerRequest = null,
     Object? showConvectionFans = null,
@@ -96,6 +100,10 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
   }) {
     return _then(
       _value.copyWith(
+            themeMode: null == themeMode
+                ? _value.themeMode
+                : themeMode // ignore: cast_nullable_to_non_nullable
+                      as AppThemeMode,
             showEcoMode: null == showEcoMode
                 ? _value.showEcoMode
                 : showEcoMode // ignore: cast_nullable_to_non_nullable
@@ -156,6 +164,7 @@ abstract class _$$AppSettingsImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
+    AppThemeMode themeMode,
     bool showEcoMode,
     bool showRoomPowerRequest,
     bool showConvectionFans,
@@ -184,6 +193,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? themeMode = null,
     Object? showEcoMode = null,
     Object? showRoomPowerRequest = null,
     Object? showConvectionFans = null,
@@ -198,6 +208,10 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$AppSettingsImpl(
+        themeMode: null == themeMode
+            ? _value.themeMode
+            : themeMode // ignore: cast_nullable_to_non_nullable
+                  as AppThemeMode,
         showEcoMode: null == showEcoMode
             ? _value.showEcoMode
             : showEcoMode // ignore: cast_nullable_to_non_nullable
@@ -251,6 +265,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AppSettingsImpl implements _AppSettings {
   const _$AppSettingsImpl({
+    this.themeMode = AppThemeMode.system,
     this.showEcoMode = false,
     this.showRoomPowerRequest = false,
     this.showConvectionFans = false,
@@ -267,6 +282,10 @@ class _$AppSettingsImpl implements _AppSettings {
   factory _$AppSettingsImpl.fromJson(Map<String, dynamic> json) =>
       _$$AppSettingsImplFromJson(json);
 
+  // Theme settings
+  @override
+  @JsonKey()
+  final AppThemeMode themeMode;
   // Advanced controls visibility
   @override
   @JsonKey()
@@ -305,7 +324,7 @@ class _$AppSettingsImpl implements _AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(showEcoMode: $showEcoMode, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
+    return 'AppSettings(themeMode: $themeMode, showEcoMode: $showEcoMode, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
   }
 
   @override
@@ -313,6 +332,8 @@ class _$AppSettingsImpl implements _AppSettings {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppSettingsImpl &&
+            (identical(other.themeMode, themeMode) ||
+                other.themeMode == themeMode) &&
             (identical(other.showEcoMode, showEcoMode) ||
                 other.showEcoMode == showEcoMode) &&
             (identical(other.showRoomPowerRequest, showRoomPowerRequest) ||
@@ -341,6 +362,7 @@ class _$AppSettingsImpl implements _AppSettings {
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    themeMode,
     showEcoMode,
     showRoomPowerRequest,
     showConvectionFans,
@@ -370,6 +392,7 @@ class _$AppSettingsImpl implements _AppSettings {
 
 abstract class _AppSettings implements AppSettings {
   const factory _AppSettings({
+    final AppThemeMode themeMode,
     final bool showEcoMode,
     final bool showRoomPowerRequest,
     final bool showConvectionFans,
@@ -386,7 +409,9 @@ abstract class _AppSettings implements AppSettings {
   factory _AppSettings.fromJson(Map<String, dynamic> json) =
       _$AppSettingsImpl.fromJson;
 
-  // Advanced controls visibility
+  // Theme settings
+  @override
+  AppThemeMode get themeMode; // Advanced controls visibility
   @override
   bool get showEcoMode;
   @override

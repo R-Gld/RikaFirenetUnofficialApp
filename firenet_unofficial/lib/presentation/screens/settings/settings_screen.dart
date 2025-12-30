@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/app_colors.dart';
+import '../../../data/models/app_settings.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
 import '../../../providers/stove_providers.dart';
@@ -39,6 +40,12 @@ class SettingsScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
+          // Appearance section
+          _buildSectionHeader(context, 'Apparence'),
+          _buildThemeSelector(context, ref, settings),
+
+          const Divider(height: 32),
+
           // Advanced controls section
           _buildSectionHeader(context, 'Contrôles avancés'),
           _buildSwitchTile(
@@ -587,6 +594,61 @@ class SettingsScreen extends ConsumerWidget {
               .read(notificationSettingsProvider.notifier)
               .removeFieldThreshold(field.fieldName);
         },
+      ),
+    );
+  }
+
+  Widget _buildThemeSelector(BuildContext context, WidgetRef ref, settings) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Thème',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+          ),
+          const SizedBox(height: 12),
+          SegmentedButton<AppThemeMode>(
+            segments: const [
+              ButtonSegment<AppThemeMode>(
+                value: AppThemeMode.light,
+                label: Text('Clair'),
+                icon: Icon(Icons.light_mode),
+              ),
+              ButtonSegment<AppThemeMode>(
+                value: AppThemeMode.dark,
+                label: Text('Sombre'),
+                icon: Icon(Icons.dark_mode),
+              ),
+              ButtonSegment<AppThemeMode>(
+                value: AppThemeMode.system,
+                label: Text('Système'),
+                icon: Icon(Icons.brightness_auto),
+              ),
+            ],
+            selected: {settings.themeMode},
+            onSelectionChanged: (Set<AppThemeMode> newSelection) {
+              ref.read(settingsProvider.notifier).updateSetting(
+                    (s) => s.copyWith(themeMode: newSelection.first),
+                  );
+            },
+          ),
+          const SizedBox(height: 8),
+          Text(
+            settings.themeMode == AppThemeMode.system
+                ? 'Suit les paramètres système'
+                : settings.themeMode == AppThemeMode.light
+                    ? 'Mode clair activé'
+                    : 'Mode sombre activé',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondary,
+                  fontStyle: FontStyle.italic,
+                ),
+          ),
+        ],
       ),
     );
   }
