@@ -71,8 +71,8 @@ class SafetyStatusPanel extends StatelessWidget {
                   context,
                   icon: Icons.thermostat,
                   label: 'Limiteur température',
-                  value: !sensors.inputUpperTemperatureLimiter ? 'Température interne OK' : 'Surchauffe',
-                  isGood: !sensors.inputUpperTemperatureLimiter, // Inactive is good
+                  value: sensors.inputUpperTemperatureLimiter ? 'Température interne OK' : 'Surchauffe',
+                  isGood: sensors.inputUpperTemperatureLimiter, // Active is good
                   goodColor: AppColors.statusActive,
                   badColor: AppColors.statusWarning,
                 ),
