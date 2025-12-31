@@ -119,9 +119,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               _navigateToSingleStove(context, stoves[0].id, stoves[0].name);
             }
 
-            return ListView.builder(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              itemCount: stoves.length,
+            return SafeArea(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                itemCount: stoves.length,
               itemBuilder: (context, index) {
                 final stove = stoves[index];
                 return StoveListTile(
@@ -138,7 +139,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     );
                   },
                 );
-              },
+                },
+              ),
             );
           },
         ),
