@@ -23,6 +23,9 @@ class HeatingScheduleEditor extends StatefulWidget {
 class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
   late Map<String, TimeRange?> _timeRanges;
 
+  // Static list of day keys for parsing (no localization needed)
+  static const _dayKeys = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
   List<_DayInfo> _getDays(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return [
@@ -52,10 +55,10 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
 
   void _parseSchedule() {
     _timeRanges = {};
-    final days = _getDays(context);
-    for (final day in days) {
+    // Use static day keys instead of calling _getDays(context) in initState
+    for (final dayKey in _dayKeys) {
       for (int slot = 1; slot <= 2; slot++) {
-        final key = '${day.key}$slot';
+        final key = '$dayKey$slot';
         final apiValue = widget.schedule[key] ?? TimeRange.disabled;
         _timeRanges[key] = TimeRange.fromApiFormat(apiValue);
       }

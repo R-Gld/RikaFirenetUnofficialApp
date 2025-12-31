@@ -32,14 +32,19 @@ class _NotificationOrchestratorState
   @override
   void initState() {
     super.initState();
-    // Initial setup will happen in the first build via ref.listen
+    // Initial setup will happen after first frame
   }
 
   @override
   Widget build(BuildContext context) {
     // Listen to notification settings changes
     ref.listen(notificationSettingsProvider, (previous, next) {
-      _handleSettingsChange(previous, next);
+      // Schedule the handler to run after the current frame to avoid layout issues
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _handleSettingsChange(previous, next);
+        }
+      });
     });
 
     return widget.child;
