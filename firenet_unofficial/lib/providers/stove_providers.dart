@@ -43,10 +43,12 @@ class StoveListNotifier extends StateNotifier<AsyncValue<List<Stove>>> {
 
   /// Discovers all stoves for the authenticated account
   Future<void> discoverStoves() async {
+    if (!mounted) return;
     state = const AsyncValue.loading();
 
     final result = await _stoveRepository.discoverStoves();
 
+    if (!mounted) return;
     result.fold(
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
@@ -93,6 +95,8 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
   /// If [silent] is true, keeps existing data visible during refresh (for polling).
   /// If [silent] is false, shows loading state (for manual refresh).
   Future<void> refreshState({bool silent = false}) async {
+    if (!mounted) return;
+
     // Only show loading if we don't have data yet or it's a manual refresh
     if (!silent || state.valueOrNull == null) {
       state = const AsyncValue.loading();
@@ -100,6 +104,7 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
 
     final result = await _stoveRepository.getStoveState(_stoveId);
 
+    if (!mounted) return;
     result.fold(
       (failure) {
         // Keep old data if silent refresh fails, otherwise show error
@@ -128,6 +133,7 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       controls: controls,
     );
 
+    if (!mounted) return;
     result.fold(
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
@@ -147,6 +153,7 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       power: power,
     );
 
+    if (!mounted) return;
     result.fold(
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
@@ -166,6 +173,7 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       temperature: temperature,
     );
 
+    if (!mounted) return;
     result.fold(
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
