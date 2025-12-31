@@ -1,0 +1,335 @@
+{
+  "@@locale": "nl",
+
+  "appTitle": "Rika Firenet",
+  "loginSubtitle": "Log in op uw account",
+  "myStoves": "Mijn kachels",
+  "settings": "Instellingen",
+
+  "email": "E-mail",
+  "emailHint": "uw@email.com",
+  "password": "Wachtwoord",
+
+  "login": "Inloggen",
+  "refresh": "Vernieuwen",
+  "testNow": "Nu testen",
+  "editThreshold": "Drempelwaarde bewerken",
+  "configureThreshold": "Drempelwaarde configureren",
+  "reset": "Herstellen",
+  "cancel": "Annuleren",
+  "save": "Opslaan",
+  "deleteThreshold": "Drempelwaarde verwijderen",
+  "turnOn": "Inschakelen",
+  "turnOff": "Uitschakelen",
+  "logout": "Uitloggen",
+  "retry": "Opnieuw proberen",
+
+  "pleaseEnterEmail": "Voer uw e-mailadres in",
+  "invalidEmail": "Ongeldig e-mailadres",
+  "pleaseEnterPassword": "Voer uw wachtwoord in",
+  "error": "Fout",
+  "connectionError": "Verbindingsfout",
+
+  "logoutTitle": "Uitloggen",
+  "logoutConfirmation": "Wilt u echt uitloggen?",
+  "turnOnStoveQuestion": "Kachel inschakelen?",
+  "turnOffStoveQuestion": "Kachel uitschakelen?",
+  "turnOnStoveConfirmation": "Wilt u de kachel starten?",
+  "turnOffStoveConfirmation": "Wilt u de kachel uitschakelen?",
+  "thresholdDialogTitle": "Drempelwaarde voor {fieldName}",
+  "@thresholdDialogTitle": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIfValueOutOfRange": "Waarschuw als de waarde buiten dit bereik komt:",
+  "minimumLabel": "Minimum: {value}",
+  "@minimumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "maximumLabel": "Maximum: {value}",
+  "@maximumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+
+  "loadingStoves": "Kachels laden...",
+  "loadingStoveData": "Kachelgegevens laden...",
+  "noStoveFound": "Geen kachel gevonden",
+  "noStoveAssociated": "Er is geen kachel gekoppeld aan uw account",
+  "online": "Online",
+  "offlineSince": "Offline sinds {minutes} min",
+  "@offlineSince": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsEnabledSuccess": "Meldingen succesvol ingeschakeld",
+  "permissionDenied": "Toestemming geweigerd. Schakel meldingen in via Android-instellingen.",
+  "notificationsDisabled": "Meldingen uitgeschakeld",
+  "testInProgress": "Test wordt uitgevoerd...",
+  "testSuccess": "Test geslaagd! Controleer meldingen.",
+  "testFailed": "Test mislukt. Controleer logboeken.",
+  "noStoveConfigured": "Geen kachel geconfigureerd",
+  "loadingStoveList": "Kachellijst laden...",
+  "settingsResetToDefaults": "Instellingen hersteld naar standaardwaarden",
+
+  "power": "Aan/uit",
+  "stoveOn": "Kachel aan",
+  "stoveOff": "Kachel uit",
+  "targetTemperature": "Doeltemperatuur",
+  "turnOnStoveToAdjustTemperature": "Schakel de kachel in om de temperatuur aan te passen",
+  "operatingMode": "Bedrijfsmodus",
+  "manualMode": "Handmatig",
+  "autoMode": "Auto",
+  "comfortMode": "Comfort",
+  "turnOnStoveToChangeMode": "Schakel de kachel in om de modus te wijzigen",
+  "heatingPower": "Verwarmingsvermogen",
+  "minPower": "Min (0%)",
+  "maxPower": "Max (100%)",
+  "turnOnStoveToAdjustPower": "Schakel de kachel in om het vermogen aan te passen",
+  "roomPowerRequest": "Kamervermogen",
+  "roomPowerRequestDescription": "Vermogensvraag voor de kamer",
+  "minimal": "Minimaal",
+  "maximum": "Maximaal",
+  "turnOnStoveToAdjustRoomPower": "Schakel de kachel in om het kamervermogen aan te passen",
+  "ecoMode": "ECO-modus",
+  "energySavingEnabled": "Energiebesparing ingeschakeld",
+  "energySavingDisabled": "Energiebesparing uitgeschakeld",
+  "frostProtection": "Vorstbeveiliging",
+  "frostProtectionActive": "Beveiliging actief - start als temp < {temp}°C",
+  "@frostProtectionActive": {
+    "placeholders": {
+      "temp": {
+        "type": "int"
+      }
+    }
+  },
+  "frostProtectionInactive": "Beveiliging uitgeschakeld",
+  "triggerTemperature": "Activeringstemperatuur",
+  "minTemp": "Min (4°C)",
+  "maxTemp": "Max (10°C)",
+  "turnOnStoveToConfigureFrostProtection": "Schakel de kachel in om de vorstbeveiliging te configureren",
+  "convectionFans": "Convectieventilatoren",
+  "fansStatus": "Ventilator 1: {fan1} | Ventilator 2: {fan2}",
+  "@fansStatus": {
+    "placeholders": {
+      "fan1": {
+        "type": "String"
+      },
+      "fan2": {
+        "type": "String"
+      }
+    }
+  },
+  "fanNumber": "Ventilator {number}",
+  "@fanNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "active": "Actief",
+  "inactive": "Inactief",
+  "speedLevel": "Snelheidsniveau",
+  "minSpeed": "Min (0)",
+  "maxSpeed": "Max (5)",
+  "heatingArea": "Verwarmingsgebied",
+  "minArea": "-30",
+  "centerArea": "0",
+  "maxArea": "+30",
+  "turnOnStoveToConfigureFans": "Schakel de kachel in om de ventilatoren te configureren",
+  "temperatureCalibration": "Temperatuurkalibratie",
+  "temperatureCalibrationDescription": "Precisieaanpassing van temperatuursensor",
+  "minOffset": "-3°C",
+  "zeroOffset": "0°C",
+  "maxOffset": "+3°C",
+  "turnOnStoveToCalibrate": "Schakel de kachel in om de temperatuur te kalibreren",
+  "bakeTemperature": "Oventemperatuur",
+  "bakeTemperatureDescription": "Temperatuurinstelling houtgestookte oven",
+  "minBakeTemp": "100°C",
+  "maxBakeTemp": "250°C",
+  "turnOnStoveToAdjustBakeTemp": "Schakel de kachel in om de oventemperatuur aan te passen",
+  "heatingSchedule": "Verwarmingsschema",
+  "activeInComfortMode": "Actief in comfortmodus",
+  "setpointTemperature": "Gewenste temperatuur",
+  "turnOnStoveToAdjustSchedule": "Schakel de kachel in om het schema aan te passen",
+
+  "quickControls": "Snelle bediening",
+  "advancedControls": "Geavanceerde bediening",
+  "appearance": "Uiterlijk",
+  "backgroundNotifications": "Achtergrondmeldingen",
+  "informationPanels": "Informatiepanelen",
+  "watchedFields": "Bewaakte velden ({count} geselecteerd)",
+  "@watchedFields": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pollingInterval": "Controle-interval: {minutes} min",
+  "@pollingInterval": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "theme": "Thema",
+  "light": "Licht",
+  "dark": "Donker",
+  "system": "Systeem",
+  "systemDescription": "Systeeminstellingen volgen",
+  "lightModeActive": "Lichte modus actief",
+  "darkModeActive": "Donkere modus actief",
+  "language": "Taal",
+  "languageSubtitle": "App-taal selecteren",
+  "systemDefault": "Systeemstandaard",
+  "showEcoMode": "ECO-modus",
+  "showEcoModeSubtitle": "Energiebesparingsschakelaar tonen",
+  "showHeatingSchedule": "Verwarmingsschema",
+  "showHeatingScheduleSubtitle": "Weekprogrammering tonen",
+  "showRoomPowerRequest": "Kamervermogen",
+  "showRoomPowerRequestSubtitle": "Niveaukiezer 1-4 tonen",
+  "showConvectionFans": "Convectieventilatoren",
+  "showConvectionFansSubtitle": "Bediening voor 2 ventilatoren tonen",
+  "showFrostProtection": "Vorstbeveiliging",
+  "showFrostProtectionSubtitle": "Vorstbeveiligingsbediening tonen",
+  "showTemperatureOffset": "Temperatuurkalibratie",
+  "showTemperatureOffsetSubtitle": "Temperatuurafwijking -3 tot +3°C tonen",
+  "showBakeTemperature": "Oventemperatuur",
+  "showBakeTemperatureSubtitle": "Oventemperatuurbediening tonen",
+  "enableNotifications": "Meldingen inschakelen",
+  "monitorChangesInBackground": "Wijzigingen controleren zelfs wanneer de app gesloten is",
+  "notificationDelayInfo": "Meldingen kunnen worden vertraagd afhankelijk van batterijoptimalisatie",
+  "showErrorWarningPanel": "Fouten en waarschuwingen",
+  "showErrorWarningPanelSubtitle": "Actieve foutenpaneel tonen",
+  "showSafetyStatusPanel": "Veiligheid en diagnostiek",
+  "showSafetyStatusPanelSubtitle": "Veiligheidspaneel tonen (deur, WiFi, druk)",
+  "showSensorInfoPanel": "Sensorinformatie",
+  "showSensorInfoPanelSubtitle": "Sensorgegevens tonen",
+  "showOutputsInfoPanel": "Uitganginformatie",
+  "showOutputsInfoPanelSubtitle": "Uitgangstatus tonen (motoren, ventilatoren)",
+  "showStatisticsPanel": "Statistieken en systeem",
+  "showStatisticsPanelSubtitle": "Gebruiksstatistieken tonen",
+
+  "noError": "Geen fout",
+  "errorDetected": "Fout gedetecteerd",
+  "warning": "Waarschuwing",
+  "errorCode": "Foutcode:",
+  "warningCode": "Waarschuwingscode:",
+  "consultManual": "Raadpleeg de gebruikershandleiding of neem contact op met de technische dienst.",
+  "temperatureSensorFailure": "Temperatuursensorfout",
+  "pressureSensorFailure": "Druksensorfout",
+  "feedMotorFailure": "Voedingsmotorfout",
+  "fanFailure": "Ventilatorfout",
+  "temperatureTooHigh": "Temperatuur te hoog",
+  "ignitionProblem": "Ontstekingsprobleem",
+  "flameFailure": "Vlamstoring",
+  "doorOpen": "Deur open",
+  "thermalOverload": "Thermische overbelasting",
+  "combustionProblem": "Verbrandingsprobleem",
+  "systemError": "Systeemfout (code: {code})",
+  "@systemError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "noWarning": "Geen waarschuwing",
+  "pelletLevelLow": "Pelletniveau laag",
+  "maintenanceNeeded": "Onderhoud nodig",
+  "cleaningRequired": "Reiniging vereist",
+  "ambientTemperatureHigh": "Omgevingstemperatuur hoog",
+  "weakWiFiSignal": "Zwak WiFi-signaal",
+  "systemWarning": "Systeemwaarschuwing (code: {code})",
+  "@systemWarning": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+
+  "currentTemperature": "Huidige temperatuur",
+  "safetyAndDiagnostics": "Veiligheid en diagnostiek",
+  "door": "Deur",
+  "closed": "Gesloten",
+  "open": "Open",
+  "wifiSignal": "WiFi-signaal",
+  "temperatureLimiter": "Temperatuurbegrenzer",
+  "internalTemperatureOK": "Interne temperatuur OK",
+  "overheating": "Oververhitting",
+  "sensorInformation": "Sensorinformatie",
+  "flameTemperature": "Vlamtemperatuur",
+  "ambientTemperature": "Omgevingstemperatuur",
+  "externalRequest": "Externe aanvraag",
+  "yes": "Ja",
+  "no": "Nee",
+  "boardTemperature": "Bordtemperatuur",
+  "ovenTemperature": "Oventemperatuur",
+  "outputs": "Uitgangen",
+  "diagonalMotor": "Diagonale motor",
+  "horizontalMotor": "Horizontale motor",
+  "combustionGasFan": "Verbrandingsgasventilator",
+  "airDampers": "Luchtkleppen",
+  "ignition": "Ontsteking",
+  "on": "AAN",
+  "off": "UIT",
+  "current": "Huidige",
+  "statisticsAndSystem": "Statistieken en systeem",
+  "usage": "Gebruik",
+  "pelletHours": "Pelleturen",
+  "woodHours": "Houturen",
+  "onOffCycles": "AAN/UIT-cycli",
+  "ignitionCount": "Ontstekingsteller",
+  "consumption": "Verbruik",
+  "totalConsumption": "Totaal verbruik",
+  "beforeMaintenance": "Vóór onderhoud",
+  "systemInformation": "Systeeminformatie",
+  "model": "Model",
+  "manufacturer": "Fabrikant",
+  "serialNumber": "Serienummer",
+  "firmwareVersion": "Firmwareversie",
+
+  "detailedScheduleEditor": "Gedetailleerde schema-editor",
+  "monday": "Maandag",
+  "tuesday": "Dinsdag",
+  "wednesday": "Woensdag",
+  "thursday": "Donderdag",
+  "friday": "Vrijdag",
+  "saturday": "Zaterdag",
+  "sunday": "Zondag",
+  "disableThisSlot": "Dit tijdvak uitschakelen",
+  "enableScheduleToEdit": "Schakel verwarmingsschema in om de programmering te bewerken",
+
+  "viewOnGitHub": "Bekijken op GitHub",
+  "about": "Over",
+  "version": "Versie {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "configureAdvancedFeatures": "Geavanceerde functies configureren",
+  "configureBackgroundNotifications": "Achtergrondmeldingen configureren",
+  "toggleInfoPanelVisibility": "Zichtbaarheid informatiepaneel schakelen",
+  "notifications": "Meldingen"
+}

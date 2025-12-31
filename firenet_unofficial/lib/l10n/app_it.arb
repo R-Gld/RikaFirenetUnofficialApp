@@ -1,0 +1,335 @@
+{
+  "@@locale": "it",
+
+  "appTitle": "Rika Firenet",
+  "loginSubtitle": "Accedi al tuo account",
+  "myStoves": "Le mie stufe",
+  "settings": "Impostazioni",
+
+  "email": "Email",
+  "emailHint": "tua@email.com",
+  "password": "Password",
+
+  "login": "Accedi",
+  "refresh": "Aggiorna",
+  "testNow": "Prova ora",
+  "editThreshold": "Modifica soglia",
+  "configureThreshold": "Configura soglia",
+  "reset": "Ripristina",
+  "cancel": "Annulla",
+  "save": "Salva",
+  "deleteThreshold": "Elimina soglia",
+  "turnOn": "Accendi",
+  "turnOff": "Spegni",
+  "logout": "Esci",
+  "retry": "Riprova",
+
+  "pleaseEnterEmail": "Inserisci la tua email",
+  "invalidEmail": "Email non valida",
+  "pleaseEnterPassword": "Inserisci la tua password",
+  "error": "Errore",
+  "connectionError": "Errore di connessione",
+
+  "logoutTitle": "Esci",
+  "logoutConfirmation": "Vuoi davvero uscire?",
+  "turnOnStoveQuestion": "Accendere la stufa?",
+  "turnOffStoveQuestion": "Spegnere la stufa?",
+  "turnOnStoveConfirmation": "Vuoi accendere la stufa?",
+  "turnOffStoveConfirmation": "Vuoi spegnere la stufa?",
+  "thresholdDialogTitle": "Soglia per {fieldName}",
+  "@thresholdDialogTitle": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIfValueOutOfRange": "Notifica se il valore esce da questo intervallo:",
+  "minimumLabel": "Minimo: {value}",
+  "@minimumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "maximumLabel": "Massimo: {value}",
+  "@maximumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+
+  "loadingStoves": "Caricamento stufe...",
+  "loadingStoveData": "Caricamento dati stufa...",
+  "noStoveFound": "Nessuna stufa trovata",
+  "noStoveAssociated": "Nessuna stufa è associata al tuo account",
+  "online": "Online",
+  "offlineSince": "Offline da {minutes} min",
+  "@offlineSince": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsEnabledSuccess": "Notifiche abilitate con successo",
+  "permissionDenied": "Permesso negato. Abilita le notifiche nelle impostazioni di Android.",
+  "notificationsDisabled": "Notifiche disabilitate",
+  "testInProgress": "Esecuzione test...",
+  "testSuccess": "Test riuscito! Controlla le notifiche.",
+  "testFailed": "Test fallito. Controlla i registri.",
+  "noStoveConfigured": "Nessuna stufa configurata",
+  "loadingStoveList": "Caricamento elenco stufe...",
+  "settingsResetToDefaults": "Impostazioni ripristinate ai valori predefiniti",
+
+  "power": "Accensione",
+  "stoveOn": "Stufa accesa",
+  "stoveOff": "Stufa spenta",
+  "targetTemperature": "Temperatura obiettivo",
+  "turnOnStoveToAdjustTemperature": "Accendi la stufa per regolare la temperatura",
+  "operatingMode": "Modalità di funzionamento",
+  "manualMode": "Manuale",
+  "autoMode": "Auto",
+  "comfortMode": "Comfort",
+  "turnOnStoveToChangeMode": "Accendi la stufa per cambiare modalità",
+  "heatingPower": "Potenza di riscaldamento",
+  "minPower": "Min (0%)",
+  "maxPower": "Max (100%)",
+  "turnOnStoveToAdjustPower": "Accendi la stufa per regolare la potenza",
+  "roomPowerRequest": "Potenza ambiente",
+  "roomPowerRequestDescription": "Livello di richiesta di potenza per l'ambiente",
+  "minimal": "Minima",
+  "maximum": "Massima",
+  "turnOnStoveToAdjustRoomPower": "Accendi la stufa per regolare la potenza ambiente",
+  "ecoMode": "Modalità ECO",
+  "energySavingEnabled": "Risparmio energetico attivato",
+  "energySavingDisabled": "Risparmio energetico disattivato",
+  "frostProtection": "Protezione antigelo",
+  "frostProtectionActive": "Protezione attiva - si avvia se temp < {temp}°C",
+  "@frostProtectionActive": {
+    "placeholders": {
+      "temp": {
+        "type": "int"
+      }
+    }
+  },
+  "frostProtectionInactive": "Protezione disattivata",
+  "triggerTemperature": "Temperatura di attivazione",
+  "minTemp": "Min (4°C)",
+  "maxTemp": "Max (10°C)",
+  "turnOnStoveToConfigureFrostProtection": "Accendi la stufa per configurare la protezione antigelo",
+  "convectionFans": "Ventilatori di convezione",
+  "fansStatus": "Ventilatore 1: {fan1} | Ventilatore 2: {fan2}",
+  "@fansStatus": {
+    "placeholders": {
+      "fan1": {
+        "type": "String"
+      },
+      "fan2": {
+        "type": "String"
+      }
+    }
+  },
+  "fanNumber": "Ventilatore {number}",
+  "@fanNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "active": "Attivo",
+  "inactive": "Inattivo",
+  "speedLevel": "Livello di velocità",
+  "minSpeed": "Min (0)",
+  "maxSpeed": "Max (5)",
+  "heatingArea": "Area di riscaldamento",
+  "minArea": "-30",
+  "centerArea": "0",
+  "maxArea": "+30",
+  "turnOnStoveToConfigureFans": "Accendi la stufa per configurare i ventilatori",
+  "temperatureCalibration": "Calibrazione temperatura",
+  "temperatureCalibrationDescription": "Regolazione di precisione del sensore di temperatura",
+  "minOffset": "-3°C",
+  "zeroOffset": "0°C",
+  "maxOffset": "+3°C",
+  "turnOnStoveToCalibrate": "Accendi la stufa per calibrare la temperatura",
+  "bakeTemperature": "Temperatura forno",
+  "bakeTemperatureDescription": "Impostazione temperatura forno a legna",
+  "minBakeTemp": "100°C",
+  "maxBakeTemp": "250°C",
+  "turnOnStoveToAdjustBakeTemp": "Accendi la stufa per regolare la temperatura del forno",
+  "heatingSchedule": "Programmazione riscaldamento",
+  "activeInComfortMode": "Attivo in modalità comfort",
+  "setpointTemperature": "Temperatura di setpoint",
+  "turnOnStoveToAdjustSchedule": "Accendi la stufa per regolare la programmazione",
+
+  "quickControls": "Controlli rapidi",
+  "advancedControls": "Controlli avanzati",
+  "appearance": "Aspetto",
+  "backgroundNotifications": "Notifiche in background",
+  "informationPanels": "Pannelli informativi",
+  "watchedFields": "Campi monitorati ({count} selezionati)",
+  "@watchedFields": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pollingInterval": "Intervallo di controllo: {minutes} min",
+  "@pollingInterval": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "theme": "Tema",
+  "light": "Chiaro",
+  "dark": "Scuro",
+  "system": "Sistema",
+  "systemDescription": "Segui impostazioni di sistema",
+  "lightModeActive": "Modalità chiara attiva",
+  "darkModeActive": "Modalità scura attiva",
+  "language": "Lingua",
+  "languageSubtitle": "Seleziona lingua dell'app",
+  "systemDefault": "Predefinito di sistema",
+  "showEcoMode": "Modalità ECO",
+  "showEcoModeSubtitle": "Mostra selettore modalità risparmio energetico",
+  "showHeatingSchedule": "Programmazione riscaldamento",
+  "showHeatingScheduleSubtitle": "Mostra programmazione settimanale",
+  "showRoomPowerRequest": "Potenza ambiente",
+  "showRoomPowerRequestSubtitle": "Mostra selettore livello 1-4",
+  "showConvectionFans": "Ventilatori di convezione",
+  "showConvectionFansSubtitle": "Mostra controlli per 2 ventilatori",
+  "showFrostProtection": "Protezione antigelo",
+  "showFrostProtectionSubtitle": "Mostra controllo protezione antigelo",
+  "showTemperatureOffset": "Calibrazione temperatura",
+  "showTemperatureOffsetSubtitle": "Mostra regolazione temperatura da -3 a +3°C",
+  "showBakeTemperature": "Temperatura forno",
+  "showBakeTemperatureSubtitle": "Mostra controllo temperatura forno",
+  "enableNotifications": "Abilita notifiche",
+  "monitorChangesInBackground": "Monitora modifiche anche quando l'app è chiusa",
+  "notificationDelayInfo": "Le notifiche potrebbero essere ritardate a seconda dell'ottimizzazione della batteria",
+  "showErrorWarningPanel": "Errori e avvisi",
+  "showErrorWarningPanelSubtitle": "Mostra pannello errori attivi",
+  "showSafetyStatusPanel": "Sicurezza e diagnostica",
+  "showSafetyStatusPanelSubtitle": "Mostra pannello sicurezza (porta, WiFi, pressione)",
+  "showSensorInfoPanel": "Informazioni sensori",
+  "showSensorInfoPanelSubtitle": "Mostra dati sensori",
+  "showOutputsInfoPanel": "Informazioni uscite",
+  "showOutputsInfoPanelSubtitle": "Mostra stato uscite (motori, ventilatori)",
+  "showStatisticsPanel": "Statistiche e sistema",
+  "showStatisticsPanelSubtitle": "Mostra statistiche di utilizzo",
+
+  "noError": "Nessun errore",
+  "errorDetected": "Errore rilevato",
+  "warning": "Avviso",
+  "errorCode": "Codice errore:",
+  "warningCode": "Codice avviso:",
+  "consultManual": "Consulta il manuale utente o contatta il servizio tecnico.",
+  "temperatureSensorFailure": "Guasto sensore di temperatura",
+  "pressureSensorFailure": "Guasto sensore di pressione",
+  "feedMotorFailure": "Guasto motore di alimentazione",
+  "fanFailure": "Guasto ventilatore",
+  "temperatureTooHigh": "Temperatura troppo alta",
+  "ignitionProblem": "Problema di accensione",
+  "flameFailure": "Guasto fiamma",
+  "doorOpen": "Porta aperta",
+  "thermalOverload": "Sovraccarico termico",
+  "combustionProblem": "Problema di combustione",
+  "systemError": "Errore di sistema (codice: {code})",
+  "@systemError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "noWarning": "Nessun avviso",
+  "pelletLevelLow": "Livello pellet basso",
+  "maintenanceNeeded": "Manutenzione necessaria",
+  "cleaningRequired": "Pulizia richiesta",
+  "ambientTemperatureHigh": "Temperatura ambiente alta",
+  "weakWiFiSignal": "Segnale WiFi debole",
+  "systemWarning": "Avviso di sistema (codice: {code})",
+  "@systemWarning": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+
+  "currentTemperature": "Temperatura attuale",
+  "safetyAndDiagnostics": "Sicurezza e diagnostica",
+  "door": "Porta",
+  "closed": "Chiusa",
+  "open": "Aperta",
+  "wifiSignal": "Segnale WiFi",
+  "temperatureLimiter": "Limitatore di temperatura",
+  "internalTemperatureOK": "Temperatura interna OK",
+  "overheating": "Surriscaldamento",
+  "sensorInformation": "Informazioni sensori",
+  "flameTemperature": "Temperatura fiamma",
+  "ambientTemperature": "Temperatura ambiente",
+  "externalRequest": "Richiesta esterna",
+  "yes": "Sì",
+  "no": "No",
+  "boardTemperature": "Temperatura scheda",
+  "ovenTemperature": "Temperatura forno",
+  "outputs": "Uscite",
+  "diagonalMotor": "Motore diagonale",
+  "horizontalMotor": "Motore orizzontale",
+  "combustionGasFan": "Ventilatore fumi di combustione",
+  "airDampers": "Serrande aria",
+  "ignition": "Accensione",
+  "on": "ACCESO",
+  "off": "SPENTO",
+  "current": "Corrente",
+  "statisticsAndSystem": "Statistiche e sistema",
+  "usage": "Utilizzo",
+  "pelletHours": "Ore pellet",
+  "woodHours": "Ore legna",
+  "onOffCycles": "Cicli ACCESO/SPENTO",
+  "ignitionCount": "Conteggio accensioni",
+  "consumption": "Consumo",
+  "totalConsumption": "Consumo totale",
+  "beforeMaintenance": "Prima della manutenzione",
+  "systemInformation": "Informazioni di sistema",
+  "model": "Modello",
+  "manufacturer": "Produttore",
+  "serialNumber": "Numero di serie",
+  "firmwareVersion": "Versione firmware",
+
+  "detailedScheduleEditor": "Editor dettagliato programmazione",
+  "monday": "Lunedì",
+  "tuesday": "Martedì",
+  "wednesday": "Mercoledì",
+  "thursday": "Giovedì",
+  "friday": "Venerdì",
+  "saturday": "Sabato",
+  "sunday": "Domenica",
+  "disableThisSlot": "Disattiva questo orario",
+  "enableScheduleToEdit": "Abilita la programmazione riscaldamento per modificare la programmazione",
+
+  "viewOnGitHub": "Visualizza su GitHub",
+  "about": "Informazioni",
+  "version": "Versione {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "configureAdvancedFeatures": "Configura funzioni avanzate",
+  "configureBackgroundNotifications": "Configura notifiche in background",
+  "toggleInfoPanelVisibility": "Attiva/disattiva visibilità pannello informazioni",
+  "notifications": "Notifiche"
+}
