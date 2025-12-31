@@ -22,11 +22,20 @@ The following versions of Rika Firenet Unofficial are currently supported with s
 - **Credentials**: Email and password are encrypted using `FlutterSecureStorage` (Android Keystore/iOS Keychain)
 - **Session cookies**: Stored locally via `PersistCookieJar` for persistent authentication
 - **App settings**: Stored in `SharedPreferences` (non-sensitive data only)
+- **Secure deletion**: Multi-layer cryptographic erasure of credentials on logout
 - **No cloud storage**: All data remains on your device
+
+### Authentication
+
+- **Biometric authentication**: Optional fingerprint/Face ID app lock for quick access (Android & iOS)
+- **Password fallback**: Always available if biometric authentication fails
+- **Session management**: Automatic re-authentication when sessions expire
 
 ### Network Security
 
 - **HTTPS enforced**: All communications with Rika Firenet API use HTTPS
+- **Certificate pinning**: SSL certificate validation to prevent man-in-the-middle attacks
+- **Rate limiting**: Client-side request throttling with exponential backoff to prevent abuse
 - **No third-party servers**: The app communicates only with official Rika Firenet API
 - **No analytics or tracking**: No data is transmitted to third parties or developers
 
@@ -118,6 +127,7 @@ To maximize your security when using Rika Firenet Unofficial:
 ### Device Security
 
 - **Lock your device** with a PIN, password, or biometric authentication
+- **Enable biometric lock**: Use the app's biometric authentication feature for quick and secure access
 - **Keep your OS updated** to receive security patches
 - **Only install from official stores** (Google Play Store, App Store)
 - **Review app permissions** regularly
