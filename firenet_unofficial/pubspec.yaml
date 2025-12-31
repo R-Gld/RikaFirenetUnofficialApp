@@ -51,6 +51,7 @@ dependencies:
   # Background Tasks & Notifications
   workmanager: ^0.9.0+3
   flutter_local_notifications: ^17.0.0
+  home_widget: ^0.8.1
 
   # HTML Parsing
   html: ^0.15.4

@@ -9,11 +9,13 @@ import '../data/models/auth_credentials.dart';
 import '../data/models/stove_sensors.dart';
 import '../data/models/stove_comparison_snapshot.dart';
 import '../data/models/notification_settings.dart';
+import '../data/models/stove_state.dart';
 import '../data/repositories/notification_settings_repository.dart';
 import '../data/repositories/notification_state_repository.dart';
 import 'notification_change_detector.dart';
 import 'notification_service.dart';
 import 'stove_field_descriptor_service.dart';
+import 'home_widget_service.dart';
 import '../core/errors/exceptions.dart';
 
 /// Background task callback - entry point for WorkManager
@@ -101,9 +103,20 @@ class BackgroundTaskHandler {
         }
       }
 
-      // 5. Parse sensors
+      // 5. Parse sensors and full stove data
       final sensorsData = stoveData['sensors'] as Map<String, dynamic>;
       final sensors = StoveSensors.fromJson(sensorsData);
+
+      // 5a. Update home widget with latest data
+      try {
+        final fullStoveData = StoveData.fromJson(stoveData);
+        final widgetService = HomeWidgetService();
+        await widgetService.updateWidget(fullStoveData);
+        debugPrint('[BG-WORKER] Home widget updated');
+      } catch (e) {
+        debugPrint('[BG-WORKER] WARNING: Failed to update widget: $e');
+        // Don't fail the whole task if widget update fails
+      }
 
       // 6. Create current snapshot with only watched fields
       final currentSnapshot = _createSnapshot(stoveId, sensors, settings);

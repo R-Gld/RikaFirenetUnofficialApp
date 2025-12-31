@@ -5,6 +5,8 @@ import '../data/models/stove_state.dart'; // Exports StoveData
 import '../data/models/stove_controls.dart';
 import 'api_client_provider.dart';
 import 'auth_providers.dart';
+import 'home_widget_provider.dart';
+import '../services/home_widget_service.dart';
 
 /// Provides StoveRepository
 final stoveRepositoryProvider = Provider<StoveRepository>((ref) {
@@ -64,6 +66,7 @@ final stoveStateProvider = StateNotifierProvider.family<
   return StoveStateNotifier(
     stoveId: stoveId,
     stoveRepository: ref.watch(stoveRepositoryProvider),
+    homeWidgetService: ref.watch(homeWidgetServiceProvider),
   );
 });
 
@@ -71,10 +74,12 @@ final stoveStateProvider = StateNotifierProvider.family<
 class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
   final String _stoveId;
   final StoveRepository _stoveRepository;
+  final HomeWidgetService homeWidgetService;
 
   StoveStateNotifier({
     required String stoveId,
     required StoveRepository stoveRepository,
+    required this.homeWidgetService,
   })  : _stoveId = stoveId,
         _stoveRepository = stoveRepository,
         super(const AsyncValue.loading()) {
@@ -101,9 +106,13 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
           return;
         }
         state = AsyncValue.error(failure.message, StackTrace.current);
+        // Update widget with error state
+        homeWidgetService.updateWidgetError(failure.message);
       },
       (stoveData) {
         state = AsyncValue.data(stoveData);
+        // Update widget with new data
+        homeWidgetService.updateWidget(stoveData);
       },
     );
   }
@@ -123,6 +132,8 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       },
       (newState) {
         state = AsyncValue.data(newState);
+        // Update widget after controls update
+        homeWidgetService.updateWidget(newState);
       },
     );
   }
@@ -140,6 +151,8 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       },
       (newState) {
         state = AsyncValue.data(newState);
+        // Update widget after power change
+        homeWidgetService.updateWidget(newState);
       },
     );
   }
@@ -157,6 +170,8 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       },
       (newState) {
         state = AsyncValue.data(newState);
+        // Update widget after temperature change
+        homeWidgetService.updateWidget(newState);
       },
     );
   }
