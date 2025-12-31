@@ -64,6 +64,18 @@ class SettingsScreen extends ConsumerWidget {
           _buildSwitchTile(
             context,
             ref,
+            title: 'Plages horaires',
+            subtitle: 'Afficher la programmation hebdomadaire',
+            value: settings.showHeatingSchedule,
+            onChanged: (value) {
+              ref.read(settingsProvider.notifier).updateSetting(
+                    (s) => s.copyWith(showHeatingSchedule: value),
+                  );
+            },
+          ),
+          _buildSwitchTile(
+            context,
+            ref,
             title: 'Demande puissance pièce',
             subtitle: 'Afficher le sélecteur de niveau 1-4',
             value: settings.showRoomPowerRequest,

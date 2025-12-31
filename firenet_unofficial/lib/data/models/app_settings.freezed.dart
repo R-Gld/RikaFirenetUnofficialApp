@@ -25,6 +25,7 @@ mixin _$AppSettings {
   AppThemeMode get themeMode =>
       throw _privateConstructorUsedError; // Advanced controls visibility
   bool get showEcoMode => throw _privateConstructorUsedError;
+  bool get showHeatingSchedule => throw _privateConstructorUsedError;
   bool get showRoomPowerRequest => throw _privateConstructorUsedError;
   bool get showConvectionFans => throw _privateConstructorUsedError;
   bool get showFrostProtection => throw _privateConstructorUsedError;
@@ -57,6 +58,7 @@ abstract class $AppSettingsCopyWith<$Res> {
   $Res call({
     AppThemeMode themeMode,
     bool showEcoMode,
+    bool showHeatingSchedule,
     bool showRoomPowerRequest,
     bool showConvectionFans,
     bool showFrostProtection,
@@ -87,6 +89,7 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
   $Res call({
     Object? themeMode = null,
     Object? showEcoMode = null,
+    Object? showHeatingSchedule = null,
     Object? showRoomPowerRequest = null,
     Object? showConvectionFans = null,
     Object? showFrostProtection = null,
@@ -107,6 +110,10 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
             showEcoMode: null == showEcoMode
                 ? _value.showEcoMode
                 : showEcoMode // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            showHeatingSchedule: null == showHeatingSchedule
+                ? _value.showHeatingSchedule
+                : showHeatingSchedule // ignore: cast_nullable_to_non_nullable
                       as bool,
             showRoomPowerRequest: null == showRoomPowerRequest
                 ? _value.showRoomPowerRequest
@@ -166,6 +173,7 @@ abstract class _$$AppSettingsImplCopyWith<$Res>
   $Res call({
     AppThemeMode themeMode,
     bool showEcoMode,
+    bool showHeatingSchedule,
     bool showRoomPowerRequest,
     bool showConvectionFans,
     bool showFrostProtection,
@@ -195,6 +203,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
   $Res call({
     Object? themeMode = null,
     Object? showEcoMode = null,
+    Object? showHeatingSchedule = null,
     Object? showRoomPowerRequest = null,
     Object? showConvectionFans = null,
     Object? showFrostProtection = null,
@@ -215,6 +224,10 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
         showEcoMode: null == showEcoMode
             ? _value.showEcoMode
             : showEcoMode // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        showHeatingSchedule: null == showHeatingSchedule
+            ? _value.showHeatingSchedule
+            : showHeatingSchedule // ignore: cast_nullable_to_non_nullable
                   as bool,
         showRoomPowerRequest: null == showRoomPowerRequest
             ? _value.showRoomPowerRequest
@@ -266,7 +279,8 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
 class _$AppSettingsImpl implements _AppSettings {
   const _$AppSettingsImpl({
     this.themeMode = AppThemeMode.system,
-    this.showEcoMode = false,
+    this.showEcoMode = true,
+    this.showHeatingSchedule = true,
     this.showRoomPowerRequest = false,
     this.showConvectionFans = false,
     this.showFrostProtection = false,
@@ -290,6 +304,9 @@ class _$AppSettingsImpl implements _AppSettings {
   @override
   @JsonKey()
   final bool showEcoMode;
+  @override
+  @JsonKey()
+  final bool showHeatingSchedule;
   @override
   @JsonKey()
   final bool showRoomPowerRequest;
@@ -324,7 +341,7 @@ class _$AppSettingsImpl implements _AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, showEcoMode: $showEcoMode, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
+    return 'AppSettings(themeMode: $themeMode, showEcoMode: $showEcoMode, showHeatingSchedule: $showHeatingSchedule, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
   }
 
   @override
@@ -336,6 +353,8 @@ class _$AppSettingsImpl implements _AppSettings {
                 other.themeMode == themeMode) &&
             (identical(other.showEcoMode, showEcoMode) ||
                 other.showEcoMode == showEcoMode) &&
+            (identical(other.showHeatingSchedule, showHeatingSchedule) ||
+                other.showHeatingSchedule == showHeatingSchedule) &&
             (identical(other.showRoomPowerRequest, showRoomPowerRequest) ||
                 other.showRoomPowerRequest == showRoomPowerRequest) &&
             (identical(other.showConvectionFans, showConvectionFans) ||
@@ -364,6 +383,7 @@ class _$AppSettingsImpl implements _AppSettings {
     runtimeType,
     themeMode,
     showEcoMode,
+    showHeatingSchedule,
     showRoomPowerRequest,
     showConvectionFans,
     showFrostProtection,
@@ -394,6 +414,7 @@ abstract class _AppSettings implements AppSettings {
   const factory _AppSettings({
     final AppThemeMode themeMode,
     final bool showEcoMode,
+    final bool showHeatingSchedule,
     final bool showRoomPowerRequest,
     final bool showConvectionFans,
     final bool showFrostProtection,
@@ -414,6 +435,8 @@ abstract class _AppSettings implements AppSettings {
   AppThemeMode get themeMode; // Advanced controls visibility
   @override
   bool get showEcoMode;
+  @override
+  bool get showHeatingSchedule;
   @override
   bool get showRoomPowerRequest;
   @override

@@ -227,25 +227,29 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Start time button
-                TextButton.icon(
-                  onPressed: widget.enabled ? () => _selectTime(slotKey, true) : null,
-                  icon: const Icon(Icons.access_time, size: 16),
-                  label: Text(
-                    startTimeText,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                Flexible(
+                  child: TextButton.icon(
+                    onPressed: widget.enabled ? () => _selectTime(slotKey, true) : null,
+                    icon: const Icon(Icons.access_time, size: 16),
+                    label: Text(
+                      startTimeText,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: Icon(Icons.arrow_forward, size: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 2),
+                  child: Icon(Icons.arrow_forward, size: 14),
                 ),
                 // End time button
-                TextButton.icon(
-                  onPressed: widget.enabled ? () => _selectTime(slotKey, false) : null,
-                  icon: const Icon(Icons.access_time, size: 16),
-                  label: Text(
-                    endTimeText,
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                Flexible(
+                  child: TextButton.icon(
+                    onPressed: widget.enabled ? () => _selectTime(slotKey, false) : null,
+                    icon: const Icon(Icons.access_time, size: 16),
+                    label: Text(
+                      endTimeText,
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
                   ),
                 ),
               ],

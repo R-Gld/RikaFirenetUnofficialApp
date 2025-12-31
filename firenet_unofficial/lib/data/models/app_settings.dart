@@ -21,7 +21,8 @@ class AppSettings with _$AppSettings {
     @Default(AppThemeMode.system) AppThemeMode themeMode,
 
     // Advanced controls visibility
-    @Default(false) bool showEcoMode,
+    @Default(true) bool showEcoMode,
+    @Default(true) bool showHeatingSchedule,
     @Default(false) bool showRoomPowerRequest,
     @Default(false) bool showConvectionFans,
     @Default(false) bool showFrostProtection,

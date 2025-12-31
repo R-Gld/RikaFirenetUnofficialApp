@@ -301,46 +301,9 @@ class StoveDetailScreen extends ConsumerWidget {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  // Heating schedule section - always visible
-                  Text(
-                    'Plages Horaires',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  HeatingTimesConfig(
-                    active: data.controls.heatingTimesActiveForComfort,
-                    setBackTemperature: int.tryParse(data.controls.setBackTemperature) ?? 16,
-                    schedule: {
-                      'Mon1': data.controls.heatingTimeMon1,
-                      'Mon2': data.controls.heatingTimeMon2,
-                      'Tue1': data.controls.heatingTimeTue1,
-                      'Tue2': data.controls.heatingTimeTue2,
-                      'Wed1': data.controls.heatingTimeWed1,
-                      'Wed2': data.controls.heatingTimeWed2,
-                      'Thu1': data.controls.heatingTimeThu1,
-                      'Thu2': data.controls.heatingTimeThu2,
-                      'Fri1': data.controls.heatingTimeFri1,
-                      'Fri2': data.controls.heatingTimeFri2,
-                      'Sat1': data.controls.heatingTimeSat1,
-                      'Sat2': data.controls.heatingTimeSat2,
-                      'Sun1': data.controls.heatingTimeSun1,
-                      'Sun2': data.controls.heatingTimeSun2,
-                    },
-                    onActiveChanged: (value) => _handleHeatingTimesActiveChanged(ref, value),
-                    onSetBackTempChanged: (value) => _handleSetBackTempChanged(ref, value),
-                    onScheduleChanged: (schedule) => _handleScheduleChange(ref, schedule),
-                    enabled: data.controls.onOff && data.isOnline,
-                  ),
-
-                  const SizedBox(height: 16),
-                  const Divider(),
-                  const SizedBox(height: 16),
-
                   // Advanced controls section - only show if at least one control is enabled
                   if (settings.showEcoMode ||
+                      settings.showHeatingSchedule ||
                       settings.showRoomPowerRequest ||
                       settings.showConvectionFans ||
                       settings.showFrostProtection ||
@@ -353,6 +316,34 @@ class StoveDetailScreen extends ConsumerWidget {
                           ),
                     ),
                     const SizedBox(height: 16),
+
+                    if (settings.showHeatingSchedule) ...[
+                      HeatingTimesConfig(
+                        active: data.controls.heatingTimesActiveForComfort,
+                        setBackTemperature: int.tryParse(data.controls.setBackTemperature) ?? 16,
+                        schedule: {
+                          'Mon1': data.controls.heatingTimeMon1,
+                          'Mon2': data.controls.heatingTimeMon2,
+                          'Tue1': data.controls.heatingTimeTue1,
+                          'Tue2': data.controls.heatingTimeTue2,
+                          'Wed1': data.controls.heatingTimeWed1,
+                          'Wed2': data.controls.heatingTimeWed2,
+                          'Thu1': data.controls.heatingTimeThu1,
+                          'Thu2': data.controls.heatingTimeThu2,
+                          'Fri1': data.controls.heatingTimeFri1,
+                          'Fri2': data.controls.heatingTimeFri2,
+                          'Sat1': data.controls.heatingTimeSat1,
+                          'Sat2': data.controls.heatingTimeSat2,
+                          'Sun1': data.controls.heatingTimeSun1,
+                          'Sun2': data.controls.heatingTimeSun2,
+                        },
+                        onActiveChanged: (value) => _handleHeatingTimesActiveChanged(ref, value),
+                        onSetBackTempChanged: (value) => _handleSetBackTempChanged(ref, value),
+                        onScheduleChanged: (schedule) => _handleScheduleChange(ref, schedule),
+                        enabled: data.controls.onOff && data.isOnline,
+                      ),
+                      const SizedBox(height: 8),
+                    ],
 
                   if (settings.showEcoMode) ...[
                     EcoModeToggle(
