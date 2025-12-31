@@ -14,5 +14,10 @@ class StorageKeys {
   static const String sessionData = 'rika_session';
 
   // ========== SharedPreferences keys ==========
-  // Add SharedPreferences keys here as needed in the future
+
+  /// Key for biometric authentication preference
+  static const String biometricEnabled = 'biometric_enabled';
+
+  /// Key to track if user was prompted for biometric enrollment
+  static const String biometricPromptShown = 'biometric_prompt_shown';
 }
