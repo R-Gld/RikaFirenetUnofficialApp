@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Rika Firenet Unofficial</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+        h1 { color: #FF5722; }
+        h2 { color: #333; margin-top: 30px; }
+        .warning { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Privacy Policy - Rika Firenet Unofficial</h1>
+    <p><strong>Last updated:</strong> December 31, 2025</p>
+    <p><strong>Developer:</strong> Romain Galland (R-Gld)</p>
+    <p><strong>Contact:</strong> contact@devgld.fr | GitHub: <a href="https://github.com/R-Gld">@R-Gld</a></p>
+
+    <div class="warning">
+        <strong>⚠️ Important Disclaimer:</strong> This app is UNOFFICIAL and NOT affiliated with RIKA.
+        Use at your own risk. RIKA is not responsible for any issues caused by this app.
+    </div>
+
+    <h2>1. Introduction</h2>
+    <p>
+        "Rika Firenet Unofficial" is an unofficial mobile application for remote control and monitoring
+        of RIKA pellet/wood stoves via the Rika Firenet web interface. This privacy policy explains
+        how the app handles your data.
+    </p>
+
+    <h2>2. Data Collection</h2>
+    <p>The app collects and stores the following data <strong>locally on your device</strong>:</p>
+    <ul>
+        <li><strong>Email address:</strong> Your Rika Firenet account email (encrypted storage)</li>
+        <li><strong>Password:</strong> Your Rika Firenet password (encrypted storage via FlutterSecureStorage)</li>
+        <li><strong>Session cookies:</strong> Authentication cookies from Rika Firenet API</li>
+        <li><strong>Stove data:</strong> Temperature, status, and sensor data fetched from Rika API</li>
+        <li><strong>App settings:</strong> Theme preference, language, notification preferences</li>
+        <li><strong>Widget data:</strong> Stove status for home screen widget</li>
+    </ul>
+
+    <h2>3. Data Usage</h2>
+    <p>Your data is used exclusively for:</p>
+    <ul>
+        <li><strong>Authentication:</strong> Logging into the Rika Firenet API on your behalf</li>
+        <li><strong>Display:</strong> Showing your stove information and controls in the app</li>
+        <li><strong>Notifications:</strong> Sending local notifications based on stove status changes</li>
+        <li><strong>Background sync:</strong> Periodically checking stove status when app is closed (configurable interval)</li>
+    </ul>
+    <p><strong>We do NOT:</strong></p>
+    <ul>
+        <li>Transmit your data to any third-party servers (except Rika's official API)</li>
+        <li>Sell or share your data</li>
+        <li>Use analytics or tracking tools</li>
+        <li>Store data in the cloud</li>
+    </ul>
+
+    <h2>4. Data Storage</h2>
+    <p>All data is stored <strong>locally on your device</strong>:</p>
+    <ul>
+        <li><strong>Credentials:</strong> Encrypted using FlutterSecureStorage (Android Keystore)</li>
+        <li><strong>Session cookies:</strong> Stored via cookie_jar package (PersistCookieJar)</li>
+        <li><strong>Settings:</strong> Stored via SharedPreferences (local key-value storage)</li>
+        <li><strong>Widget data:</strong> Stored via SharedPreferences</li>
+    </ul>
+    <p>No data is transmitted to the developer or stored on external servers.</p>
+
+    <h2>5. Background Processing</h2>
+    <p>The app uses background tasks to:</p>
+    <ul>
+        <li>Periodically check stove status (interval configurable: 15-60 minutes)</li>
+        <li>Send local notifications when monitored values change</li>
+        <li>Update home screen widget with latest stove data</li>
+    </ul>
+    <p>Background tasks communicate only with the Rika Firenet API, not with the developer.</p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>The app communicates with:</p>
+    <ul>
+        <li><strong>Rika Firenet API</strong> (https://www.rika-firenet.com): Official RIKA web service for stove control</li>
+    </ul>
+    <p>Your use of the Rika Firenet API is subject to RIKA's terms of service and privacy policy.</p>
+    <p><strong>No other third-party services are used.</strong> No analytics, crash reporting, or advertising SDKs.</p>
+
+    <h2>7. Permissions</h2>
+    <p>The app requests the following Android permissions:</p>
+    <ul>
+        <li><strong>INTERNET:</strong> To communicate with Rika Firenet API</li>
+        <li><strong>ACCESS_NETWORK_STATE:</strong> To check network connectivity before API calls</li>
+        <li><strong>POST_NOTIFICATIONS:</strong> To send local notifications</li>
+        <li><strong>WAKE_LOCK:</strong> To keep device awake during background sync</li>
+        <li><strong>RECEIVE_BOOT_COMPLETED:</strong> To restart background sync after device reboot</li>
+        <li><strong>VIBRATE:</strong> To vibrate for notifications</li>
+        <li><strong>REQUEST_IGNORE_BATTERY_OPTIMIZATIONS:</strong> To ensure reliable background sync</li>
+    </ul>
+
+    <h2>8. Data Security</h2>
+    <p>Security measures:</p>
+    <ul>
+        <li>All credentials encrypted using Android Keystore (FlutterSecureStorage)</li>
+        <li>All network communication uses HTTPS</li>
+        <li>No data transmitted to developer's servers</li>
+        <li>Code obfuscation via ProGuard/R8 to prevent reverse engineering</li>
+    </ul>
+
+    <h2>9. User Rights</h2>
+    <p>You have the right to:</p>
+    <ul>
+        <li><strong>Delete your data:</strong> Logout from the app or uninstall to remove all stored data</li>
+        <li><strong>Access your data:</strong> All data is stored locally and accessible via app settings</li>
+        <li><strong>Control notifications:</strong> Disable/configure notifications in app settings</li>
+    </ul>
+
+    <h2>10. Children's Privacy</h2>
+    <p>This app is not intended for children under 13. We do not knowingly collect data from children.</p>
+
+    <h2>11. Changes to Privacy Policy</h2>
+    <p>
+        We may update this privacy policy. Changes will be posted at this URL and the "Last updated"
+        date will be revised. Continued use of the app after changes constitutes acceptance.
+    </p>
+
+    <h2>12. Open Source</h2>
+    <p>
+        This app is open-source under MIT License. Source code is available at:
+        <a href="https://github.com/R-Gld/RikaFirenetUnofficialApp">https://github.com/R-Gld/RikaFirenetUnofficialApp</a>
+    </p>
+
+    <h2>13. Contact</h2>
+    <p>For privacy questions or concerns:</p>
+    <ul>
+        <li><strong>Email:</strong> contact@devgld.fr</li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/R-Gld">@R-Gld</a></li>
+        <li><strong>Issues:</strong> <a href="https://github.com/R-Gld/RikaFirenetUnofficialApp/issues">GitHub Issues</a></li>
+    </ul>
+
+    <hr>
+    <p><small>© 2025 Romain Galland. This app is UNOFFICIAL and NOT affiliated with RIKA.</small></p>
+</body>
+</html>
