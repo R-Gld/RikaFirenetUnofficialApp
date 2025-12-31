@@ -7,6 +7,7 @@ import '../../theme/app_colors.dart';
 import '../../../data/models/app_settings.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
+import '../../../providers/biometric_auth_provider.dart';
 import 'advanced_controls_settings_screen.dart';
 import 'notifications_settings_screen.dart';
 import 'info_panels_settings_screen.dart';
@@ -39,6 +40,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
     final notifSettings = ref.watch(notificationSettingsProvider);
+    final biometricSettings = ref.watch(biometricSettingsProvider);
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
@@ -74,6 +76,24 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             _buildSectionHeader(context, l10n.appearance),
             _buildThemeSelector(context, ref, settings, l10n),
             _buildLanguageSelector(context, ref, settings, l10n),
+
+            const Divider(height: 32),
+
+            // Security Section
+            _buildSectionHeader(context, 'Security'),
+            if (biometricSettings.isAvailable)
+              _buildBiometricToggle(context, ref, biometricSettings, l10n)
+            else
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: Text(
+                  'Biometric authentication is not available on this device',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                        fontStyle: FontStyle.italic,
+                      ),
+                ),
+              ),
 
             const Divider(height: 32),
 
@@ -317,6 +337,61 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBiometricToggle(
+    BuildContext context,
+    WidgetRef ref,
+    BiometricSettings biometricSettings,
+    AppLocalizations l10n,
+  ) {
+    return SwitchListTile(
+      title: const Text('Biometric Authentication'),
+      subtitle: const Text('Use fingerprint or face unlock to secure the app'),
+      secondary: const Icon(Icons.fingerprint, color: AppColors.primary),
+      value: biometricSettings.isEnabled,
+      onChanged: (value) async {
+        if (value) {
+          // Test biometric before enabling
+          final biometricService = ref.read(biometricAuthServiceProvider);
+          final success = await biometricService.authenticate(
+            reason: 'Authenticate to enable biometric unlock',
+          );
+
+          if (success) {
+            await ref.read(biometricSettingsProvider.notifier).setBiometricEnabled(true);
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Biometric authentication enabled'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          } else {
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Authentication failed'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          }
+        } else {
+          // Disable biometric
+          await ref.read(biometricSettingsProvider.notifier).setBiometricEnabled(false);
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Biometric authentication disabled'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        }
+      },
     );
   }
 
