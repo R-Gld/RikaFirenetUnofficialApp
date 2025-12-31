@@ -9,6 +9,8 @@ class HomeWidgetService {
   /// Updates the home widget with stove data
   Future<void> updateWidget(StoveData stoveData) async {
     try {
+      _logger.d('Updating widget with data for ${stoveData.name}');
+
       // Save data to shared preferences for widget
       await HomeWidget.saveWidgetData<String>('stove_name', stoveData.name);
       await HomeWidget.saveWidgetData<String>(
@@ -35,9 +37,11 @@ class HomeWidgetService {
         stoveData.sensors.parameterFeedRateTotal.toString(),
       );
       await HomeWidget.saveWidgetData<int>(
-        'last_update',
+        'last_update_timestamp',
         DateTime.now().millisecondsSinceEpoch,
       );
+
+      _logger.d('Widget data saved, triggering update');
 
       // Update the widget
       await HomeWidget.updateWidget(
