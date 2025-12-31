@@ -239,13 +239,14 @@ class StoveDetailScreen extends ConsumerWidget {
 
           return RefreshIndicator(
             onRefresh: () => _handleRefresh(ref),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
+            child: SafeArea(
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                   // Header with status and temperatures
                   _buildHeader(context, data),
                   const SizedBox(height: 16),
@@ -443,7 +444,8 @@ class StoveDetailScreen extends ConsumerWidget {
                       oem: data.oem,
                     ),
                   ],
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

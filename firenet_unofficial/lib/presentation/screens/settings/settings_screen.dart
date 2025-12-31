@@ -38,8 +38,9 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: ListView(
-        children: [
+      body: SafeArea(
+        child: ListView(
+          children: [
           // Appearance section
           _buildSectionHeader(context, 'Apparence'),
           _buildThemeSelector(context, ref, settings),
@@ -193,7 +194,8 @@ class SettingsScreen extends ConsumerWidget {
           ),
 
           const SizedBox(height: 32),
-        ],
+          ],
+        ),
       ),
     );
   }
