@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/common/loading_indicator.dart';
 import '../../widgets/common/error_widget.dart';
@@ -196,6 +197,8 @@ class StoveDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     // Activate automatic polling for this stove
     ref.watch(stovePollingProvider(stoveId));
 
@@ -216,18 +219,18 @@ class StoveDetailScreen extends ConsumerWidget {
                 ),
               );
             },
-            tooltip: 'Paramètres',
+            tooltip: l10n.settings,
           ),
           IconButton(
             icon: const Icon(Icons.refresh),
             onPressed: () => _handleRefresh(ref),
-            tooltip: 'Actualiser',
+            tooltip: l10n.refresh,
           ),
         ],
       ),
       body: stoveState.when(
-        loading: () => const LoadingIndicator(
-          message: 'Chargement des données du poêle...',
+        loading: () => LoadingIndicator(
+          message: l10n.loadingStoveData,
         ),
         error: (error, stackTrace) => AppErrorWidget(
           errorMessage: error.toString(),
@@ -255,7 +258,7 @@ class StoveDetailScreen extends ConsumerWidget {
 
                   // Quick controls section
                   Text(
-                    'Contrôles Rapides',
+                    l10n.quickControls,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -310,7 +313,7 @@ class StoveDetailScreen extends ConsumerWidget {
                       settings.showTemperatureOffset ||
                       settings.showBakeTemperature) ...[
                     Text(
-                      'Contrôles Avancés',
+                      l10n.advancedControls,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -458,6 +461,7 @@ class StoveDetailScreen extends ConsumerWidget {
   }
 
   Widget _buildHeader(BuildContext context, dynamic data) {
+    final l10n = AppLocalizations.of(context)!;
     final statusCategory = data.sensors.statusCategory;
     final currentTemp = double.tryParse(data.sensors.inputRoomTemperature) ?? 0.0;
     final targetTemp = int.tryParse(data.controls.targetTemperature) ?? 20;
@@ -483,7 +487,7 @@ class StoveDetailScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Température Actuelle',
+                        l10n.currentTemperature,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -511,7 +515,7 @@ class StoveDetailScreen extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Température Cible',
+                        l10n.targetTemperature,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -554,7 +558,7 @@ class StoveDetailScreen extends ConsumerWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Hors ligne depuis ${data.lastSeenMinutes} min',
+                      l10n.offlineSince(data.lastSeenMinutes),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppColors.statusWarning,
                             fontWeight: FontWeight.w500,
@@ -574,7 +578,7 @@ class StoveDetailScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'En ligne',
+                    l10n.online,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.statusActive,
                           fontWeight: FontWeight.w500,

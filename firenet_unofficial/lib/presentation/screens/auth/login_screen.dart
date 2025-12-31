@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/auth_providers.dart';
 import '../../theme/app_colors.dart';
 
@@ -37,6 +38,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final authState = ref.watch(authStateProvider);
 
     return Scaffold(
@@ -62,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'Rika Firenet',
+                        l10n.appTitle,
                         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.primary,
@@ -71,7 +73,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Connectez-vous à votre compte',
+                        l10n.loginSubtitle,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.textSecondary,
                             ),
@@ -85,17 +87,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
                         enabled: !authState.isLoading,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'votre@email.com',
-                          prefixIcon: Icon(Icons.email_outlined),
+                        decoration: InputDecoration(
+                          labelText: l10n.email,
+                          hintText: l10n.emailHint,
+                          prefixIcon: const Icon(Icons.email_outlined),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer votre email';
+                            return l10n.pleaseEnterEmail;
                           }
                           if (!value.contains('@')) {
-                            return 'Email invalide';
+                            return l10n.invalidEmail;
                           }
                           return null;
                         },
@@ -110,7 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         enabled: !authState.isLoading,
                         onFieldSubmitted: (_) => _handleLogin(),
                         decoration: InputDecoration(
-                          labelText: 'Mot de passe',
+                          labelText: l10n.password,
                           prefixIcon: const Icon(Icons.lock_outlined),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -125,7 +127,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer votre mot de passe';
+                            return l10n.pleaseEnterPassword;
                           }
                           return null;
                         },
@@ -176,9 +178,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                   ),
                                 ),
                               )
-                            : const Text(
-                                'Se connecter',
-                                style: TextStyle(
+                            : Text(
+                                l10n.login,
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),

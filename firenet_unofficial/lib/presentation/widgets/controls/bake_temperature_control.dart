@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Control for bake oven temperature (100-250°C)
@@ -58,6 +59,7 @@ class _BakeTemperatureControlState extends State<BakeTemperatureControl> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,7 +77,7 @@ class _BakeTemperatureControlState extends State<BakeTemperatureControl> {
                         const Icon(Icons.bakery_dining, color: AppColors.secondary),
                         const SizedBox(width: 8),
                         Text(
-                          'Température four',
+                          l10n.bakeTemperature,
                           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
                               ),
@@ -84,7 +86,7 @@ class _BakeTemperatureControlState extends State<BakeTemperatureControl> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Réglage température du four à bois',
+                      l10n.bakeTemperatureDescription,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                           ),
@@ -155,13 +157,13 @@ class _BakeTemperatureControlState extends State<BakeTemperatureControl> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '100°C',
+                  l10n.minBakeTemp,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                 ),
                 Text(
-                  '250°C',
+                  l10n.maxBakeTemp,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -172,7 +174,7 @@ class _BakeTemperatureControlState extends State<BakeTemperatureControl> {
             if (!widget.enabled) ...[
               const SizedBox(height: 12),
               Text(
-                'Allumez le poêle pour modifier la température du four',
+                l10n.turnOnStoveToAdjustBakeTemp,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

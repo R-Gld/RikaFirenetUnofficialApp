@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../data/helpers/time_range.dart';
 import '../../theme/app_colors.dart';
 
@@ -22,15 +23,18 @@ class HeatingScheduleEditor extends StatefulWidget {
 class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
   late Map<String, TimeRange?> _timeRanges;
 
-  final List<_DayInfo> _days = const [
-    _DayInfo(label: 'Lundi', key: 'Mon'),
-    _DayInfo(label: 'Mardi', key: 'Tue'),
-    _DayInfo(label: 'Mercredi', key: 'Wed'),
-    _DayInfo(label: 'Jeudi', key: 'Thu'),
-    _DayInfo(label: 'Vendredi', key: 'Fri'),
-    _DayInfo(label: 'Samedi', key: 'Sat'),
-    _DayInfo(label: 'Dimanche', key: 'Sun'),
-  ];
+  List<_DayInfo> _getDays(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      _DayInfo(label: l10n.monday, key: 'Mon'),
+      _DayInfo(label: l10n.tuesday, key: 'Tue'),
+      _DayInfo(label: l10n.wednesday, key: 'Wed'),
+      _DayInfo(label: l10n.thursday, key: 'Thu'),
+      _DayInfo(label: l10n.friday, key: 'Fri'),
+      _DayInfo(label: l10n.saturday, key: 'Sat'),
+      _DayInfo(label: l10n.sunday, key: 'Sun'),
+    ];
+  }
 
   @override
   void initState() {
@@ -48,7 +52,8 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
 
   void _parseSchedule() {
     _timeRanges = {};
-    for (final day in _days) {
+    final days = _getDays(context);
+    for (final day in days) {
       for (int slot = 1; slot <= 2; slot++) {
         final key = '${day.key}$slot';
         final apiValue = widget.schedule[key] ?? TimeRange.disabled;
@@ -125,6 +130,8 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final days = _getDays(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -133,7 +140,7 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
             const Icon(Icons.event, color: AppColors.secondary, size: 20),
             const SizedBox(width: 8),
             Text(
-              'Programmation horaires détaillée',
+              l10n.detailedScheduleEditor,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -141,14 +148,14 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
           ],
         ),
         const SizedBox(height: 16),
-        for (final day in _days) ...[
+        for (final day in days) ...[
           _buildDaySchedule(day),
-          if (day != _days.last) const Divider(height: 24),
+          if (day != days.last) const Divider(height: 24),
         ],
         if (!widget.enabled) ...[
           const SizedBox(height: 16),
           Text(
-            'Activez les plages horaires pour éditer la programmation',
+            l10n.enableScheduleToEdit,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.textSecondary,
                   fontStyle: FontStyle.italic,
@@ -243,7 +250,7 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
           IconButton(
             icon: const Icon(Icons.clear, size: 20),
             onPressed: widget.enabled && hasTime ? () => _clearSlot(slotKey) : null,
-            tooltip: 'Désactiver cette plage',
+            tooltip: AppLocalizations.of(context)!.disableThisSlot,
             color: AppColors.textSecondary,
           ),
         ],

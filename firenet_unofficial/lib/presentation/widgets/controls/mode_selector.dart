@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Operating mode selector for the stove
@@ -18,6 +19,7 @@ class OperatingModeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -25,28 +27,28 @@ class OperatingModeSelector extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Mode de fonctionnement',
+              l10n.operatingMode,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),
             const SizedBox(height: 12),
             SegmentedButton<int>(
-              segments: const [
+              segments: [
                 ButtonSegment<int>(
                   value: 0,
-                  label: Text('Manuel'),
-                  icon: Icon(Icons.tune),
+                  label: Text(l10n.manualMode),
+                  icon: const Icon(Icons.tune),
                 ),
                 ButtonSegment<int>(
                   value: 1,
-                  label: Text('Auto'),
-                  icon: Icon(Icons.auto_mode),
+                  label: Text(l10n.autoMode),
+                  icon: const Icon(Icons.auto_mode),
                 ),
                 ButtonSegment<int>(
                   value: 2,
-                  label: Text('Confort'),
-                  icon: Icon(Icons.weekend),
+                  label: Text(l10n.comfortMode),
+                  icon: const Icon(Icons.weekend),
                 ),
               ],
               selected: {currentMode},
@@ -73,7 +75,7 @@ class OperatingModeSelector extends StatelessWidget {
             if (!enabled) ...[
               const SizedBox(height: 8),
               Text(
-                'Allumez le poêle pour changer de mode',
+                l10n.turnOnStoveToChangeMode,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,
