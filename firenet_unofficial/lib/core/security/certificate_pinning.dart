@@ -13,9 +13,18 @@ class CertificatePinningValidator {
   // Command: echo | openssl s_client -connect www.rika-firenet.com:443 -servername www.rika-firenet.com 2>/dev/null | \
   //          openssl x509 -pubkey -noout | openssl pkey -pubin -outform DER | \
   //          openssl dgst -sha256 -binary | openssl enc -base64
+  //
+  // CERTIFICATE ROTATION PROCEDURE (when Rika renews their SSL certificate):
+  // 1. Generate new hash using command above
+  // 2. Add new hash to list BELOW (keep old hash)
+  // 3. Release app update with BOTH hashes
+  // 4. Wait 2-4 weeks for user adoption (~90-95%)
+  // 5. Remove old hash in next release
+  //
+  // See SECURITY.md for detiled certificate rotation strategy
   static const List<String> _pinnedPublicKeyHashes = [
     'mAXiOaBzLsq4NP7qbVl62bHRXvzdVhKPxfHXAYMWAY4=',  // Current certificate (valid as of 2025-12-31)
-    // Add backup/future key here when certificate rotation is planned
+    // Add new certificate hash here when rotation is needed (keep old hash during transition)
   ];
 
   static const String _pinnedHost = 'www.rika-firenet.com';
