@@ -1,6 +1,6 @@
 # 🔥 Rika Firenet Unofficial
 
-[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/R-Gld/RikaFirenetUnofficialApp)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/R-Gld/RikaFirenetUnofficialApp)
 [![Flutter](https://img.shields.io/badge/Flutter-3.38.2-02569B?logo=flutter)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart-3.10.0-0175C2?logo=dart)](https://dart.dev)
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Linux%20%7C%20macOS-lightgrey)]()
