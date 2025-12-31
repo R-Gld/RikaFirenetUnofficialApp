@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../providers/auth_providers.dart';
+import '../../../providers/biometric_auth_provider.dart';
 import '../../theme/app_colors.dart';
+import '../../widgets/auth/biometric_prompt_dialog.dart';
 
 /// Login screen for email/password authentication
 class LoginScreen extends ConsumerStatefulWidget {
@@ -34,6 +36,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           _emailController.text.trim(),
           _passwordController.text,
         );
+
+    // After login, check if we should prompt for biometric enrollment
+    final authState = ref.read(authStateProvider);
+    if (authState.isAuthenticated && mounted) {
+      await _promptBiometricEnrollment();
+    }
+  }
+
+  /// Prompts the user to enable biometric authentication if available
+  Future<void> _promptBiometricEnrollment() async {
+    final biometricSettings = ref.read(biometricSettingsProvider);
+    final biometricNotifier = ref.read(biometricSettingsProvider.notifier);
+
+    // Only prompt if biometric is available and we haven't asked before
+    if (!biometricSettings.isAvailable) return;
+
+    final wasPromptShown = await biometricNotifier.wasPromptShown();
+    if (wasPromptShown) return;
+
+    // Show the enrollment dialog
+    if (mounted) {
+      await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const BiometricPromptDialog(),
+      );
+    }
   }
 
   @override
