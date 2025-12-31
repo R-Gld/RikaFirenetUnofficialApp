@@ -34,6 +34,14 @@ class CertificatePinningValidator {
       return true; // Allow other hosts
     }
 
+    // If pinning is not enabled (placeholder hash), bypass validation
+    if (!isPinningEnabled) {
+      if (kDebugMode) {
+        debugPrint('[CertPin] Certificate pinning disabled (placeholder hash)');
+      }
+      return true;
+    }
+
     // In debug mode, allow bypassing pinning (optional)
     if (kDebugMode) {
       debugPrint('[CertPin] Debug mode: Checking certificate for $host');
