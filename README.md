@@ -182,16 +182,15 @@ Each panel can be shown or hidden according to your preferences.
 
 ## 📸 Screenshots
 
-> Section to be completed with application screenshots:
-> - Login screen
-> - Stove list
-> - Detail screen with controls
-> - Expandable information panels
-> - Notification configuration
-> - Field selection for monitoring
-> - Android home screen widget
-> - Settings screen with submenus
-> - Language selector
+<div align="center">
+
+### Login & Main Controls
+<img src=".github/screenshots/screenshot_1_login.jpg" width="250" alt="Login Screen"/> <img src=".github/screenshots/screenshot_2_controls.jpg" width="250" alt="Stove Control Screen"/>
+
+### Advanced Controls & Information Panels
+<img src=".github/screenshots/screenshot_3_advanced.jpg" width="250" alt="Advanced Controls"/> <img src=".github/screenshots/screenshot_4_info.jpg" width="250" alt="Information Panels"/>
+
+</div>
 
 ---
 
