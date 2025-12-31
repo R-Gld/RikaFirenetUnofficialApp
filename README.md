@@ -60,7 +60,7 @@ Owners of Rika pellet or wood stoves equipped with the Firenet module who want:
 
 ### 🌍 Internationalization (i18n)
 
-**New in v1.1.0**: Full multilingual support with 7 languages!
+Full multilingual support with 7 languages:
 
 - **Supported Languages**:
   - 🇬🇧 **English**
@@ -80,7 +80,7 @@ Owners of Rika pellet or wood stoves equipped with the Firenet module who want:
 
 ### 📱 Android Home Screen Widget
 
-**New in v1.1.0**: Quick stove status at a glance!
+Quick stove status at a glance:
 
 - **Widget Features**:
   - Dark modern design matching app theme
@@ -93,7 +93,7 @@ Owners of Rika pellet or wood stoves equipped with the Firenet module who want:
 
 ### ⚙️ Reorganized Settings Screen
 
-**New in v1.1.0**: Better organized settings with submenus!
+Better organized settings with submenus:
 
 - **Main Settings**:
   - GitHub repository link card (top)
@@ -105,6 +105,30 @@ Owners of Rika pellet or wood stoves equipped with the Firenet module who want:
   - **Advanced Controls**: Toggle visibility of advanced features
   - **Notifications**: Full notification configuration
   - **Information Panels**: Manage panel visibility
+
+### 🔒 Security Features
+
+Advanced security features to protect your data and connection:
+
+- **Biometric Authentication**: Optional fingerprint or Face ID app lock (Android & iOS)
+  - Enable/disable in Settings → Security
+  - Fallback to password always available
+  - Prompt on every app launch when enabled
+
+- **Certificate Pinning**: SSL certificate validation to prevent man-in-the-middle attacks
+  - Automatic validation of Rika Firenet certificate
+  - Protects against network-level attacks
+
+- **Rate Limiting**: Client-side request throttling to prevent API abuse
+  - Token bucket algorithm with exponential backoff
+  - Protects against accidental request flooding
+  - Configurable limits per endpoint
+
+- **Secure Deletion**: Multi-layer cryptographic erasure on logout
+  - Credentials wiped from secure storage
+  - Session cookies cleared
+  - HTTP cache purged
+  - Best-effort memory zeroing
 
 ### 🎛️ Real-Time Control
 
@@ -206,6 +230,9 @@ Each panel can be shown or hidden according to your preferences.
   - `FlutterSecureStorage`: Encrypted credentials
   - `SharedPreferences`: App settings
   - `PersistCookieJar`: Session cookies
+- **Security**:
+  - `local_auth`: Biometric authentication (fingerprint/Face ID)
+  - `crypto`: SHA-256 hashing for certificate pinning
 - **Background Tasks**: WorkManager 0.9.0 (Android/iOS)
 - **Notifications**: flutter_local_notifications 17.0.0
 - **Home Widget**: home_widget 0.8.1 (Android)
@@ -242,7 +269,8 @@ lib/
 ├── presentation/          # Presentation layer (UI)
 │   ├── screens/          # Main screens
 │   │   ├── auth/
-│   │   │   └── login_screen.dart
+│   │   │   ├── login_screen.dart
+│   │   │   └── biometric_lock_screen.dart
 │   │   ├── home/
 │   │   │   └── home_screen.dart
 │   │   ├── stove_detail/
@@ -253,6 +281,8 @@ lib/
 │   │       ├── notifications_settings_screen.dart
 │   │       └── info_panels_settings_screen.dart
 │   ├── widgets/          # Reusable components
+│   │   ├── auth/         # Authentication widgets
+│   │   │   └── biometric_prompt_dialog.dart
 │   │   ├── controls/     # Control widgets
 │   │   ├── info/         # Information panels
 │   │   └── common/       # Common widgets
@@ -292,6 +322,14 @@ lib/
     ├── errors/
     │   ├── exceptions.dart
     │   └── failures.dart
+    ├── network/
+    │   ├── token_bucket.dart
+    │   └── rate_limiter.dart
+    ├── security/
+    │   ├── biometric_auth_service.dart
+    │   ├── certificate_pinning.dart
+    │   ├── pinned_http_client.dart
+    │   └── secure_deletion_service.dart
     └── utils/
         └── cookie_parser.dart
 ```
@@ -437,6 +475,16 @@ flutter build macos --release
    - Example: "Ambient temperature > 25°C"
 6. **Test**: "Test Now" button to verify configuration
 
+### 🔒 Enable Biometric Authentication
+
+1. **Settings** → **Security**
+2. **Enable biometric toggle** (fingerprint/Face ID authentication is tested)
+3. **Confirm with your biometric** to enable
+4. **On next app launch**: Biometric prompt appears before accessing the app
+5. **Disable anytime**: Toggle off in Settings or use "Use Password Instead" button
+
+> Only available on Android and iOS devices with biometric sensors.
+
 ### 🎨 Customize Interface
 
 **Advanced Controls**:
@@ -472,6 +520,8 @@ Required permissions in `AndroidManifest.xml`:
 - `RECEIVE_BOOT_COMPLETED`: Restart tasks after reboot
 - `VIBRATE`: Vibration during notifications
 - `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`: Background network access
+- `USE_BIOMETRIC`: Fingerprint authentication
+- `USE_FINGERPRINT`: Legacy fingerprint support
 
 ### 💾 Storage
 
@@ -548,6 +598,10 @@ For our complete security policy and vulnerability reporting procedures, please 
 - ✅ **Encrypted credentials** at rest (FlutterSecureStorage)
 - ✅ **No plaintext storage** of passwords
 - ✅ **HTTPS enforced**: Automatic HTTP → HTTPS upgrade
+- ✅ **Certificate pinning**: SSL validation to prevent MITM attacks
+- ✅ **Biometric authentication**: Optional app lock with fingerprint/Face ID
+- ✅ **Rate limiting**: Client-side throttling with exponential backoff
+- ✅ **Secure deletion**: Multi-layer cryptographic erasure on logout
 - ✅ **Secure session cookies** with persistence
 - ✅ **Auto-logout** with confirmation dialog
 - ✅ **Authentication error** handling
