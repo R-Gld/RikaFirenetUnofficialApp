@@ -541,6 +541,8 @@ flutter pub run build_runner watch --delete-conflicting-outputs
 
 ## 🛡️ Security
 
+For our complete security policy and vulnerability reporting procedures, please see **[SECURITY.md](SECURITY.md)**.
+
 ### ✅ Implemented Best Practices
 
 - ✅ **Encrypted credentials** at rest (FlutterSecureStorage)
@@ -590,32 +592,21 @@ flutter pub run build_runner watch --delete-conflicting-outputs
 
 ## 🤝 Contributing
 
-This project is **open source**. Contributions are welcome!
+This project is **open source** and contributions are welcome! Whether you're fixing bugs, adding features, improving documentation, or adding translations, your help is appreciated.
 
-### How to Contribute
+For detailed contribution guidelines, development setup, code style, and more, please read our **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+
+### Quick Start
 
 1. **Fork** the repository
-2. **Create a feature branch**
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. **Commit** your changes
-   ```bash
-   git commit -m 'Add AmazingFeature'
-   ```
-4. **Push** to the branch
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. **Open a Pull Request**
+2. **Clone** your fork and install dependencies
+3. **Create a feature branch**: `git checkout -b feature/AmazingFeature`
+4. **Make your changes** following our code style guidelines
+5. **Test** your changes
+6. **Commit** using conventional commit format
+7. **Push** and open a Pull Request
 
-### Guidelines
-
-- Follow **Flutter/Dart conventions**
-- Use `flutter analyze` before committing
-- Add **tests** if applicable
-- **Document** new features
-- Keep commit messages clear and descriptive
+See [CONTRIBUTING.md](CONTRIBUTING.md) for complete setup instructions, architecture guidelines, testing requirements, and more.
 
 ---
 
@@ -683,6 +674,6 @@ If your stove malfunctions:
 
 **Made with ❤️ for the Rika stove owners community**
 
-**Version 1.1.0** | **7 Languages Supported** | **100+ Monitored Data Points**
+**7 Languages Supported** | **100+ Monitored Data Points**
 
 </div>
