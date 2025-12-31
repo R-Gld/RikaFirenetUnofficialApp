@@ -7,12 +7,14 @@ import 'api_client_provider.dart';
 import 'auth_providers.dart';
 import 'home_widget_provider.dart';
 import '../services/home_widget_service.dart';
+import 'rate_limiter_provider.dart';
 
 /// Provides StoveRepository
 final stoveRepositoryProvider = Provider<StoveRepository>((ref) {
   return StoveRepository(
     apiClient: ref.watch(rikaApiClientProvider),
     htmlParser: ref.watch(htmlParserServiceProvider),
+    rateLimiter: ref.watch(rateLimiterProvider),
   );
 });
 

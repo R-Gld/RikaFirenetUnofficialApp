@@ -3,6 +3,8 @@ import '../data/repositories/auth_repository.dart';
 import '../data/repositories/secure_storage_repository.dart';
 import '../data/models/auth_credentials.dart';
 import 'api_client_provider.dart';
+import 'rate_limiter_provider.dart';
+import 'secure_deletion_provider.dart';
 
 /// Provides SecureStorageRepository
 final secureStorageRepositoryProvider = Provider<SecureStorageRepository>((ref) {
@@ -14,6 +16,8 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(
     apiClient: ref.watch(rikaApiClientProvider),
     storageRepository: ref.watch(secureStorageRepositoryProvider),
+    rateLimiter: ref.watch(rateLimiterProvider),
+    secureDeletionService: ref.watch(secureDeletionServiceProvider),
   );
 });
 
