@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Panel displaying active errors and warnings
@@ -16,59 +17,62 @@ class ErrorWarningPanel extends StatelessWidget {
   });
 
   /// Get error description from error code
-  String _getErrorDescription(int code, int subCode) {
+  String _getErrorDescription(BuildContext context, int code, int subCode) {
+    final l10n = AppLocalizations.of(context)!;
     // Basic mapping of known error codes
     // Note: Complete mapping would require documentation from Rika
     switch (code) {
       case 0:
-        return 'Aucune erreur';
+        return l10n.noError;
       case 1:
-        return 'Défaut sonde de température';
+        return l10n.temperatureSensorFailure;
       case 2:
-        return 'Défaut capteur de pression';
+        return l10n.pressureSensorFailure;
       case 3:
-        return 'Défaut moteur alimentation';
+        return l10n.feedMotorFailure;
       case 4:
-        return 'Défaut ventilateur';
+        return l10n.fanFailure;
       case 5:
-        return 'Température trop élevée';
+        return l10n.temperatureTooHigh;
       case 6:
-        return 'Problème d\'allumage';
+        return l10n.ignitionProblem;
       case 7:
-        return 'Défaut de flamme';
+        return l10n.flameFailure;
       case 8:
-        return 'Porte ouverte';
+        return l10n.doorOpen;
       case 9:
-        return 'Surcharge thermique';
+        return l10n.thermalOverload;
       case 10:
-        return 'Problème de combustion';
+        return l10n.combustionProblem;
       default:
-        return 'Erreur système (code: $code${subCode != 0 ? "/$subCode" : ""})';
+        return l10n.systemError('$code${subCode != 0 ? "/$subCode" : ""}');
     }
   }
 
   /// Get warning description from warning code
-  String _getWarningDescription(int code) {
+  String _getWarningDescription(BuildContext context, int code) {
+    final l10n = AppLocalizations.of(context)!;
     switch (code) {
       case 0:
-        return 'Aucun avertissement';
+        return l10n.noWarning;
       case 1:
-        return 'Niveau de granulés faible';
+        return l10n.pelletLevelLow;
       case 2:
-        return 'Entretien nécessaire';
+        return l10n.maintenanceNeeded;
       case 3:
-        return 'Nettoyage requis';
+        return l10n.cleaningRequired;
       case 4:
-        return 'Température ambiante élevée';
+        return l10n.ambientTemperatureHigh;
       case 5:
-        return 'Signal WiFi faible';
+        return l10n.weakWiFiSignal;
       default:
-        return 'Avertissement système (code: $code)';
+        return l10n.systemWarning(code);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final hasError = errorCode != 0;
     final hasWarning = warningCode != 0;
 
@@ -91,7 +95,7 @@ class ErrorWarningPanel extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    hasError ? 'Erreur détectée' : 'Avertissement',
+                    hasError ? l10n.errorDetected : l10n.warning,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: hasError ? AppColors.statusWarning : Colors.orange,
@@ -117,7 +121,7 @@ class ErrorWarningPanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _getErrorDescription(errorCode, subErrorCode),
+                      _getErrorDescription(context, errorCode, subErrorCode),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -126,7 +130,7 @@ class ErrorWarningPanel extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Code d\'erreur: ',
+                          l10n.errorCode,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: AppColors.textSecondary,
                               ),
@@ -149,7 +153,7 @@ class ErrorWarningPanel extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Consultez le manuel d\'utilisation ou contactez le service technique.',
+                      l10n.consultManual,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppColors.textSecondary,
                             fontStyle: FontStyle.italic,
@@ -176,7 +180,7 @@ class ErrorWarningPanel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _getWarningDescription(warningCode),
+                      _getWarningDescription(context, warningCode),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -185,7 +189,7 @@ class ErrorWarningPanel extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Code avertissement: ',
+                          l10n.warningCode,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: AppColors.textSecondary,
                               ),

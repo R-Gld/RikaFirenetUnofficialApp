@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Control for frost protection with activation switch and temperature threshold
@@ -59,6 +60,7 @@ class _FrostProtectionControlState extends State<FrostProtectionControl> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -66,14 +68,14 @@ class _FrostProtectionControlState extends State<FrostProtectionControl> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SwitchListTile(
-              title: const Text(
-                'Protection anti-gel',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              title: Text(
+                l10n.frostProtection,
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(
                 widget.active
-                    ? 'Protection activée - démarre si température < $_currentTemp°C'
-                    : 'Protection désactivée',
+                    ? l10n.frostProtectionActive(_currentTemp)
+                    : l10n.frostProtectionInactive,
                 style: TextStyle(
                   color: widget.active ? AppColors.statusActive : AppColors.textSecondary,
                   fontSize: 13,
@@ -94,7 +96,7 @@ class _FrostProtectionControlState extends State<FrostProtectionControl> {
               const Divider(height: 24),
 
               Text(
-                'Température de déclenchement',
+                l10n.triggerTemperature,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -170,13 +172,13 @@ class _FrostProtectionControlState extends State<FrostProtectionControl> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Min (4°C)',
+                    l10n.minTemp,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
                   ),
                   Text(
-                    'Max (10°C)',
+                    l10n.maxTemp,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                         ),
@@ -188,7 +190,7 @@ class _FrostProtectionControlState extends State<FrostProtectionControl> {
             if (!widget.enabled) ...[
               const SizedBox(height: 12),
               Text(
-                'Allumez le poêle pour configurer la protection anti-gel',
+                l10n.turnOnStoveToConfigureFrostProtection,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../data/models/stove_sensors.dart';
 import '../../theme/app_colors.dart';
 
@@ -13,15 +14,16 @@ class SensorInfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final roomTemp = double.tryParse(sensors.inputRoomTemperature) ?? 0.0;
 
     return Card(
       child: ExpansionTile(
         initiallyExpanded: false,
         leading: const Icon(Icons.sensors, color: AppColors.primary),
-        title: const Text(
-          'Informations capteurs',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.sensorInformation,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         children: [
           Padding(
@@ -31,7 +33,7 @@ class SensorInfoPanel extends StatelessWidget {
                 _buildInfoRow(
                   context,
                   icon: Icons.local_fire_department,
-                  label: 'Température de flamme',
+                  label: l10n.flameTemperature,
                   value: '${sensors.inputFlameTemperature}°C',
                   iconColor: Colors.orange,
                 ),
@@ -39,7 +41,7 @@ class SensorInfoPanel extends StatelessWidget {
                 _buildInfoRow(
                   context,
                   icon: Icons.thermostat,
-                  label: 'Température ambiante',
+                  label: l10n.ambientTemperature,
                   value: '${roomTemp.toStringAsFixed(1)}°C',
                   iconColor: Colors.blue,
                 ),
@@ -47,8 +49,8 @@ class SensorInfoPanel extends StatelessWidget {
                 _buildInfoRow(
                   context,
                   icon: Icons.input,
-                  label: 'Demande externe',
-                  value: sensors.inputExternalRequest ? 'Oui' : 'Non',
+                  label: l10n.externalRequest,
+                  value: sensors.inputExternalRequest ? l10n.yes : l10n.no,
                   iconColor: sensors.inputExternalRequest
                       ? AppColors.statusActive
                       : AppColors.statusOff,
@@ -59,7 +61,7 @@ class SensorInfoPanel extends StatelessWidget {
                 _buildInfoRow(
                   context,
                   icon: Icons.developer_board,
-                  label: 'Temp. carte électronique',
+                  label: l10n.boardTemperature,
                   value: '${sensors.inputBoardTemperature}°C',
                   iconColor: _getBoardTempColor(sensors.inputBoardTemperature),
                 ),
@@ -70,7 +72,7 @@ class SensorInfoPanel extends StatelessWidget {
                   _buildInfoRow(
                     context,
                     icon: Icons.bakery_dining,
-                    label: 'Temp. four',
+                    label: l10n.ovenTemperature,
                     value: '${sensors.inputBakeTemperature}°C',
                     iconColor: AppColors.secondary,
                   ),

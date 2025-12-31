@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Settings for both convection fans
@@ -109,16 +110,17 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: ExpansionTile(
         initiallyExpanded: false,
         leading: const Icon(Icons.air, color: AppColors.secondary),
-        title: const Text(
-          'Ventilateurs de convection',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.convectionFans,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
-          'Fan 1: ${_fan1Active ? "ON" : "OFF"} | Fan 2: ${_fan2Active ? "ON" : "OFF"}',
+          l10n.fansStatus(_fan1Active ? l10n.active : l10n.inactive, _fan2Active ? l10n.active : l10n.inactive),
           style: const TextStyle(fontSize: 13),
         ),
         children: [
@@ -173,7 +175,7 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
                 if (!widget.enabled) ...[
                   const SizedBox(height: 16),
                   Text(
-                    'Allumez le poêle pour configurer les ventilateurs',
+                    l10n.turnOnStoveToConfigureFans,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: AppColors.textSecondary,
                           fontStyle: FontStyle.italic,
@@ -199,16 +201,17 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
     required ValueChanged<double> onLevelChanged,
     required ValueChanged<double> onAreaChanged,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SwitchListTile(
           title: Text(
-            'Ventilateur $fanNumber',
+            l10n.fanNumber(fanNumber),
             style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           subtitle: Text(
-            active ? 'Actif' : 'Inactif',
+            active ? l10n.active : l10n.inactive,
             style: TextStyle(
               color: active ? AppColors.statusActive : AppColors.textSecondary,
               fontSize: 13,
@@ -225,7 +228,7 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
 
           // Level control (0-5)
           Text(
-            'Niveau de vitesse',
+            l10n.speedLevel,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -264,8 +267,8 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Min (0)', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-              Text('Max (5)', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(l10n.minSpeed, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(l10n.maxSpeed, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
             ],
           ),
 
@@ -273,7 +276,7 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
 
           // Area control (-30 to +30)
           Text(
-            'Zone de chauffe',
+            l10n.heatingArea,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -312,9 +315,9 @@ class _ConvectionFansControlState extends State<ConvectionFansControl> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('-30', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-              Text('0', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
-              Text('+30', style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(l10n.minArea, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(l10n.centerArea, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
+              Text(l10n.maxArea, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.textSecondary)),
             ],
           ),
         ],

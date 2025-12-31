@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Control for temperature calibration offset (-3 to +3°C)
@@ -67,6 +68,7 @@ class _TemperatureOffsetControlState extends State<TemperatureOffsetControl> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -74,14 +76,14 @@ class _TemperatureOffsetControlState extends State<TemperatureOffsetControl> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Calibration température',
+              l10n.temperatureCalibration,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),
             const SizedBox(height: 4),
             Text(
-              'Ajustement de précision du capteur de température',
+              l10n.temperatureCalibrationDescription,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -164,20 +166,20 @@ class _TemperatureOffsetControlState extends State<TemperatureOffsetControl> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '-3°C',
+                  l10n.minOffset,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                 ),
                 Text(
-                  '0°C',
+                  l10n.zeroOffset,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.statusActive,
                         fontWeight: FontWeight.w600,
                       ),
                 ),
                 Text(
-                  '+3°C',
+                  l10n.maxOffset,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -188,7 +190,7 @@ class _TemperatureOffsetControlState extends State<TemperatureOffsetControl> {
             if (!widget.enabled) ...[
               const SizedBox(height: 12),
               Text(
-                'Allumez le poêle pour calibrer la température',
+                l10n.turnOnStoveToCalibrate,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

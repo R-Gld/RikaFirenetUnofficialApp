@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../data/models/stove_sensors.dart';
 import '../../theme/app_colors.dart';
 
@@ -17,13 +18,14 @@ class StatisticsPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: ExpansionTile(
         initiallyExpanded: false,
         leading: const Icon(Icons.analytics, color: AppColors.primary),
-        title: const Text(
-          'Statistiques et système',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.statisticsAndSystem,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         children: [
           Padding(
@@ -32,26 +34,26 @@ class StatisticsPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Section: Utilisation
-                _buildSectionTitle(context, 'Utilisation'),
+                _buildSectionTitle(context, l10n.usage),
                 const SizedBox(height: 8),
                 _buildStatRow(
                   context,
-                  label: 'Heures pellets',
+                  label: l10n.pelletHours,
                   value: '${sensors.parameterRuntimePellets} h',
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Heures bois',
+                  label: l10n.woodHours,
                   value: '${(sensors.parameterRuntimeLogs / 60).toStringAsFixed(1)} h',
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Cycles ON/OFF',
+                  label: l10n.onOffCycles,
                   value: '${sensors.parameterOnOffCycleCount}',
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Nombre d\'allumages',
+                  label: l10n.ignitionCount,
                   value: '${sensors.parameterIgnitionCount}',
                 ),
                 const SizedBox(height: 16),
@@ -59,16 +61,16 @@ class StatisticsPanel extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Section: Consommation
-                _buildSectionTitle(context, 'Consommation'),
+                _buildSectionTitle(context, l10n.consumption),
                 const SizedBox(height: 8),
                 _buildStatRow(
                   context,
-                  label: 'Consommation totale',
+                  label: l10n.totalConsumption,
                   value: '${sensors.parameterFeedRateTotal} kg',
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Avant entretien',
+                  label: l10n.beforeMaintenance,
                   value: '${sensors.parameterServiceCountdownKg} kg (${sensors.parameterServiceCountdownTime} h)',
                   valueColor: sensors.parameterServiceCountdownKg < 50
                       ? AppColors.statusWarning
@@ -79,26 +81,26 @@ class StatisticsPanel extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Section: Système
-                _buildSectionTitle(context, 'Informations système'),
+                _buildSectionTitle(context, l10n.systemInformation),
                 const SizedBox(height: 8),
                 _buildStatRow(
                   context,
-                  label: 'Modèle',
+                  label: l10n.model,
                   value: stoveType,
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Fabricant',
+                  label: l10n.manufacturer,
                   value: oem,
                 ),
                 _buildStatRow(
                   context,
-                  label: 'N° de fabrication',
+                  label: l10n.serialNumber,
                   value: '${sensors.parameterFabricationNumber}',
                 ),
                 _buildStatRow(
                   context,
-                  label: 'Version firmware',
+                  label: l10n.firmwareVersion,
                   value: 'MB:${sensors.parameterVersionMainBoard} '
                       'TFT:${sensors.parameterVersionTFT} '
                       'WiFi:${sensors.parameterVersionWiFi}',

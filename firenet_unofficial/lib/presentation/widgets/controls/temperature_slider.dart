@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Temperature slider widget for setting target temperature (16-30°C)
@@ -57,6 +58,7 @@ class _TemperatureSliderState extends State<TemperatureSlider> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -64,7 +66,7 @@ class _TemperatureSliderState extends State<TemperatureSlider> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Température Cible',
+              l10n.targetTemperature,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -139,7 +141,7 @@ class _TemperatureSliderState extends State<TemperatureSlider> {
               const SizedBox(height: 8),
               Center(
                 child: Text(
-                  'Allumez le poêle pour régler la température',
+                  l10n.turnOnStoveToAdjustTemperature,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                         fontStyle: FontStyle.italic,

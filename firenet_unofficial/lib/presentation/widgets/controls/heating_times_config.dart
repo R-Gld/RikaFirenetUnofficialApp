@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 import 'heating_schedule_editor.dart';
 
@@ -48,6 +49,7 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,14 +58,14 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
           children: [
             // Activation switch
             SwitchListTile(
-              title: const Text(
-                'Plages horaires',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              title: Text(
+                l10n.heatingSchedule,
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               subtitle: Text(
                 widget.active
-                    ? 'Actif en mode confort'
-                    : 'Inactif',
+                    ? l10n.activeInComfortMode
+                    : l10n.inactive,
               ),
               value: widget.active,
               secondary: Icon(
@@ -81,7 +83,7 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
 
               // Setback temperature slider
               Text(
-                'Température de maintien',
+                l10n.setpointTemperature,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -173,7 +175,7 @@ class _HeatingTimesConfigState extends State<HeatingTimesConfig> {
             if (!widget.enabled) ...[
               const SizedBox(height: 8),
               Text(
-                'Allumez le poêle pour modifier les plages horaires',
+                l10n.turnOnStoveToAdjustSchedule,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

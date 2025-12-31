@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Control for room power request level (1-4)
@@ -16,6 +17,7 @@ class RoomPowerRequestControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -23,14 +25,14 @@ class RoomPowerRequestControl extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Demande de puissance pièce',
+              l10n.roomPowerRequest,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
             ),
             const SizedBox(height: 4),
             Text(
-              'Niveau de demande de puissance pour la pièce',
+              l10n.roomPowerRequestDescription,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: AppColors.textSecondary,
                   ),
@@ -91,13 +93,13 @@ class RoomPowerRequestControl extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Minimal',
+                  l10n.minimal,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                 ),
                 Text(
-                  'Maximum',
+                  l10n.maximum,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -108,7 +110,7 @@ class RoomPowerRequestControl extends StatelessWidget {
             if (!enabled) ...[
               const SizedBox(height: 12),
               Text(
-                'Allumez le poêle pour modifier la demande de puissance',
+                l10n.turnOnStoveToAdjustRoomPower,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

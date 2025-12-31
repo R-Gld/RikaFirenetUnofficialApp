@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../data/models/stove_sensors.dart';
 import '../../theme/app_colors.dart';
 
@@ -29,6 +30,7 @@ class SafetyStatusPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final wifiBars = _getWifiSignalBars(sensors.statusWifiStrength);
     final wifiColor = _getWifiSignalColor(sensors.statusWifiStrength);
 
@@ -36,9 +38,9 @@ class SafetyStatusPanel extends StatelessWidget {
       child: ExpansionTile(
         initiallyExpanded: false,
         leading: const Icon(Icons.security, color: AppColors.primary),
-        title: const Text(
-          'Sécurité & Diagnostics',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.safetyAndDiagnostics,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         children: [
           Padding(
@@ -49,8 +51,8 @@ class SafetyStatusPanel extends StatelessWidget {
                 _buildStatusRow(
                   context,
                   icon: Icons.door_front_door,
-                  label: 'Porte',
-                  value: sensors.inputDoor ? 'Fermée' : 'Ouverte',
+                  label: l10n.door,
+                  value: sensors.inputDoor ? l10n.closed : l10n.open,
                   isGood: sensors.inputDoor,
                   goodColor: AppColors.statusActive,
                   badColor: AppColors.statusWarning,
@@ -70,8 +72,8 @@ class SafetyStatusPanel extends StatelessWidget {
                 _buildStatusRow(
                   context,
                   icon: Icons.thermostat,
-                  label: 'Limiteur température',
-                  value: sensors.inputUpperTemperatureLimiter ? 'Température interne OK' : 'Surchauffe',
+                  label: l10n.temperatureLimiter,
+                  value: sensors.inputUpperTemperatureLimiter ? l10n.internalTemperatureOK : l10n.overheating,
                   isGood: sensors.inputUpperTemperatureLimiter, // Active is good
                   goodColor: AppColors.statusActive,
                   badColor: AppColors.statusWarning,
@@ -134,6 +136,7 @@ class SafetyStatusPanel extends StatelessWidget {
     required int bars,
     required Color color,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -142,7 +145,7 @@ class SafetyStatusPanel extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'Signal WiFi',
+              l10n.wifiSignal,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),

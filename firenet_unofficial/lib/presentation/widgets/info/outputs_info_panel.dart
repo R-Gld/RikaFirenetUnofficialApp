@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../data/models/stove_sensors.dart';
 import '../../theme/app_colors.dart';
 
@@ -13,13 +14,14 @@ class OutputsInfoPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: ExpansionTile(
         initiallyExpanded: false,
         leading: const Icon(Icons.settings_input_component, color: AppColors.secondary),
-        title: const Text(
-          'Sorties',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.outputs,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         children: [
           Padding(
@@ -29,7 +31,7 @@ class OutputsInfoPanel extends StatelessWidget {
                 // Moteur diagonal (auger) - en ‰
                 _buildMotorInfo(
                   context,
-                  label: 'Moteur diagonal',
+                  label: l10n.diagonalMotor,
                   permille: sensors.outputDischargeMotor,
                   current: sensors.outputDischargeCurrent,
                 ),
@@ -38,7 +40,7 @@ class OutputsInfoPanel extends StatelessWidget {
                 // Moteur horizontal (insertion) - en ‰
                 _buildMotorInfo(
                   context,
-                  label: 'Moteur horizontal',
+                  label: l10n.horizontalMotor,
                   permille: sensors.outputInsertionMotor,
                   current: sensors.outputInsertionCurrent,
                 ),
@@ -47,7 +49,7 @@ class OutputsInfoPanel extends StatelessWidget {
                 // Ventilateur gaz combustion
                 _buildFanInfo(
                   context,
-                  label: 'Ventilateur gaz combustion',
+                  label: l10n.combustionGasFan,
                   currentRpm: sensors.outputIDFan,
                   targetRpm: sensors.outputIDFanTarget,
                 ),
@@ -56,7 +58,7 @@ class OutputsInfoPanel extends StatelessWidget {
                 // Volets d'aération (‰)
                 _buildFlapsInfo(
                   context,
-                  label: 'Volets d\'aération',
+                  label: l10n.airDampers,
                   current: sensors.outputAirFlaps,
                   target: sensors.outputAirFlapsTargetPosition,
                 ),
@@ -66,7 +68,7 @@ class OutputsInfoPanel extends StatelessWidget {
                 _buildStatusRow(
                   context,
                   icon: sensors.outputIgnition ? Icons.whatshot : Icons.whatshot_outlined,
-                  label: 'Allumage',
+                  label: l10n.ignition,
                   isActive: sensors.outputIgnition,
                 ),
               ],
@@ -122,7 +124,7 @@ class OutputsInfoPanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Courant',
+                AppLocalizations.of(context)!.current,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                     ),
@@ -265,7 +267,7 @@ class OutputsInfoPanel extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
-              isActive ? 'ACTIF' : 'INACTIF',
+              isActive ? AppLocalizations.of(context)!.on : AppLocalizations.of(context)!.off,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: isActive ? AppColors.statusActive : AppColors.statusOff,

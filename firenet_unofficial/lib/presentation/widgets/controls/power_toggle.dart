@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Power toggle widget with confirmation dialog
@@ -15,19 +16,20 @@ class PowerToggle extends StatelessWidget {
   });
 
   Future<void> _showConfirmDialog(BuildContext context, bool newValue) async {
+    final l10n = AppLocalizations.of(context)!;
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(newValue ? 'Allumer le poêle ?' : 'Éteindre le poêle ?'),
+        title: Text(newValue ? l10n.turnOnStoveQuestion : l10n.turnOffStoveQuestion),
         content: Text(
           newValue
-              ? 'Voulez-vous démarrer le poêle ?'
-              : 'Voulez-vous éteindre le poêle ?',
+              ? l10n.turnOnStoveConfirmation
+              : l10n.turnOffStoveConfirmation,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Annuler'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
@@ -35,7 +37,7 @@ class PowerToggle extends StatelessWidget {
               backgroundColor: newValue ? AppColors.statusActive : AppColors.error,
               foregroundColor: Colors.white,
             ),
-            child: Text(newValue ? 'Allumer' : 'Éteindre'),
+            child: Text(newValue ? l10n.turnOn : l10n.turnOff),
           ),
         ],
       ),
@@ -48,13 +50,14 @@ class PowerToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: SwitchListTile(
-        title: const Text(
-          'Alimentation',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.power,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
-        subtitle: Text(isOn ? 'Poêle allumé' : 'Poêle éteint'),
+        subtitle: Text(isOn ? l10n.stoveOn : l10n.stoveOff),
         value: isOn,
         secondary: Icon(
           isOn ? Icons.power : Icons.power_off,

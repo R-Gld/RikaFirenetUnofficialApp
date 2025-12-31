@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Control for heating power (0-100%)
@@ -39,6 +40,7 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -46,7 +48,7 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Puissance de chauffe',
+              l10n.heatingPower,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -82,13 +84,13 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Min (0%)',
+                  l10n.minPower,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
                 ),
                 Text(
-                  'Max (100%)',
+                  l10n.maxPower,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondary,
                       ),
@@ -99,7 +101,7 @@ class _HeatingPowerControlState extends State<HeatingPowerControl> {
             if (!widget.enabled) ...[
               const SizedBox(height: 12),
               Text(
-                'Allumez le poêle pour modifier la puissance',
+                l10n.turnOnStoveToAdjustPower,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondary,
                       fontStyle: FontStyle.italic,

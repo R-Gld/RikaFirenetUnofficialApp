@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/stove_providers.dart';
 import '../../../providers/auth_providers.dart';
 import '../../widgets/common/loading_indicator.dart';
@@ -41,25 +42,26 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final stoveList = ref.watch(stoveListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mes Poêles'),
+        title: Text(l10n.myStoves),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            tooltip: 'Déconnexion',
+            tooltip: l10n.logout,
             onPressed: () async {
               final confirmed = await showDialog<bool>(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text('Déconnexion'),
-                  content: const Text('Voulez-vous vraiment vous déconnecter ?'),
+                  title: Text(l10n.logoutTitle),
+                  content: Text(l10n.logoutConfirmation),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('Annuler'),
+                      child: Text(l10n.cancel),
                     ),
                     ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(true),
@@ -67,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         backgroundColor: AppColors.error,
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text('Déconnexion'),
+                      child: Text(l10n.logout),
                     ),
                   ],
                 ),
@@ -85,8 +87,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           await ref.read(stoveListProvider.notifier).discoverStoves();
         },
         child: stoveList.when(
-          loading: () => const LoadingIndicator(
-            message: 'Chargement des poêles...',
+          loading: () => LoadingIndicator(
+            message: l10n.loadingStoves,
           ),
           error: (error, stackTrace) => AppErrorWidget(
             errorMessage: error.toString(),
@@ -98,14 +100,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             if (stoves.isEmpty) {
               return EmptyStateWidget(
                 icon: Icons.fireplace_outlined,
-                title: 'Aucun poêle trouvé',
-                message: 'Aucun poêle n\'est associé à votre compte',
+                title: l10n.noStoveFound,
+                message: l10n.noStoveAssociated,
                 action: ElevatedButton.icon(
                   onPressed: () {
                     ref.read(stoveListProvider.notifier).discoverStoves();
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Actualiser'),
+                  label: Text(l10n.refresh),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.textOnPrimary,

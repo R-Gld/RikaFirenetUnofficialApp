@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Toggle control for ECO mode
@@ -16,16 +17,17 @@ class EcoModeToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       child: SwitchListTile(
-        title: const Text(
-          'Mode ECO',
-          style: TextStyle(fontWeight: FontWeight.w600),
+        title: Text(
+          l10n.ecoMode,
+          style: const TextStyle(fontWeight: FontWeight.w600),
         ),
         subtitle: Text(
           isActive
-              ? 'Économie d\'énergie activée'
-              : 'Économie d\'énergie désactivée',
+              ? l10n.energySavingEnabled
+              : l10n.energySavingDisabled,
           style: TextStyle(
             color: isActive ? AppColors.statusActive : AppColors.textSecondary,
             fontSize: 13,
