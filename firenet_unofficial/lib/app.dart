@@ -4,9 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
 import 'providers/auth_providers.dart';
 import 'providers/settings_provider.dart';
+import 'providers/biometric_auth_provider.dart';
 import 'data/models/app_settings.dart';
 import 'presentation/theme/app_theme.dart';
 import 'presentation/screens/auth/login_screen.dart';
+import 'presentation/screens/auth/biometric_lock_screen.dart';
 import 'presentation/screens/home/home_screen.dart';
 import 'presentation/widgets/common/loading_indicator.dart';
 
@@ -63,8 +65,62 @@ class App extends ConsumerWidget {
               body: LoadingIndicator(message: 'Chargement...'),
             )
           : authState.isAuthenticated
-              ? const HomeScreen()
+              ? const BiometricGateWrapper()
               : const LoginScreen(),
     );
+  }
+}
+
+/// Wrapper widget that shows biometric lock screen if enabled
+class BiometricGateWrapper extends ConsumerStatefulWidget {
+  const BiometricGateWrapper({super.key});
+
+  @override
+  ConsumerState<BiometricGateWrapper> createState() => _BiometricGateWrapperState();
+}
+
+class _BiometricGateWrapperState extends ConsumerState<BiometricGateWrapper> {
+  bool _biometricUnlocked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Check if biometric is enabled on initial load
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final biometricSettings = ref.read(biometricSettingsProvider);
+      if (!biometricSettings.isEnabled) {
+        // Biometric not enabled, proceed directly to home
+        setState(() {
+          _biometricUnlocked = true;
+        });
+      }
+    });
+  }
+
+  void _onBiometricSuccess() {
+    setState(() {
+      _biometricUnlocked = true;
+    });
+  }
+
+  void _onFallbackToPassword() {
+    // Disable biometric and show login screen by logging out
+    ref.read(authStateProvider.notifier).logout();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final biometricSettings = ref.watch(biometricSettingsProvider);
+
+    // If biometric is enabled and not yet unlocked, show lock screen
+    if (biometricSettings.isEnabled && !_biometricUnlocked) {
+      return BiometricLockScreen(
+        onSuccess: _onBiometricSuccess,
+        onFallbackToPassword: _onFallbackToPassword,
+      );
+    }
+
+    // Otherwise, show the home screen
+    return const HomeScreen();
   }
 }
