@@ -4,14 +4,15 @@
 
 The following versions of Rika Firenet Unofficial are currently supported with security updates:
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.3.x   | :white_check_mark: |
-| 1.2.x   | :white_check_mark: |
-| 1.1.x   | :x:                |
-| < 1.1   | :x:                |
+| Version | Supported          | Security Features |
+| ------- | ------------------ | ----------------- |
+| 1.4.x   | :white_check_mark: | **Full security suite** (certificate pinning, biometric auth, secure deletion, rate limiting) |
+| 1.3.x   | :x:                | Missing critical security features |
+| 1.2.x   | :x:                | Missing critical security features |
+| 1.1.x   | :x:                | Missing critical security features |
+| < 1.1   | :x:                | Missing critical security features |
 
-**Note:** We recommend always using the latest stable release to benefit from the most recent security improvements and bug fixes.
+**⚠️ IMPORTANT SECURITY NOTICE:** Version 1.4.0 introduces critical security features that protect against MITM attacks, credential theft, and API abuse. **We strongly recommend upgrading to 1.4.x immediately.** Previous versions lack essential security protections and should not be used.
 
 ---
 
