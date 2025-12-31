@@ -1,9 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import '../datasources/rika_api_client.dart';
 import '../models/auth_credentials.dart';
 import 'secure_storage_repository.dart';
 import '../../core/errors/exceptions.dart';
 import '../../core/errors/failures.dart';
+import '../../core/network/rate_limiter.dart';
+import '../../core/security/secure_deletion_service.dart';
+import '../../core/constants/storage_keys.dart';
 
 /// Repository for authentication operations
 ///
@@ -11,14 +15,20 @@ import '../../core/errors/failures.dart';
 class AuthRepository {
   final RikaApiClient _apiClient;
   final SecureStorageRepository _storageRepository;
+  final RateLimiter _rateLimiter;
+  final SecureDeletionService _secureDeletionService;
 
   SessionData? _currentSession;
 
   AuthRepository({
     required RikaApiClient apiClient,
     required SecureStorageRepository storageRepository,
+    required RateLimiter rateLimiter,
+    required SecureDeletionService secureDeletionService,
   })  : _apiClient = apiClient,
-        _storageRepository = storageRepository;
+        _storageRepository = storageRepository,
+        _rateLimiter = rateLimiter,
+        _secureDeletionService = secureDeletionService;
 
   /// Authenticates with credentials and stores session
   ///
@@ -27,29 +37,37 @@ class AuthRepository {
     AuthCredentials credentials,
   ) async {
     try {
-      final authResult = await _apiClient.authenticate(
-        email: credentials.email,
-        password: credentials.password,
+      return await _rateLimiter.execute(
+        'authenticate',
+        () async {
+          final authResult = await _apiClient.authenticate(
+            email: credentials.email,
+            password: credentials.password,
+          );
+
+          // Use actual cookie expiry from server, or fallback to 30 days if not provided
+          final expiresAt = authResult.expiresAt ??
+              DateTime.now().add(const Duration(days: 30));
+
+          final session = SessionData(
+            sessionCookie: authResult.sessionCookie,
+            expiresAt: expiresAt,
+          );
+
+          _currentSession = session;
+
+          // Save both credentials and session
+          await _storageRepository.saveCredentials(credentials);
+          await _storageRepository.saveSessionData(session);
+
+          return Right(session);
+        },
       );
-
-      // Use actual cookie expiry from server, or fallback to 30 days if not provided
-      final expiresAt = authResult.expiresAt ??
-          DateTime.now().add(const Duration(days: 30));
-
-      final session = SessionData(
-        sessionCookie: authResult.sessionCookie,
-        expiresAt: expiresAt,
-      );
-
-      _currentSession = session;
-
-      // Save both credentials and session
-      await _storageRepository.saveCredentials(credentials);
-      await _storageRepository.saveSessionData(session);
-
-      return Right(session);
     } on AuthenticationException catch (e) {
       return Left(AuthFailure(e.message));
+    } on RateLimitException catch (e) {
+      final waitSeconds = (e.waitTimeMs / 1000).ceil();
+      return Left(AuthFailure('Too many login attempts. Please wait $waitSeconds seconds.'));
     } on NetworkException catch (e) {
       return Left(NetworkFailure(e.message));
     } catch (e) {
@@ -104,14 +122,32 @@ class AuthRepository {
   /// Gets current session
   SessionData? get currentSession => _currentSession;
 
-  /// Logs out and clears all stored data
+  /// Logs out and securely wipes all stored data
   ///
   /// Returns [Unit] on success or [CacheFailure] on error
   Future<Either<Failure, Unit>> logout() async {
     try {
+      // 1. Clear API session (cookies)
       await _apiClient.clearSession();
-      await _storageRepository.clearAll();
+
+      // 2. Perform secure deletion of all sensitive data
+      final success = await _secureDeletionService.performLogoutCleanup(
+        secureStorageKeys: [
+          StorageKeys.credentials,
+          StorageKeys.sessionData,
+        ],
+        sharedPreferencesKeys: [
+          // Add any sensitive SharedPreferences keys if needed
+        ],
+      );
+
+      if (!success) {
+        debugPrint('[AuthRepository] Secure deletion completed with warnings');
+      }
+
+      // 3. Clear in-memory session
       _currentSession = null;
+
       return const Right(unit);
     } catch (e) {
       return Left(CacheFailure('Logout failed: $e'));

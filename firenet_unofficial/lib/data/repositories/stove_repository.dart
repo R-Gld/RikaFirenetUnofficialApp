@@ -7,6 +7,7 @@ import '../models/stove_controls.dart';
 import '../../core/constants/api_constants.dart';
 import '../../core/errors/exceptions.dart';
 import '../../core/errors/failures.dart';
+import '../../core/network/rate_limiter.dart';
 
 /// Repository for stove operations
 ///
@@ -15,23 +16,33 @@ import '../../core/errors/failures.dart';
 class StoveRepository {
   final RikaApiClient _apiClient;
   final HtmlParserService _htmlParser;
+  final RateLimiter _rateLimiter;
 
   StoveRepository({
     required RikaApiClient apiClient,
     required HtmlParserService htmlParser,
+    required RateLimiter rateLimiter,
   })  : _apiClient = apiClient,
-        _htmlParser = htmlParser;
+        _htmlParser = htmlParser,
+        _rateLimiter = rateLimiter;
 
   /// Discovers all stoves for the authenticated account
   ///
   /// Returns list of [Stove] or [Failure] on error
   Future<Either<Failure, List<Stove>>> discoverStoves() async {
     try {
-      final html = await _apiClient.getStoveSummaryHtml();
-      final stoves = _htmlParser.parseStoveList(html);
-      return Right(stoves);
+      return await _rateLimiter.execute(
+        'getStoveSummaryHtml',
+        () async {
+          final html = await _apiClient.getStoveSummaryHtml();
+          final stoves = _htmlParser.parseStoveList(html);
+          return Right(stoves);
+        },
+      );
     } on SessionExpiredException {
       return const Left(AuthFailure('Session expired'));
+    } on RateLimitException catch (e) {
+      return Left(NetworkFailure('Rate limited: ${e.message}'));
     } on ParsingException catch (e) {
       return Left(ServerFailure('Failed to parse stoves: ${e.message}'));
     } on NetworkException catch (e) {
@@ -46,11 +57,19 @@ class StoveRepository {
   /// Returns [StoveData] or [Failure] on error
   Future<Either<Failure, StoveData>> getStoveState(String stoveId) async {
     try {
-      final json = await _apiClient.getStoveStatus(stoveId);
-      final state = StoveData.fromJson(json);
-      return Right(state);
+      return await _rateLimiter.execute(
+        'getStoveStatus',
+        () async {
+          final json = await _apiClient.getStoveStatus(stoveId);
+          final state = StoveData.fromJson(json);
+          return Right(state);
+        },
+      );
     } on SessionExpiredException {
       return const Left(AuthFailure('Session expired'));
+    } on RateLimitException {
+      // For polling, don't treat rate limit as error - just skip this poll
+      return const Left(NetworkFailure('Rate limited'));
     } on NetworkException catch (e) {
       return Left(NetworkFailure(e.message));
     } catch (e) {
@@ -74,31 +93,39 @@ class StoveRepository {
         return const Left(ValidationFailure('Invalid control values'));
       }
 
-      // Send control update
-      final success = await _apiClient.setStoveControls(
-        stoveId,
-        controls.toJson(),
+      return await _rateLimiter.execute(
+        'setStoveControls',
+        () async {
+          // Send control update
+          final success = await _apiClient.setStoveControls(
+            stoveId,
+            controls.toJson(),
+          );
+
+          if (!success) {
+            return const Left(ServerFailure('Control update rejected'));
+          }
+
+          // Poll for confirmation
+          for (int i = 0; i < ApiConstants.maxControlUpdateRetries; i++) {
+            await Future.delayed(ApiConstants.controlUpdateRetryDelay);
+
+            final stateResult = await getStoveState(stoveId);
+            if (stateResult.isRight()) {
+              // Successfully confirmed - return new state
+              return stateResult;
+            }
+          }
+
+          // Timeout waiting for confirmation
+          return const Left(ServerFailure('Control update not confirmed'));
+        },
       );
-
-      if (!success) {
-        return const Left(ServerFailure('Control update rejected'));
-      }
-
-      // Poll for confirmation
-      for (int i = 0; i < ApiConstants.maxControlUpdateRetries; i++) {
-        await Future.delayed(ApiConstants.controlUpdateRetryDelay);
-
-        final stateResult = await getStoveState(stoveId);
-        if (stateResult.isRight()) {
-          // Successfully confirmed - return new state
-          return stateResult;
-        }
-      }
-
-      // Timeout waiting for confirmation
-      return const Left(ServerFailure('Control update not confirmed'));
     } on SessionExpiredException {
       return const Left(AuthFailure('Session expired'));
+    } on RateLimitException catch (e) {
+      final waitSeconds = (e.waitTimeMs / 1000).ceil();
+      return Left(NetworkFailure('Rate limited: Please wait $waitSeconds seconds'));
     } on ControlUpdateException catch (e) {
       return Left(ServerFailure(e.message));
     } on NetworkException catch (e) {
