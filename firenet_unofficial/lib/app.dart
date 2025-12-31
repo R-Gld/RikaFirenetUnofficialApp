@@ -80,26 +80,31 @@ class BiometricGateWrapper extends ConsumerStatefulWidget {
 }
 
 class _BiometricGateWrapperState extends ConsumerState<BiometricGateWrapper> {
-  bool _biometricUnlocked = false;
+  bool _biometricPassed = false;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    // Check if biometric is enabled on initial load
+    // Wait for next frame to let provider initialize
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final biometricSettings = ref.read(biometricSettingsProvider);
-      if (!biometricSettings.isEnabled) {
-        // Biometric not enabled, proceed directly to home
-        setState(() {
-          _biometricUnlocked = true;
+      if (mounted) {
+        // Small delay to ensure provider has loaded from SharedPreferences
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted) {
+            setState(() {
+              _isInitialized = true;
+            });
+          }
         });
       }
     });
   }
 
   void _onBiometricSuccess() {
+    if (!mounted) return;
     setState(() {
-      _biometricUnlocked = true;
+      _biometricPassed = true;
     });
   }
 
@@ -112,8 +117,17 @@ class _BiometricGateWrapperState extends ConsumerState<BiometricGateWrapper> {
   Widget build(BuildContext context) {
     final biometricSettings = ref.watch(biometricSettingsProvider);
 
-    // If biometric is enabled and not yet unlocked, show lock screen
-    if (biometricSettings.isEnabled && !_biometricUnlocked) {
+    // Show loading while initializing
+    if (!_isInitialized) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
+
+    // If biometric is enabled and user hasn't passed authentication yet, show lock screen
+    if (biometricSettings.isEnabled && !_biometricPassed) {
       return BiometricLockScreen(
         onSuccess: _onBiometricSuccess,
         onFallbackToPassword: _onFallbackToPassword,
