@@ -120,11 +120,11 @@ class _NotificationOrchestratorState
           debugPrint('[NotificationOrchestrator] Stove list loading, will retry on next settings change');
         },
         error: (error, stack) {
-          debugPrint('[NotificationOrchestrator] Error getting stove list: $error');
+          debugPrint('[NotificationOrchestrator] Error getting stove list: ${error.runtimeType}');
         },
       );
     } catch (e) {
-      debugPrint('[NotificationOrchestrator] Error registering tasks: $e');
+      debugPrint('[NotificationOrchestrator] Error registering tasks: ${e.runtimeType}');
     }
   }
 }

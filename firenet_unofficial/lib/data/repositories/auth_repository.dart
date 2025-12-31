@@ -27,15 +27,17 @@ class AuthRepository {
     AuthCredentials credentials,
   ) async {
     try {
-      final sessionCookie = await _apiClient.authenticate(
+      final authResult = await _apiClient.authenticate(
         email: credentials.email,
         password: credentials.password,
       );
 
-      // Session typically expires in 30 days
-      final expiresAt = DateTime.now().add(const Duration(days: 30));
+      // Use actual cookie expiry from server, or fallback to 30 days if not provided
+      final expiresAt = authResult.expiresAt ??
+          DateTime.now().add(const Duration(days: 30));
+
       final session = SessionData(
-        sessionCookie: sessionCookie,
+        sessionCookie: authResult.sessionCookie,
         expiresAt: expiresAt,
       );
 

@@ -4,6 +4,15 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import '../../core/constants/api_constants.dart';
 import '../../core/errors/exceptions.dart';
+import '../../core/utils/cookie_parser.dart';
+
+/// Result of authentication containing session cookie and expiration
+class AuthResult {
+  final String sessionCookie;
+  final DateTime? expiresAt;
+
+  const AuthResult(this.sessionCookie, this.expiresAt);
+}
 
 /// HTTP client for Rika Firenet API
 ///
@@ -29,21 +38,23 @@ class RikaApiClient {
       _dio.interceptors.add(CookieManager(_cookieJar));
     }
 
-    // Add logging in debug mode
-    _dio.interceptors.add(
-      LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-        logPrint: (obj) => debugPrint('[RikaAPI] $obj'),
-      ),
-    );
+    // Add logging in debug mode ONLY (security: prevent credential leakage in production)
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          logPrint: (obj) => debugPrint('[RikaAPI] $obj'),
+        ),
+      );
+    }
   }
 
   /// Authenticates with email and password
   ///
-  /// Returns session cookie value on success
+  /// Returns [AuthResult] containing session cookie and expiration on success
   /// Throws [AuthenticationException] if credentials are invalid
-  Future<String> authenticate({
+  Future<AuthResult> authenticate({
     required String email,
     required String password,
   }) async {
@@ -80,8 +91,9 @@ class RikaApiClient {
         ),
       );
 
-      // Extract session cookie
+      // Extract session cookie and expiration
       String sessionCookieValue;
+      DateTime? expiresAt;
 
       if (kIsWeb) {
         // On web, cookies are managed by the browser
@@ -95,11 +107,13 @@ class RikaApiClient {
         );
 
         // Parse cookie value from header (format: "connect.sid=s%3A...")
-        final cookieParts = sessionCookieHeader.split(';').first.split('=');
-        if (cookieParts.length != 2) {
+        sessionCookieValue = CookieParser.extractSessionCookie(sessionCookieHeader) ?? '';
+        if (sessionCookieValue.isEmpty) {
           throw const AuthenticationException('Invalid cookie format');
         }
-        sessionCookieValue = cookieParts[1];
+
+        // Parse expiration from Set-Cookie header
+        expiresAt = CookieParser.extractCookieExpiry(sessionCookieHeader);
       } else {
         // On mobile/desktop, use CookieJar
         final cookies = await _cookieJar.loadForRequest(
@@ -113,9 +127,12 @@ class RikaApiClient {
           ),
         );
         sessionCookieValue = sessionCookie.value;
+
+        // Extract expiration from cookie
+        expiresAt = sessionCookie.expires;
       }
 
-      return sessionCookieValue;
+      return AuthResult(sessionCookieValue, expiresAt);
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
