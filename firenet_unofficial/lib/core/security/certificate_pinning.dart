@@ -9,14 +9,12 @@ import 'package:flutter/foundation.dart';
 /// to prevent MITM attacks
 class CertificatePinningValidator {
   // SHA-256 hash of www.rika-firenet.com public key
-  // TODO: Update with actual certificate hash using:
-  // openssl s_client -connect www.rika-firenet.com:443 -showcerts | \
-  // openssl x509 -pubkey -noout | \
-  // openssl pkey -pubin -outform DER | \
-  // openssl dgst -sha256 -binary | \
-  // openssl enc -base64
+  // Generated on 2025-12-31
+  // Command: echo | openssl s_client -connect www.rika-firenet.com:443 -servername www.rika-firenet.com 2>/dev/null | \
+  //          openssl x509 -pubkey -noout | openssl pkey -pubin -outform DER | \
+  //          openssl dgst -sha256 -binary | openssl enc -base64
   static const List<String> _pinnedPublicKeyHashes = [
-    'PLACEHOLDER_HASH_UPDATE_WITH_REAL_CERTIFICATE_HASH',
+    'mAXiOaBzLsq4NP7qbVl62bHRXvzdVhKPxfHXAYMWAY4=',  // Current certificate (valid as of 2025-12-31)
     // Add backup/future key here when certificate rotation is planned
   ];
 
