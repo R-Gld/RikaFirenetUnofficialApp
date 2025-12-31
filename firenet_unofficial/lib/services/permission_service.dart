@@ -32,7 +32,7 @@ class PermissionService {
 
       return granted ?? false;
     } catch (e) {
-      debugPrint('[PermissionService] Error requesting notification permission: $e');
+      debugPrint('[PermissionService] Error requesting notification permission: ${e.runtimeType}');
       return false;
     }
   }
@@ -56,7 +56,7 @@ class PermissionService {
       final bool? granted = await androidPlugin.areNotificationsEnabled();
       return granted ?? false;
     } catch (e) {
-      debugPrint('[PermissionService] Error checking notification permission: $e');
+      debugPrint('[PermissionService] Error checking notification permission: ${e.runtimeType}');
       return false;
     }
   }

@@ -12,6 +12,7 @@ import '../data/models/notification_settings.dart';
 import '../data/models/stove_state.dart';
 import '../data/repositories/notification_settings_repository.dart';
 import '../data/repositories/notification_state_repository.dart';
+import '../core/constants/storage_keys.dart';
 import 'notification_change_detector.dart';
 import 'notification_service.dart';
 import 'stove_field_descriptor_service.dart';
@@ -41,8 +42,10 @@ void backgroundTaskCallback() {
       debugPrint('[BG-WORKER] Task completed: ${success ? "SUCCESS" : "FAILED"}');
       return success;
     } catch (e, stackTrace) {
-      debugPrint('[BG-WORKER] ERROR: $e');
-      debugPrint('[BG-WORKER] Stack trace: $stackTrace');
+      debugPrint('[BG-WORKER] ERROR: ${e.runtimeType}');
+      if (kDebugMode) {
+        debugPrint('[BG-WORKER] Stack trace: $stackTrace');
+      }
       return false;
     }
   });
@@ -97,7 +100,7 @@ class BackgroundTaskHandler {
           // Retry fetch
           stoveData = await apiClient.getStoveStatus(stoveId);
         } catch (e) {
-          debugPrint('[BG-WORKER] ERROR: Reauthentication failed: $e');
+          debugPrint('[BG-WORKER] ERROR: Reauthentication failed: ${e.runtimeType}');
           await _sendAuthErrorNotification();
           return false;
         }
@@ -114,7 +117,7 @@ class BackgroundTaskHandler {
         await widgetService.updateWidget(fullStoveData);
         debugPrint('[BG-WORKER] Home widget updated');
       } catch (e) {
-        debugPrint('[BG-WORKER] WARNING: Failed to update widget: $e');
+        debugPrint('[BG-WORKER] WARNING: Failed to update widget: ${e.runtimeType}');
         // Don't fail the whole task if widget update fails
       }
 
@@ -162,8 +165,10 @@ class BackgroundTaskHandler {
 
       return true;
     } catch (e, stackTrace) {
-      debugPrint('[BG-WORKER] ERROR in execute: $e');
-      debugPrint('[BG-WORKER] Stack trace: $stackTrace');
+      debugPrint('[BG-WORKER] ERROR in execute: ${e.runtimeType}');
+      if (kDebugMode) {
+        debugPrint('[BG-WORKER] Stack trace: $stackTrace');
+      }
       return false;
     }
   }
@@ -172,7 +177,7 @@ class BackgroundTaskHandler {
   Future<AuthCredentials?> _loadCredentials() async {
     try {
       const storage = FlutterSecureStorage();
-      final credentialsJson = await storage.read(key: 'rika_credentials');
+      final credentialsJson = await storage.read(key: StorageKeys.credentials);
 
       if (credentialsJson == null) {
         return null;
@@ -181,7 +186,7 @@ class BackgroundTaskHandler {
       final json = jsonDecode(credentialsJson) as Map<String, dynamic>;
       return AuthCredentials.fromJson(json);
     } catch (e) {
-      debugPrint('[BG-WORKER] ERROR loading credentials: $e');
+      debugPrint('[BG-WORKER] ERROR loading credentials: ${e.runtimeType}');
       return null;
     }
   }
@@ -208,7 +213,7 @@ class BackgroundTaskHandler {
         final value = StoveFieldDescriptorService.getFieldValue(sensors, fieldName);
         fieldValues[fieldName] = value;
       } catch (e) {
-        debugPrint('[BG-WORKER] WARNING: Could not get value for field $fieldName: $e');
+        debugPrint('[BG-WORKER] WARNING: Could not get value for field $fieldName: ${e.runtimeType}');
       }
     }
 
@@ -226,7 +231,7 @@ class BackgroundTaskHandler {
       await notificationService.initialize();
       await notificationService.sendAuthErrorNotification();
     } catch (e) {
-      debugPrint('[BG-WORKER] ERROR sending auth error notification: $e');
+      debugPrint('[BG-WORKER] ERROR sending auth error notification: ${e.runtimeType}');
     }
   }
 }

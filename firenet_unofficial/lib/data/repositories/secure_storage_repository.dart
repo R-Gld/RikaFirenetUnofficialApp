@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'dart:convert';
 import '../models/auth_credentials.dart';
 import '../../core/errors/failures.dart';
+import '../../core/constants/storage_keys.dart';
 
 /// Repository for securely storing and retrieving sensitive data
 ///
@@ -11,9 +12,6 @@ import '../../core/errors/failures.dart';
 /// in the device's secure storage (Keychain on iOS, KeyStore on Android)
 class SecureStorageRepository {
   final FlutterSecureStorage _storage;
-
-  static const String _credentialsKey = 'rika_credentials';
-  static const String _sessionDataKey = 'rika_session';
 
   SecureStorageRepository({FlutterSecureStorage? storage})
       : _storage = storage ?? const FlutterSecureStorage();
@@ -26,7 +24,7 @@ class SecureStorageRepository {
   ) async {
     try {
       final json = jsonEncode(credentials.toJson());
-      await _storage.write(key: _credentialsKey, value: json);
+      await _storage.write(key: StorageKeys.credentials, value: json);
       return const Right(unit);
     } catch (e) {
       return const Left(CacheFailure('Failed to save credentials'));
@@ -38,7 +36,7 @@ class SecureStorageRepository {
   /// Returns credentials if found, null if not found, or [CacheFailure] on error
   Future<Either<Failure, AuthCredentials?>> getCredentials() async {
     try {
-      final json = await _storage.read(key: _credentialsKey);
+      final json = await _storage.read(key: StorageKeys.credentials);
       if (json == null) return const Right(null);
 
       final map = jsonDecode(json) as Map<String, dynamic>;
@@ -54,7 +52,7 @@ class SecureStorageRepository {
   Future<Either<Failure, Unit>> saveSessionData(SessionData session) async {
     try {
       final json = jsonEncode(session.toJson());
-      await _storage.write(key: _sessionDataKey, value: json);
+      await _storage.write(key: StorageKeys.sessionData, value: json);
       return const Right(unit);
     } catch (e) {
       return const Left(CacheFailure('Failed to save session'));
@@ -66,7 +64,7 @@ class SecureStorageRepository {
   /// Returns session if found, null if not found, or [CacheFailure] on error
   Future<Either<Failure, SessionData?>> getSessionData() async {
     try {
-      final json = await _storage.read(key: _sessionDataKey);
+      final json = await _storage.read(key: StorageKeys.sessionData);
       if (json == null) return const Right(null);
 
       final map = jsonDecode(json) as Map<String, dynamic>;
@@ -81,8 +79,8 @@ class SecureStorageRepository {
   /// Returns [Unit] on success or [CacheFailure] on error
   Future<Either<Failure, Unit>> clearAll() async {
     try {
-      await _storage.delete(key: _credentialsKey);
-      await _storage.delete(key: _sessionDataKey);
+      await _storage.delete(key: StorageKeys.credentials);
+      await _storage.delete(key: StorageKeys.sessionData);
       return const Right(unit);
     } catch (e) {
       return const Left(CacheFailure('Failed to clear storage'));
