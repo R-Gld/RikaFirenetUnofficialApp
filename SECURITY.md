@@ -160,6 +160,34 @@ This app uses the Rika Firenet web interface API, which is:
 - **WorkManager limitations**: Android may restrict background tasks based on battery optimization settings
 - **Notification delays**: Background sync interval may not be perfectly precise due to OS restrictions
 
+### Certificate Pinning Maintenance
+
+The app uses SSL certificate pinning to prevent man-in-the-middle attacks. When RIKA renews their SSL certificate, the app requires an update:
+
+**Certificate Rotation Strategy**:
+
+1. **~30 days before expiry**: Add new certificate hash to the pinned list (keep old hash)
+2. **Release update**: Publish new app version with both hashes
+3. **Wait for adoption**: Monitor update rate (~90-95% of active users)
+4. **Remove old hash**: After sufficient adoption, remove the expired hash in next release
+
+**Current Certificate**:
+- Hash: `mAXiOaBzLsq4NP7qbVl62bHRXvzdVhKPxfHXAYMWAY4=`
+- Valid as of: 2025-12-31
+- Next review: Check certificate expiry periodically
+
+**To regenerate hash**:
+```bash
+echo | openssl s_client -connect www.rika-firenet.com:443 -servername www.rika-firenet.com 2>/dev/null | \
+openssl x509 -pubkey -noout | openssl pkey -pubin -outform DER | \
+openssl dgst -sha256 -binary | openssl enc -base64
+```
+
+**Impact if not updated**:
+- App will reject SSL connections to Rika Firenet
+- Users will see "Certificate pinning validation failed" errors
+- Authentication will fail until app is updated
+
 ---
 
 ## Security Audit History
