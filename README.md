@@ -665,8 +665,7 @@ If your stove malfunctions:
 ## 📞 Support
 
 - **GitHub Issues**: [https://github.com/R-Gld/RikaFirenetUnofficialApp/issues](https://github.com/R-Gld/RikaFirenetUnofficialApp/issues)
-- **Discussions**: [https://github.com/R-Gld/RikaFirenetUnofficialApp/discussions](https://github.com/R-Gld/RikaFirenetUnofficialApp/discussions)
-
+- 
 ---
 
 ## 🔗 Useful Links
@@ -685,6 +684,6 @@ If your stove malfunctions:
 
 **Made with ❤️ for the Rika stove owners community**
 
-**Version 1.1.0** | **7 Languages Supported** | **100+ Monitored Data Points**
+**7 Languages Supported** | **100+ Monitored Data Points**
 
 </div>
