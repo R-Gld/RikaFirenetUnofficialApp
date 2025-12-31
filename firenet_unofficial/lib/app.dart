@@ -50,6 +50,11 @@ class App extends ConsumerWidget {
       supportedLocales: const [
         Locale('en', ''),
         Locale('fr', ''),
+        Locale('da', ''),
+        Locale('de', ''),
+        Locale('es', ''),
+        Locale('it', ''),
+        Locale('nl', ''),
       ],
       locale: settings.appLocale, // Use saved locale or null for system default
 

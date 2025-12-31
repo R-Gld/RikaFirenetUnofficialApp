@@ -274,6 +274,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             value: Locale('fr'),
             child: Text('Français'),
           ),
+          const DropdownMenuItem(
+            value: Locale('da'),
+            child: Text('Dansk'),
+          ),
+          const DropdownMenuItem(
+            value: Locale('de'),
+            child: Text('Deutsch'),
+          ),
+          const DropdownMenuItem(
+            value: Locale('es'),
+            child: Text('Español'),
+          ),
+          const DropdownMenuItem(
+            value: Locale('it'),
+            child: Text('Italiano'),
+          ),
+          const DropdownMenuItem(
+            value: Locale('nl'),
+            child: Text('Nederlands'),
+          ),
         ],
         onChanged: (locale) {
           ref.read(settingsProvider.notifier).updateSetting(
