@@ -206,22 +206,6 @@ class _HeatingScheduleEditorState extends State<HeatingScheduleEditor> {
       ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: hasTime ? AppColors.primary : AppColors.textSecondary,
-              borderRadius: BorderRadius.circular(4),
-            ),
-            child: Text(
-              'Plage $slot',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(width: 12),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
