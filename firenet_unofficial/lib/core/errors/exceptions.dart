@@ -67,3 +67,25 @@ class TimeoutException extends RikaException {
     super.originalError,
   ]);
 }
+
+/// Thrown when rate limit is exceeded
+class RateLimitException extends RikaException {
+  final int waitTimeMs;
+
+  const RateLimitException([
+    super.message = 'Rate limit exceeded',
+    this.waitTimeMs = 0,
+    super.originalError,
+  ]);
+
+  @override
+  String toString() => 'RateLimitException: $message (wait ${waitTimeMs}ms)';
+}
+
+/// Thrown when certificate pinning fails
+class CertificatePinningException extends RikaException {
+  const CertificatePinningException([
+    super.message = 'Certificate pinning validation failed',
+    super.originalError,
+  ]);
+}
