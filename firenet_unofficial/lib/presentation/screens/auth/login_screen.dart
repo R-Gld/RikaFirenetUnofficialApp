@@ -38,8 +38,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         );
 
     // After login, check if we should prompt for biometric enrollment
+    if (!mounted) return;
     final authState = ref.read(authStateProvider);
-    if (authState.isAuthenticated && mounted) {
+    if (authState.isAuthenticated) {
       await _promptBiometricEnrollment();
     }
   }
