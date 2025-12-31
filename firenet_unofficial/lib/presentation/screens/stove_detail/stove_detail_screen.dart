@@ -301,23 +301,16 @@ class StoveDetailScreen extends ConsumerWidget {
                   const Divider(),
                   const SizedBox(height: 16),
 
-                  // Advanced controls section - only show if at least one control is enabled
-                  if (settings.showEcoMode ||
-                      settings.showRoomPowerRequest ||
-                      settings.showConvectionFans ||
-                      settings.showFrostProtection ||
-                      settings.showTemperatureOffset ||
-                      settings.showBakeTemperature) ...[
-                    Text(
-                      'Contrôles Avancés',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                    ),
-                    const SizedBox(height: 16),
+                  // Heating schedule section - always visible
+                  Text(
+                    'Plages Horaires',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  const SizedBox(height: 16),
 
-                    // Heating times configuration (at the top of advanced controls)
-                    HeatingTimesConfig(
+                  HeatingTimesConfig(
                     active: data.controls.heatingTimesActiveForComfort,
                     setBackTemperature: int.tryParse(data.controls.setBackTemperature) ?? 16,
                     schedule: {
@@ -341,7 +334,25 @@ class StoveDetailScreen extends ConsumerWidget {
                     onScheduleChanged: (schedule) => _handleScheduleChange(ref, schedule),
                     enabled: data.controls.onOff && data.isOnline,
                   ),
-                  const SizedBox(height: 8),
+
+                  const SizedBox(height: 16),
+                  const Divider(),
+                  const SizedBox(height: 16),
+
+                  // Advanced controls section - only show if at least one control is enabled
+                  if (settings.showEcoMode ||
+                      settings.showRoomPowerRequest ||
+                      settings.showConvectionFans ||
+                      settings.showFrostProtection ||
+                      settings.showTemperatureOffset ||
+                      settings.showBakeTemperature) ...[
+                    Text(
+                      'Contrôles Avancés',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 16),
 
                   if (settings.showEcoMode) ...[
                     EcoModeToggle(
