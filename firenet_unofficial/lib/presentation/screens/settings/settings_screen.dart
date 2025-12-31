@@ -1,25 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../theme/app_colors.dart';
 import '../../../data/models/app_settings.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
-import '../../../providers/stove_providers.dart';
-import '../../../services/stove_field_descriptor_service.dart';
-import '../../../services/background_task_handler.dart';
-import '../../../services/permission_service.dart';
+import 'advanced_controls_settings_screen.dart';
+import 'notifications_settings_screen.dart';
+import 'info_panels_settings_screen.dart';
 
 /// Settings screen for customizing the UI
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  String _appVersion = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAppVersion();
+  }
+
+  Future<void> _loadAppVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final settings = ref.watch(settingsProvider);
+    final notifSettings = ref.watch(notificationSettingsProvider);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Paramètres'),
+        title: Text(l10n.settings),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -27,186 +51,120 @@ class SettingsScreen extends ConsumerWidget {
               await ref.read(settingsProvider.notifier).resetToDefaults();
               if (context.mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Paramètres réinitialisés par défaut'),
-                    duration: Duration(seconds: 2),
+                  SnackBar(
+                    content: Text(l10n.settingsResetToDefaults),
+                    duration: const Duration(seconds: 2),
                   ),
                 );
               }
             },
-            tooltip: 'Réinitialiser',
+            tooltip: l10n.reset,
           ),
         ],
       ),
       body: SafeArea(
         child: ListView(
           children: [
-          // Appearance section
-          _buildSectionHeader(context, 'Apparence'),
-          _buildThemeSelector(context, ref, settings),
+            // GitHub Card at top
+            _buildGitHubCard(context, l10n),
 
-          const Divider(height: 32),
+            const Divider(),
 
-          // Advanced controls section
-          _buildSectionHeader(context, 'Contrôles avancés'),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Mode ECO',
-            subtitle: 'Afficher le toggle mode économique',
-            value: settings.showEcoMode,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showEcoMode: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Plages horaires',
-            subtitle: 'Afficher la programmation hebdomadaire',
-            value: settings.showHeatingSchedule,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showHeatingSchedule: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Demande puissance pièce',
-            subtitle: 'Afficher le sélecteur de niveau 1-4',
-            value: settings.showRoomPowerRequest,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showRoomPowerRequest: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Ventilateurs de convection',
-            subtitle: 'Afficher les contrôles des 2 ventilateurs',
-            value: settings.showConvectionFans,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showConvectionFans: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Protection anti-gel',
-            subtitle: 'Afficher le contrôle de protection anti-gel',
-            value: settings.showFrostProtection,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showFrostProtection: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Calibration température',
-            subtitle: 'Afficher l\'offset de température -3 à +3°C',
-            value: settings.showTemperatureOffset,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showTemperatureOffset: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Température four',
-            subtitle: 'Afficher le contrôle de température du four',
-            value: settings.showBakeTemperature,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showBakeTemperature: value),
-                  );
-            },
-          ),
+            // Appearance Section (inline)
+            _buildSectionHeader(context, l10n.appearance),
+            _buildThemeSelector(context, ref, settings, l10n),
+            _buildLanguageSelector(context, ref, settings, l10n),
 
-          const Divider(height: 32),
+            const Divider(height: 32),
 
-          // Notifications section
-          _buildSectionHeader(context, 'Notifications en arrière-plan'),
-          _buildNotificationSection(context, ref),
+            // About Section (inline)
+            _buildSectionHeader(context, l10n.about),
+            _buildAboutInfo(context, l10n),
 
-          const Divider(height: 32),
+            const Divider(height: 32),
 
-          // Info panels section
-          _buildSectionHeader(context, 'Panneaux d\'information'),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Erreurs et warnings',
-            subtitle: 'Afficher le panneau d\'erreurs actives',
-            value: settings.showErrorWarningPanel,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showErrorWarningPanel: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Sécurité et diagnostics',
-            subtitle: 'Afficher le panneau sécurité (porte, WiFi, pression)',
-            value: settings.showSafetyStatusPanel,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showSafetyStatusPanel: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Informations capteurs',
-            subtitle: 'Afficher les données des capteurs',
-            value: settings.showSensorInfoPanel,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showSensorInfoPanel: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Informations sorties',
-            subtitle: 'Afficher l\'état des sorties (moteurs, ventilateurs)',
-            value: settings.showOutputsInfoPanel,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showOutputsInfoPanel: value),
-                  );
-            },
-          ),
-          _buildSwitchTile(
-            context,
-            ref,
-            title: 'Statistiques et système',
-            subtitle: 'Afficher les statistiques d\'utilisation',
-            value: settings.showStatisticsPanel,
-            onChanged: (value) {
-              ref.read(settingsProvider.notifier).updateSetting(
-                    (s) => s.copyWith(showStatisticsPanel: value),
-                  );
-            },
-          ),
+            // Submenu Navigation Items
+            _buildSubmenuTile(
+              context,
+              l10n: l10n,
+              title: l10n.advancedControls,
+              subtitle: l10n.configureAdvancedFeatures,
+              icon: Icons.tune,
+              onTap: () => _navigateToAdvancedControls(context),
+            ),
+            _buildSubmenuTile(
+              context,
+              l10n: l10n,
+              title: l10n.notifications,
+              subtitle: l10n.configureBackgroundNotifications,
+              icon: Icons.notifications,
+              trailing: Switch(
+                value: notifSettings.enabled,
+                onChanged: (value) {
+                  // Just toggle the master switch without navigating
+                  if (value) {
+                    _navigateToNotifications(context);
+                  } else {
+                    ref.read(notificationSettingsProvider.notifier).setEnabled(false);
+                  }
+                },
+              ),
+              onTap: () => _navigateToNotifications(context),
+            ),
+            _buildSubmenuTile(
+              context,
+              l10n: l10n,
+              title: l10n.informationPanels,
+              subtitle: l10n.toggleInfoPanelVisibility,
+              icon: Icons.info_outline,
+              onTap: () => _navigateToInfoPanels(context),
+            ),
 
-          const SizedBox(height: 32),
+            const SizedBox(height: 32),
+
+            // Version at bottom (non-clickable)
+            _buildVersionInfo(context, l10n),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGitHubCard(BuildContext context, AppLocalizations l10n) {
+    return Card(
+      margin: const EdgeInsets.all(16),
+      child: InkWell(
+        onTap: () => _launchGitHub(),
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              const Icon(Icons.code, size: 40, color: AppColors.primary),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      l10n.viewOnGitHub,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      'github.com/R-Gld/RikaFirenetUnofficialApp',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              const Icon(Icons.open_in_new, color: AppColors.primary),
+            ],
+          ),
         ),
       ),
     );
@@ -225,422 +183,40 @@ class SettingsScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildSwitchTile(
-    BuildContext context,
-    WidgetRef ref, {
-    required String title,
-    required String subtitle,
-    required bool value,
-    required ValueChanged<bool> onChanged,
-  }) {
-    return SwitchListTile(
-      title: Text(title),
-      subtitle: Text(
-        subtitle,
-        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: AppColors.textSecondary,
-            ),
-      ),
-      value: value,
-      onChanged: onChanged,
-    );
-  }
-
-  Widget _buildNotificationSection(BuildContext context, WidgetRef ref) {
-    final notifSettings = ref.watch(notificationSettingsProvider);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Master toggle
-        _buildSwitchTile(
-          context,
-          ref,
-          title: 'Activer les notifications',
-          subtitle: 'Surveiller les changements même quand l\'app est fermée',
-          value: notifSettings.enabled,
-          onChanged: (value) => _handleNotificationToggle(context, ref, value),
-        ),
-
-        // Polling interval slider
-        if (notifSettings.enabled) ...[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Intervalle de vérification : ${notifSettings.pollingIntervalMinutes} min',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Slider(
-                  value: notifSettings.pollingIntervalMinutes.toDouble(),
-                  min: 15,
-                  max: 60,
-                  divisions: 3, // 15, 30, 45, 60
-                  label: '${notifSettings.pollingIntervalMinutes} min',
-                  activeColor: AppColors.primary,
-                  onChanged: (value) {
-                    ref
-                        .read(notificationSettingsProvider.notifier)
-                        .setPollingInterval(value.toInt());
-                  },
-                ),
-                Text(
-                  'Les notifications peuvent être retardées selon l\'optimisation batterie',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                        fontStyle: FontStyle.italic,
-                      ),
-                ),
-              ],
-            ),
-          ),
-
-          const Divider(indent: 16, endIndent: 16),
-
-          // Field selector header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(
-              'Champs à surveiller (${notifSettings.watchedFields.length} sélectionnés)',
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ),
-
-          // Field selector by category
-          ..._buildFieldSelector(context, ref, notifSettings),
-
-          const Divider(indent: 16, endIndent: 16, height: 24),
-
-          // Test now button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: OutlinedButton.icon(
-              onPressed: () => _testNow(context, ref),
-              icon: const Icon(Icons.play_arrow),
-              label: const Text('Tester maintenant'),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primary,
-              ),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-
-  List<Widget> _buildFieldSelector(
+  Widget _buildThemeSelector(
     BuildContext context,
     WidgetRef ref,
-    notifSettings,
+    AppSettings settings,
+    AppLocalizations l10n,
   ) {
-    final fieldsByCategory = StoveFieldDescriptorService.getFieldsByCategory();
-    final categories = [
-      FieldCategory.status,
-      FieldCategory.temperature,
-      FieldCategory.safety,
-      FieldCategory.motors,
-      FieldCategory.consumption,
-    ];
-
-    return categories.map((category) {
-      final fields = fieldsByCategory[category] ?? [];
-      if (fields.isEmpty) return const SizedBox.shrink();
-
-      return ExpansionTile(
-        title: Text(
-          StoveFieldDescriptorService.getCategoryName(category),
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-        ),
-        initiallyExpanded: false,
-        children: fields.map((field) {
-          final isWatched = notifSettings.watchedFields.contains(field.fieldName);
-          final hasThreshold = notifSettings.fieldThresholds.containsKey(field.fieldName);
-
-          return CheckboxListTile(
-            title: Text(field.displayName),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  field.description,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
-                ),
-                if (isWatched && field.supportsThreshold)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: TextButton.icon(
-                      onPressed: () => _showThresholdDialog(
-                        context,
-                        ref,
-                        field,
-                        notifSettings,
-                      ),
-                      icon: Icon(
-                        hasThreshold ? Icons.tune : Icons.add_circle_outline,
-                        size: 16,
-                      ),
-                      label: Text(
-                        hasThreshold ? 'Modifier le seuil' : 'Configurer un seuil',
-                        style: const TextStyle(fontSize: 12),
-                      ),
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppColors.primary,
-                        padding: EdgeInsets.zero,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            value: isWatched,
-            activeColor: AppColors.primary,
-            controlAffinity: ListTileControlAffinity.leading,
-            onChanged: (value) {
-              if (value == true) {
-                ref
-                    .read(notificationSettingsProvider.notifier)
-                    .addWatchedField(field.fieldName);
-              } else {
-                ref
-                    .read(notificationSettingsProvider.notifier)
-                    .removeWatchedField(field.fieldName);
-              }
-            },
-          );
-        }).toList(),
-      );
-    }).toList();
-  }
-
-  Future<void> _handleNotificationToggle(
-    BuildContext context,
-    WidgetRef ref,
-    bool value,
-  ) async {
-    if (value) {
-      // Enabling notifications - request permission first
-      final permissionService = PermissionService();
-      final granted = await permissionService.requestNotificationPermission();
-
-      if (!granted) {
-        // Permission denied
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Permission refusée. Activez les notifications dans les paramètres Android.',
-              ),
-              duration: Duration(seconds: 4),
-              backgroundColor: Colors.orange,
-            ),
-          );
-        }
-        return; // Don't enable notifications
-      }
-
-      // Permission granted - enable notifications
-      ref.read(notificationSettingsProvider.notifier).setEnabled(true);
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Notifications activées avec succès'),
-            duration: Duration(seconds: 2),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    } else {
-      // Disabling notifications - no permission needed
-      ref.read(notificationSettingsProvider.notifier).setEnabled(false);
-
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Notifications désactivées'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    }
-  }
-
-  Future<void> _testNow(BuildContext context, WidgetRef ref) async {
-    final stoveListAsync = ref.read(stoveListProvider);
-
-    stoveListAsync.when(
-      data: (stoves) async {
-        if (stoves.isEmpty) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Aucun poêle configuré'),
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
-          return;
-        }
-
-        // Show loading indicator
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Exécution du test en cours...'),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
-
-        // Execute background task for first stove
-        final firstStoveId = stoves.first.id;
-        final handler = BackgroundTaskHandler();
-
-        try {
-          final success = await handler.execute(firstStoveId);
-
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  success
-                      ? 'Test réussi ! Vérifiez les notifications.'
-                      : 'Échec du test. Vérifiez les logs.',
-                ),
-                duration: const Duration(seconds: 3),
-                backgroundColor: success ? Colors.green : Colors.red,
-              ),
-            );
-          }
-        } catch (e) {
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Erreur : $e'),
-                duration: const Duration(seconds: 3),
-                backgroundColor: Colors.red,
-              ),
-            );
-          }
-        }
-      },
-      loading: () {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Chargement de la liste des poêles...'),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
-      },
-      error: (error, stack) {
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Erreur : $error'),
-              duration: const Duration(seconds: 3),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
-    );
-  }
-
-  void _showThresholdDialog(
-    BuildContext context,
-    WidgetRef ref,
-    StoveFieldDescriptor field,
-    notifSettings,
-  ) {
-    // Get current threshold or defaults
-    final currentThreshold = notifSettings.fieldThresholds[field.fieldName];
-    double minValue = (currentThreshold?['min'] as num?)?.toDouble() ?? 0.0;
-    double maxValue = (currentThreshold?['max'] as num?)?.toDouble() ?? 100.0;
-
-    // Determine sensible ranges based on field type
-    double rangeMin = 0.0;
-    double rangeMax = 100.0;
-    int divisions = 100;
-
-    if (field.fieldName.contains('Temperature')) {
-      rangeMin = 0.0;
-      rangeMax = 100.0;
-      divisions = 100;
-    } else if (field.fieldName.contains('Fan') || field.fieldName.contains('Motor')) {
-      rangeMin = 0.0;
-      rangeMax = 5000.0;
-      divisions = 50;
-    } else if (field.fieldName.contains('Pressure')) {
-      rangeMin = -100.0;
-      rangeMax = 100.0;
-      divisions = 40;
-    } else if (field.fieldName.contains('Service')) {
-      rangeMin = 0.0;
-      rangeMax = 1000.0;
-      divisions = 100;
-    }
-
-    showDialog(
-      context: context,
-      builder: (context) => _ThresholdDialog(
-        field: field,
-        initialMin: minValue,
-        initialMax: maxValue,
-        rangeMin: rangeMin,
-        rangeMax: rangeMax,
-        divisions: divisions,
-        onSave: (min, max) {
-          ref
-              .read(notificationSettingsProvider.notifier)
-              .setFieldThreshold(field.fieldName, min, max);
-        },
-        onRemove: () {
-          ref
-              .read(notificationSettingsProvider.notifier)
-              .removeFieldThreshold(field.fieldName);
-        },
-      ),
-    );
-  }
-
-  Widget _buildThemeSelector(BuildContext context, WidgetRef ref, settings) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Thème',
+            l10n.theme,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
           ),
           const SizedBox(height: 12),
           SegmentedButton<AppThemeMode>(
-            segments: const [
+            segments: [
               ButtonSegment<AppThemeMode>(
                 value: AppThemeMode.light,
-                label: Text('Clair'),
-                icon: Icon(Icons.light_mode),
+                label: Text(l10n.light),
+                icon: const Icon(Icons.light_mode),
               ),
               ButtonSegment<AppThemeMode>(
                 value: AppThemeMode.dark,
-                label: Text('Sombre'),
-                icon: Icon(Icons.dark_mode),
+                label: Text(l10n.dark),
+                icon: const Icon(Icons.dark_mode),
               ),
               ButtonSegment<AppThemeMode>(
                 value: AppThemeMode.system,
-                label: Text('Système'),
-                icon: Icon(Icons.brightness_auto),
+                label: Text(l10n.system),
+                icon: const Icon(Icons.settings),
               ),
             ],
             selected: {settings.themeMode},
@@ -652,11 +228,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            settings.themeMode == AppThemeMode.system
-                ? 'Suit les paramètres système'
-                : settings.themeMode == AppThemeMode.light
-                    ? 'Mode clair activé'
-                    : 'Mode sombre activé',
+            _getThemeDescription(settings.themeMode, l10n),
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppColors.textSecondary,
                   fontStyle: FontStyle.italic,
@@ -666,127 +238,143 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
-}
 
-/// Threshold configuration dialog
-class _ThresholdDialog extends StatefulWidget {
-  final StoveFieldDescriptor field;
-  final double initialMin;
-  final double initialMax;
-  final double rangeMin;
-  final double rangeMax;
-  final int divisions;
-  final void Function(double min, double max) onSave;
-  final VoidCallback onRemove;
-
-  const _ThresholdDialog({
-    required this.field,
-    required this.initialMin,
-    required this.initialMax,
-    required this.rangeMin,
-    required this.rangeMax,
-    required this.divisions,
-    required this.onSave,
-    required this.onRemove,
-  });
-
-  @override
-  State<_ThresholdDialog> createState() => _ThresholdDialogState();
-}
-
-class _ThresholdDialogState extends State<_ThresholdDialog> {
-  late double _minValue;
-  late double _maxValue;
-
-  @override
-  void initState() {
-    super.initState();
-    _minValue = widget.initialMin;
-    _maxValue = widget.initialMax;
+  String _getThemeDescription(AppThemeMode mode, AppLocalizations l10n) {
+    switch (mode) {
+      case AppThemeMode.light:
+        return l10n.lightModeActive;
+      case AppThemeMode.dark:
+        return l10n.darkModeActive;
+      case AppThemeMode.system:
+        return l10n.systemDescription;
+    }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Seuil pour ${widget.field.displayName}'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.field.description,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.textSecondary,
-                ),
+  Widget _buildLanguageSelector(
+    BuildContext context,
+    WidgetRef ref,
+    AppSettings settings,
+    AppLocalizations l10n,
+  ) {
+    return ListTile(
+      title: Text(l10n.language),
+      subtitle: Text(l10n.languageSubtitle),
+      trailing: DropdownButton<Locale?>(
+        value: settings.appLocale,
+        items: [
+          DropdownMenuItem(
+            value: null,
+            child: Text(l10n.systemDefault),
           ),
-          const SizedBox(height: 16),
-          Text(
-            'Notifier si la valeur sort de cette plage :',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+          const DropdownMenuItem(
+            value: Locale('en'),
+            child: Text('English'),
           ),
-          const SizedBox(height: 16),
-          Text('Minimum : ${_minValue.toStringAsFixed(1)}'),
-          Slider(
-            value: _minValue,
-            min: widget.rangeMin,
-            max: widget.rangeMax,
-            divisions: widget.divisions,
-            label: _minValue.toStringAsFixed(1),
-            activeColor: AppColors.primary,
-            onChanged: (value) {
-              setState(() {
-                _minValue = value;
-                if (_minValue > _maxValue) {
-                  _maxValue = _minValue;
-                }
-              });
-            },
-          ),
-          const SizedBox(height: 8),
-          Text('Maximum : ${_maxValue.toStringAsFixed(1)}'),
-          Slider(
-            value: _maxValue,
-            min: widget.rangeMin,
-            max: widget.rangeMax,
-            divisions: widget.divisions,
-            label: _maxValue.toStringAsFixed(1),
-            activeColor: AppColors.primary,
-            onChanged: (value) {
-              setState(() {
-                _maxValue = value;
-                if (_maxValue < _minValue) {
-                  _minValue = _maxValue;
-                }
-              });
-            },
+          const DropdownMenuItem(
+            value: Locale('fr'),
+            child: Text('Français'),
           ),
         ],
+        onChanged: (locale) {
+          ref.read(settingsProvider.notifier).updateSetting(
+                (s) => s.copyWith(appLocale: locale),
+              );
+        },
       ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            widget.onRemove();
-            Navigator.of(context).pop();
-          },
-          child: const Text('Supprimer seuil'),
+    );
+  }
+
+  Widget _buildAboutInfo(BuildContext context, AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (_appVersion.isNotEmpty)
+            Text(
+              l10n.version(_appVersion),
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSubmenuTile(
+    BuildContext context, {
+    required AppLocalizations l10n,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    Widget? trailing,
+    required VoidCallback onTap,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: AppColors.primary),
+      title: Text(title),
+      subtitle: Text(
+        subtitle,
+        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: AppColors.textSecondary,
+            ),
+      ),
+      trailing: trailing ?? const Icon(Icons.chevron_right),
+      onTap: onTap,
+    );
+  }
+
+  Widget _buildVersionInfo(BuildContext context, AppLocalizations l10n) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text(
+          _appVersion.isNotEmpty ? l10n.version(_appVersion) : '',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppColors.textSecondary,
+              ),
         ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('Annuler'),
-        ),
-        FilledButton(
-          onPressed: () {
-            widget.onSave(_minValue, _maxValue);
-            Navigator.of(context).pop();
-          },
-          style: FilledButton.styleFrom(
-            backgroundColor: AppColors.primary,
+      ),
+    );
+  }
+
+  Future<void> _launchGitHub() async {
+    final url = Uri.parse('https://github.com/R-Gld/RikaFirenetUnofficialApp');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Could not open GitHub'),
+            duration: Duration(seconds: 2),
           ),
-          child: const Text('Enregistrer'),
-        ),
-      ],
+        );
+      }
+    }
+  }
+
+  void _navigateToAdvancedControls(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const AdvancedControlsSettingsScreen(),
+      ),
+    );
+  }
+
+  void _navigateToNotifications(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const NotificationsSettingsScreen(),
+      ),
+    );
+  }
+
+  void _navigateToInfoPanels(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const InfoPanelsSettingsScreen(),
+      ),
     );
   }
 }

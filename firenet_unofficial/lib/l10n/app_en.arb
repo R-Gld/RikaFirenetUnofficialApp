@@ -1,0 +1,335 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Rika Firenet",
+  "loginSubtitle": "Log in to your account",
+  "myStoves": "My Stoves",
+  "settings": "Settings",
+
+  "email": "Email",
+  "emailHint": "your@email.com",
+  "password": "Password",
+
+  "login": "Log In",
+  "refresh": "Refresh",
+  "testNow": "Test Now",
+  "editThreshold": "Edit Threshold",
+  "configureThreshold": "Configure Threshold",
+  "reset": "Reset",
+  "cancel": "Cancel",
+  "save": "Save",
+  "deleteThreshold": "Delete Threshold",
+  "turnOn": "Turn On",
+  "turnOff": "Turn Off",
+  "logout": "Logout",
+  "retry": "Retry",
+
+  "pleaseEnterEmail": "Please enter your email",
+  "invalidEmail": "Invalid email",
+  "pleaseEnterPassword": "Please enter your password",
+  "error": "Error",
+  "connectionError": "Connection error",
+
+  "logoutTitle": "Logout",
+  "logoutConfirmation": "Do you really want to log out?",
+  "turnOnStoveQuestion": "Turn on the stove?",
+  "turnOffStoveQuestion": "Turn off the stove?",
+  "turnOnStoveConfirmation": "Do you want to start the stove?",
+  "turnOffStoveConfirmation": "Do you want to turn off the stove?",
+  "thresholdDialogTitle": "Threshold for {fieldName}",
+  "@thresholdDialogTitle": {
+    "placeholders": {
+      "fieldName": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIfValueOutOfRange": "Notify if the value goes out of this range:",
+  "minimumLabel": "Minimum: {value}",
+  "@minimumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "maximumLabel": "Maximum: {value}",
+  "@maximumLabel": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+
+  "loadingStoves": "Loading stoves...",
+  "loadingStoveData": "Loading stove data...",
+  "noStoveFound": "No stove found",
+  "noStoveAssociated": "No stove is associated with your account",
+  "online": "Online",
+  "offlineSince": "Offline for {minutes} min",
+  "@offlineSince": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsEnabledSuccess": "Notifications enabled successfully",
+  "permissionDenied": "Permission denied. Enable notifications in Android settings.",
+  "notificationsDisabled": "Notifications disabled",
+  "testInProgress": "Running test...",
+  "testSuccess": "Test successful! Check notifications.",
+  "testFailed": "Test failed. Check logs.",
+  "noStoveConfigured": "No stove configured",
+  "loadingStoveList": "Loading stove list...",
+  "settingsResetToDefaults": "Settings reset to defaults",
+
+  "power": "Power",
+  "stoveOn": "Stove on",
+  "stoveOff": "Stove off",
+  "targetTemperature": "Target Temperature",
+  "turnOnStoveToAdjustTemperature": "Turn on the stove to adjust temperature",
+  "operatingMode": "Operating Mode",
+  "manualMode": "Manual",
+  "autoMode": "Auto",
+  "comfortMode": "Comfort",
+  "turnOnStoveToChangeMode": "Turn on the stove to change mode",
+  "heatingPower": "Heating Power",
+  "minPower": "Min (0%)",
+  "maxPower": "Max (100%)",
+  "turnOnStoveToAdjustPower": "Turn on the stove to adjust power",
+  "roomPowerRequest": "Room Power Request",
+  "roomPowerRequestDescription": "Power demand level for the room",
+  "minimal": "Minimal",
+  "maximum": "Maximum",
+  "turnOnStoveToAdjustRoomPower": "Turn on the stove to adjust room power",
+  "ecoMode": "ECO Mode",
+  "energySavingEnabled": "Energy saving enabled",
+  "energySavingDisabled": "Energy saving disabled",
+  "frostProtection": "Frost Protection",
+  "frostProtectionActive": "Protection active - starts if temp < {temp}°C",
+  "@frostProtectionActive": {
+    "placeholders": {
+      "temp": {
+        "type": "int"
+      }
+    }
+  },
+  "frostProtectionInactive": "Protection disabled",
+  "triggerTemperature": "Trigger temperature",
+  "minTemp": "Min (4°C)",
+  "maxTemp": "Max (10°C)",
+  "turnOnStoveToConfigureFrostProtection": "Turn on the stove to configure frost protection",
+  "convectionFans": "Convection Fans",
+  "fansStatus": "Fan 1: {fan1} | Fan 2: {fan2}",
+  "@fansStatus": {
+    "placeholders": {
+      "fan1": {
+        "type": "String"
+      },
+      "fan2": {
+        "type": "String"
+      }
+    }
+  },
+  "fanNumber": "Fan {number}",
+  "@fanNumber": {
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "active": "Active",
+  "inactive": "Inactive",
+  "speedLevel": "Speed level",
+  "minSpeed": "Min (0)",
+  "maxSpeed": "Max (5)",
+  "heatingArea": "Heating area",
+  "minArea": "-30",
+  "centerArea": "0",
+  "maxArea": "+30",
+  "turnOnStoveToConfigureFans": "Turn on the stove to configure fans",
+  "temperatureCalibration": "Temperature Calibration",
+  "temperatureCalibrationDescription": "Precision adjustment of temperature sensor",
+  "minOffset": "-3°C",
+  "zeroOffset": "0°C",
+  "maxOffset": "+3°C",
+  "turnOnStoveToCalibrate": "Turn on the stove to calibrate temperature",
+  "bakeTemperature": "Bake Temperature",
+  "bakeTemperatureDescription": "Wood-fired oven temperature setting",
+  "minBakeTemp": "100°C",
+  "maxBakeTemp": "250°C",
+  "turnOnStoveToAdjustBakeTemp": "Turn on the stove to adjust bake temperature",
+  "heatingSchedule": "Heating Schedule",
+  "activeInComfortMode": "Active in comfort mode",
+  "setpointTemperature": "Setpoint temperature",
+  "turnOnStoveToAdjustSchedule": "Turn on the stove to adjust schedule",
+
+  "quickControls": "Quick Controls",
+  "advancedControls": "Advanced Controls",
+  "appearance": "Appearance",
+  "backgroundNotifications": "Background Notifications",
+  "informationPanels": "Information Panels",
+  "watchedFields": "Watched fields ({count} selected)",
+  "@watchedFields": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pollingInterval": "Check interval: {minutes} min",
+  "@pollingInterval": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "systemDescription": "Follow system settings",
+  "lightModeActive": "Light mode active",
+  "darkModeActive": "Dark mode active",
+  "language": "Language",
+  "languageSubtitle": "Select app language",
+  "systemDefault": "System default",
+  "showEcoMode": "ECO mode",
+  "showEcoModeSubtitle": "Show energy saving mode toggle",
+  "showHeatingSchedule": "Heating schedule",
+  "showHeatingScheduleSubtitle": "Show weekly programming",
+  "showRoomPowerRequest": "Room power request",
+  "showRoomPowerRequestSubtitle": "Show level 1-4 selector",
+  "showConvectionFans": "Convection fans",
+  "showConvectionFansSubtitle": "Show controls for 2 fans",
+  "showFrostProtection": "Frost protection",
+  "showFrostProtectionSubtitle": "Show frost protection control",
+  "showTemperatureOffset": "Temperature calibration",
+  "showTemperatureOffsetSubtitle": "Show temperature offset -3 to +3°C",
+  "showBakeTemperature": "Bake temperature",
+  "showBakeTemperatureSubtitle": "Show oven temperature control",
+  "enableNotifications": "Enable notifications",
+  "monitorChangesInBackground": "Monitor changes even when app is closed",
+  "notificationDelayInfo": "Notifications may be delayed depending on battery optimization",
+  "showErrorWarningPanel": "Errors and warnings",
+  "showErrorWarningPanelSubtitle": "Show active errors panel",
+  "showSafetyStatusPanel": "Safety and diagnostics",
+  "showSafetyStatusPanelSubtitle": "Show safety panel (door, WiFi, pressure)",
+  "showSensorInfoPanel": "Sensor information",
+  "showSensorInfoPanelSubtitle": "Show sensor data",
+  "showOutputsInfoPanel": "Outputs information",
+  "showOutputsInfoPanelSubtitle": "Show outputs status (motors, fans)",
+  "showStatisticsPanel": "Statistics and system",
+  "showStatisticsPanelSubtitle": "Show usage statistics",
+
+  "noError": "No error",
+  "errorDetected": "Error detected",
+  "warning": "Warning",
+  "errorCode": "Error code:",
+  "warningCode": "Warning code:",
+  "consultManual": "Consult the user manual or contact technical service.",
+  "temperatureSensorFailure": "Temperature sensor failure",
+  "pressureSensorFailure": "Pressure sensor failure",
+  "feedMotorFailure": "Feed motor failure",
+  "fanFailure": "Fan failure",
+  "temperatureTooHigh": "Temperature too high",
+  "ignitionProblem": "Ignition problem",
+  "flameFailure": "Flame failure",
+  "doorOpen": "Door open",
+  "thermalOverload": "Thermal overload",
+  "combustionProblem": "Combustion problem",
+  "systemError": "System error (code: {code})",
+  "@systemError": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "noWarning": "No warning",
+  "pelletLevelLow": "Pellet level low",
+  "maintenanceNeeded": "Maintenance needed",
+  "cleaningRequired": "Cleaning required",
+  "ambientTemperatureHigh": "Ambient temperature high",
+  "weakWiFiSignal": "Weak WiFi signal",
+  "systemWarning": "System warning (code: {code})",
+  "@systemWarning": {
+    "placeholders": {
+      "code": {
+        "type": "int"
+      }
+    }
+  },
+
+  "currentTemperature": "Current Temperature",
+  "safetyAndDiagnostics": "Safety & Diagnostics",
+  "door": "Door",
+  "closed": "Closed",
+  "open": "Open",
+  "wifiSignal": "WiFi Signal",
+  "temperatureLimiter": "Temperature limiter",
+  "internalTemperatureOK": "Internal temperature OK",
+  "overheating": "Overheating",
+  "sensorInformation": "Sensor Information",
+  "flameTemperature": "Flame temperature",
+  "ambientTemperature": "Ambient temperature",
+  "externalRequest": "External request",
+  "yes": "Yes",
+  "no": "No",
+  "boardTemperature": "Board temperature",
+  "ovenTemperature": "Oven temperature",
+  "outputs": "Outputs",
+  "diagonalMotor": "Diagonal motor",
+  "horizontalMotor": "Horizontal motor",
+  "combustionGasFan": "Combustion gas fan",
+  "airDampers": "Air dampers",
+  "ignition": "Ignition",
+  "on": "ON",
+  "off": "OFF",
+  "current": "Current",
+  "statisticsAndSystem": "Statistics & System",
+  "usage": "Usage",
+  "pelletHours": "Pellet hours",
+  "woodHours": "Wood hours",
+  "onOffCycles": "ON/OFF cycles",
+  "ignitionCount": "Ignition count",
+  "consumption": "Consumption",
+  "totalConsumption": "Total consumption",
+  "beforeMaintenance": "Before maintenance",
+  "systemInformation": "System Information",
+  "model": "Model",
+  "manufacturer": "Manufacturer",
+  "serialNumber": "Serial number",
+  "firmwareVersion": "Firmware version",
+
+  "detailedScheduleEditor": "Detailed Schedule Editor",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "disableThisSlot": "Disable this slot",
+  "enableScheduleToEdit": "Enable heating schedule to edit programming",
+
+  "viewOnGitHub": "View on GitHub",
+  "about": "About",
+  "version": "Version {version}",
+  "@version": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "configureAdvancedFeatures": "Configure advanced features",
+  "configureBackgroundNotifications": "Configure background notifications",
+  "toggleInfoPanelVisibility": "Toggle info panel visibility",
+  "notifications": "Notifications"
+}
