@@ -36,7 +36,7 @@ class StoveStatusWidgetProvider : AppWidgetProvider() {
         val flameTemp = prefs.getString("flame_temperature", "--") ?: "--"
         val status = prefs.getString("status", "État inconnu") ?: "État inconnu"
         val pellets = prefs.getString("pellets_consumption", "--") ?: "--"
-        val lastUpdateIso = prefs.getString("last_update", null)
+        val lastUpdateTimestamp = prefs.getLong("last_update", 0)
         val isOnline = prefs.getBoolean("is_online", false)
         val hasError = prefs.getBoolean("has_error", false)
 
@@ -49,12 +49,11 @@ class StoveStatusWidgetProvider : AppWidgetProvider() {
         views.setTextViewText(R.id.pellets_consumption, "$pellets kg")
 
         // Format last update time
-        if (lastUpdateIso != null) {
+        if (lastUpdateTimestamp > 0) {
             try {
-                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val date = Date(lastUpdateTimestamp)
                 val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-                val date = inputFormat.parse(lastUpdateIso)
-                val formattedTime = if (date != null) outputFormat.format(date) else "--:--"
+                val formattedTime = outputFormat.format(date)
                 views.setTextViewText(R.id.last_update, "Dernière mise à jour: $formattedTime")
             } catch (e: Exception) {
                 views.setTextViewText(R.id.last_update, "Dernière mise à jour: --:--")

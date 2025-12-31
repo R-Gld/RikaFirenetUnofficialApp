@@ -34,9 +34,9 @@ class HomeWidgetService {
         'pellets_consumption',
         stoveData.sensors.parameterFeedRateTotal.toString(),
       );
-      await HomeWidget.saveWidgetData<String>(
+      await HomeWidget.saveWidgetData<int>(
         'last_update',
-        DateTime.now().toIso8601String(),
+        DateTime.now().millisecondsSinceEpoch,
       );
 
       // Update the widget
