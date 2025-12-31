@@ -674,6 +674,4 @@ If your stove malfunctions:
 
 **Made with ❤️ for the Rika stove owners community**
 
-**7 Languages Supported** | **100+ Monitored Data Points**
-
 </div>
