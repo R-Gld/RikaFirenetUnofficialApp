@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_settings.freezed.dart';
@@ -20,6 +21,9 @@ class AppSettings with _$AppSettings {
     // Theme settings
     @Default(AppThemeMode.system) AppThemeMode themeMode,
 
+    // Language settings (null = system default)
+    @LocaleConverter() Locale? appLocale,
+
     // Advanced controls visibility
     @Default(true) bool showEcoMode,
     @Default(true) bool showHeatingSchedule,
@@ -39,4 +43,24 @@ class AppSettings with _$AppSettings {
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>
       _$AppSettingsFromJson(json);
+}
+
+/// JSON converter for Locale
+class LocaleConverter implements JsonConverter<Locale?, String?> {
+  const LocaleConverter();
+
+  @override
+  Locale? fromJson(String? json) {
+    if (json == null || json.isEmpty) return null;
+    final parts = json.split('_');
+    return Locale(parts[0], parts.length > 1 ? parts[1] : '');
+  }
+
+  @override
+  String? toJson(Locale? object) {
+    if (object == null) return null;
+    return object.countryCode != null && object.countryCode!.isNotEmpty
+        ? '${object.languageCode}_${object.countryCode}'
+        : object.languageCode;
+  }
 }

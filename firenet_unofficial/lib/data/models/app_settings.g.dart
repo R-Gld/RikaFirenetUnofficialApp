@@ -11,6 +11,7 @@ _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
       themeMode:
           $enumDecodeNullable(_$AppThemeModeEnumMap, json['themeMode']) ??
           AppThemeMode.system,
+      appLocale: const LocaleConverter().fromJson(json['appLocale'] as String?),
       showEcoMode: json['showEcoMode'] as bool? ?? true,
       showHeatingSchedule: json['showHeatingSchedule'] as bool? ?? true,
       showRoomPowerRequest: json['showRoomPowerRequest'] as bool? ?? false,
@@ -28,6 +29,7 @@ _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$AppSettingsImplToJson(_$AppSettingsImpl instance) =>
     <String, dynamic>{
       'themeMode': _$AppThemeModeEnumMap[instance.themeMode]!,
+      'appLocale': const LocaleConverter().toJson(instance.appLocale),
       'showEcoMode': instance.showEcoMode,
       'showHeatingSchedule': instance.showHeatingSchedule,
       'showRoomPowerRequest': instance.showRoomPowerRequest,

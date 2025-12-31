@@ -23,7 +23,9 @@ AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) {
 mixin _$AppSettings {
   // Theme settings
   AppThemeMode get themeMode =>
-      throw _privateConstructorUsedError; // Advanced controls visibility
+      throw _privateConstructorUsedError; // Language settings (null = system default)
+  @LocaleConverter()
+  Locale? get appLocale => throw _privateConstructorUsedError; // Advanced controls visibility
   bool get showEcoMode => throw _privateConstructorUsedError;
   bool get showHeatingSchedule => throw _privateConstructorUsedError;
   bool get showRoomPowerRequest => throw _privateConstructorUsedError;
@@ -57,6 +59,7 @@ abstract class $AppSettingsCopyWith<$Res> {
   @useResult
   $Res call({
     AppThemeMode themeMode,
+    @LocaleConverter() Locale? appLocale,
     bool showEcoMode,
     bool showHeatingSchedule,
     bool showRoomPowerRequest,
@@ -88,6 +91,7 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
   @override
   $Res call({
     Object? themeMode = null,
+    Object? appLocale = freezed,
     Object? showEcoMode = null,
     Object? showHeatingSchedule = null,
     Object? showRoomPowerRequest = null,
@@ -107,6 +111,10 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
                 ? _value.themeMode
                 : themeMode // ignore: cast_nullable_to_non_nullable
                       as AppThemeMode,
+            appLocale: freezed == appLocale
+                ? _value.appLocale
+                : appLocale // ignore: cast_nullable_to_non_nullable
+                      as Locale?,
             showEcoMode: null == showEcoMode
                 ? _value.showEcoMode
                 : showEcoMode // ignore: cast_nullable_to_non_nullable
@@ -172,6 +180,7 @@ abstract class _$$AppSettingsImplCopyWith<$Res>
   @useResult
   $Res call({
     AppThemeMode themeMode,
+    @LocaleConverter() Locale? appLocale,
     bool showEcoMode,
     bool showHeatingSchedule,
     bool showRoomPowerRequest,
@@ -202,6 +211,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? themeMode = null,
+    Object? appLocale = freezed,
     Object? showEcoMode = null,
     Object? showHeatingSchedule = null,
     Object? showRoomPowerRequest = null,
@@ -221,6 +231,10 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
             ? _value.themeMode
             : themeMode // ignore: cast_nullable_to_non_nullable
                   as AppThemeMode,
+        appLocale: freezed == appLocale
+            ? _value.appLocale
+            : appLocale // ignore: cast_nullable_to_non_nullable
+                  as Locale?,
         showEcoMode: null == showEcoMode
             ? _value.showEcoMode
             : showEcoMode // ignore: cast_nullable_to_non_nullable
@@ -279,6 +293,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
 class _$AppSettingsImpl implements _AppSettings {
   const _$AppSettingsImpl({
     this.themeMode = AppThemeMode.system,
+    @LocaleConverter() this.appLocale,
     this.showEcoMode = true,
     this.showHeatingSchedule = true,
     this.showRoomPowerRequest = false,
@@ -300,6 +315,10 @@ class _$AppSettingsImpl implements _AppSettings {
   @override
   @JsonKey()
   final AppThemeMode themeMode;
+  // Language settings (null = system default)
+  @override
+  @LocaleConverter()
+  final Locale? appLocale;
   // Advanced controls visibility
   @override
   @JsonKey()
@@ -341,7 +360,7 @@ class _$AppSettingsImpl implements _AppSettings {
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, showEcoMode: $showEcoMode, showHeatingSchedule: $showHeatingSchedule, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
+    return 'AppSettings(themeMode: $themeMode, appLocale: $appLocale, showEcoMode: $showEcoMode, showHeatingSchedule: $showHeatingSchedule, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel)';
   }
 
   @override
@@ -351,6 +370,8 @@ class _$AppSettingsImpl implements _AppSettings {
             other is _$AppSettingsImpl &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
+            (identical(other.appLocale, appLocale) ||
+                other.appLocale == appLocale) &&
             (identical(other.showEcoMode, showEcoMode) ||
                 other.showEcoMode == showEcoMode) &&
             (identical(other.showHeatingSchedule, showHeatingSchedule) ||
@@ -382,6 +403,7 @@ class _$AppSettingsImpl implements _AppSettings {
   int get hashCode => Object.hash(
     runtimeType,
     themeMode,
+    appLocale,
     showEcoMode,
     showHeatingSchedule,
     showRoomPowerRequest,
@@ -413,6 +435,7 @@ class _$AppSettingsImpl implements _AppSettings {
 abstract class _AppSettings implements AppSettings {
   const factory _AppSettings({
     final AppThemeMode themeMode,
+    @LocaleConverter() final Locale? appLocale,
     final bool showEcoMode,
     final bool showHeatingSchedule,
     final bool showRoomPowerRequest,
@@ -432,7 +455,10 @@ abstract class _AppSettings implements AppSettings {
 
   // Theme settings
   @override
-  AppThemeMode get themeMode; // Advanced controls visibility
+  AppThemeMode get themeMode; // Language settings (null = system default)
+  @override
+  @LocaleConverter()
+  Locale? get appLocale; // Advanced controls visibility
   @override
   bool get showEcoMode;
   @override
