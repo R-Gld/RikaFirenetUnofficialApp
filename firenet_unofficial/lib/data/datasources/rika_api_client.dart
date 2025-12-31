@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../../core/constants/api_constants.dart';
 import '../../core/errors/exceptions.dart';
 import '../../core/utils/cookie_parser.dart';
+import '../../core/security/pinned_http_client.dart';
 
 /// Result of authentication containing session cookie and expiration
 class AuthResult {
@@ -32,6 +33,11 @@ class RikaApiClient {
         validateStatus: (status) => status != null && status < 500,
       ),
     );
+
+    // Add certificate pinning (not supported on web)
+    if (!kIsWeb) {
+      _dio.httpClientAdapter = PinnedHttpClientAdapter();
+    }
 
     // Add cookie manager for session handling (not supported on web)
     if (!kIsWeb) {
