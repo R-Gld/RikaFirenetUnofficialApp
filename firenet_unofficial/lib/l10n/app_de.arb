@@ -245,5 +245,23 @@
   "configureAdvancedFeatures": "Erweiterte Funktionen konfigurieren",
   "configureBackgroundNotifications": "Hintergrundbenachrichtigungen konfigurieren",
   "toggleInfoPanelVisibility": "Infopanel-Sichtbarkeit umschalten",
-  "notifications": "Benachrichtigungen"
+  "notifications": "Benachrichtigungen",
+
+  "errorRoomSensorSignalLost": "Raumsensorsignal verloren - Bitte auf MANUELLEN MODUS umschalten",
+  "errorPelletLidOpen": "Pelletsdeckel offen - Bitte Deckel schließen",
+  "errorDoorOpen": "Tür offen - Bitte Tür schließen",
+  "errorPelletLidOrDoorOpen": "Pelletsdeckel oder Tür offen",
+  "errorNotEnoughLowPressure": "Nicht genug Unterdruck - Abgasweg prüfen",
+  "errorAirFlapsCalibrating": "Luftklappen kalibrieren - Bitte warten",
+  "errorBurnBackFlapOpen": "Rückbrandklappe oder Rauchgasklappe offen",
+  "errorStoveNotInPosition": "Ofen nicht in Position - Platzierung prüfen",
+
+  "warningRoomSensorSignalLost": "Raumsensorsignal verloren",
+  "warningPelletLidOpen": "Pelletsdeckel offen",
+  "warningDoorOpen": "Tür offen",
+  "warningPelletLidOrDoorOpen": "Pelletsdeckel oder Tür offen",
+  "warningNotEnoughLowPressure": "Nicht genug Unterdruck",
+  "warningAirFlapsCalibrating": "Luftklappen kalibrieren",
+  "warningBurnBackFlapOpen": "Rückbrandklappe oder Rauchgasklappe offen",
+  "warningStoveNotInPosition": "Ofen nicht in Position"
 }

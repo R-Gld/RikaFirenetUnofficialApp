@@ -512,34 +512,32 @@ class AppLocalizationsDa extends AppLocalizations {
       'Se brugermanualen eller kontakt teknisk service.';
 
   @override
-  String get temperatureSensorFailure => 'Temperatursensorfejl';
+  String get errorRoomSensorSignalLost =>
+      'Rumsensorsignal tabt - Skift til MANUEL TILSTAND';
 
   @override
-  String get pressureSensorFailure => 'Tryksensorfejl';
+  String get errorPelletLidOpen => 'Pelletlåg åbent - Luk låget';
 
   @override
-  String get feedMotorFailure => 'Fodermotorfejl';
+  String get errorDoorOpen => 'Dør åben - Luk døren';
 
   @override
-  String get fanFailure => 'Blæserfejl';
+  String get errorPelletLidOrDoorOpen => 'Pelletlåg eller dør åben';
 
   @override
-  String get temperatureTooHigh => 'Temperatur for høj';
+  String get errorNotEnoughLowPressure =>
+      'Ikke nok undertryk - Kontroller udstødning';
 
   @override
-  String get ignitionProblem => 'Tændingsproblem';
+  String get errorAirFlapsCalibrating =>
+      'Kalibrerer luftklapper - Vent venligst';
 
   @override
-  String get flameFailure => 'Flammefejl';
+  String get errorBurnBackFlapOpen => 'Tilbageslagsklap eller røggasklap åben';
 
   @override
-  String get doorOpen => 'Dør åben';
-
-  @override
-  String get thermalOverload => 'Termisk overbelastning';
-
-  @override
-  String get combustionProblem => 'Forbrændingsproblem';
+  String get errorStoveNotInPosition =>
+      'Ovn ikke i position - Kontroller placering';
 
   @override
   String systemError(String code) {
@@ -550,19 +548,29 @@ class AppLocalizationsDa extends AppLocalizations {
   String get noWarning => 'Ingen advarsel';
 
   @override
-  String get pelletLevelLow => 'Pillerniveau lavt';
+  String get warningRoomSensorSignalLost => 'Rumsensorsignal tabt';
 
   @override
-  String get maintenanceNeeded => 'Vedligeholdelse nødvendig';
+  String get warningPelletLidOpen => 'Pelletlåg åbent';
 
   @override
-  String get cleaningRequired => 'Rengøring påkrævet';
+  String get warningDoorOpen => 'Dør åben';
 
   @override
-  String get ambientTemperatureHigh => 'Omgivelsestemperatur høj';
+  String get warningPelletLidOrDoorOpen => 'Pelletlåg eller dør åben';
 
   @override
-  String get weakWiFiSignal => 'Svagt WiFi-signal';
+  String get warningNotEnoughLowPressure => 'Ikke nok undertryk';
+
+  @override
+  String get warningAirFlapsCalibrating => 'Kalibrerer luftklapper';
+
+  @override
+  String get warningBurnBackFlapOpen =>
+      'Tilbageslagsklap eller røggasklap åben';
+
+  @override
+  String get warningStoveNotInPosition => 'Ovn ikke i position';
 
   @override
   String systemWarning(int code) {

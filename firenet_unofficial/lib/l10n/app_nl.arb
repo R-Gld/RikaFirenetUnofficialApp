@@ -332,5 +332,23 @@
   "configureAdvancedFeatures": "Geavanceerde functies configureren",
   "configureBackgroundNotifications": "Achtergrondmeldingen configureren",
   "toggleInfoPanelVisibility": "Zichtbaarheid informatiepaneel schakelen",
-  "notifications": "Meldingen"
+  "notifications": "Meldingen",
+
+  "errorRoomSensorSignalLost": "Kamersensor signaal verloren - Schakel over naar HANDMATIGE MODUS",
+  "errorPelletLidOpen": "Pelletdeksel open - Sluit het deksel",
+  "errorDoorOpen": "Deur open - Sluit de deur",
+  "errorPelletLidOrDoorOpen": "Pelletdeksel of deur open",
+  "errorNotEnoughLowPressure": "Onvoldoende onderdruk - Controleer afvoer",
+  "errorAirFlapsCalibrating": "Luchtkleppen kalibreren - Even geduld",
+  "errorBurnBackFlapOpen": "Terugbrandklep of rookgasklep open",
+  "errorStoveNotInPosition": "Kachel niet in positie - Controleer plaatsing",
+
+  "warningRoomSensorSignalLost": "Kamersensor signaal verloren",
+  "warningPelletLidOpen": "Pelletdeksel open",
+  "warningDoorOpen": "Deur open",
+  "warningPelletLidOrDoorOpen": "Pelletdeksel of deur open",
+  "warningNotEnoughLowPressure": "Onvoldoende onderdruk",
+  "warningAirFlapsCalibrating": "Luchtkleppen kalibreren",
+  "warningBurnBackFlapOpen": "Terugbrandklep of rookgasklep open",
+  "warningStoveNotInPosition": "Kachel niet in positie"
 }

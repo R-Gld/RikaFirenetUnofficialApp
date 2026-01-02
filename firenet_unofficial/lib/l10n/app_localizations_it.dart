@@ -522,34 +522,34 @@ class AppLocalizationsIt extends AppLocalizations {
       'Consulta il manuale utente o contatta il servizio tecnico.';
 
   @override
-  String get temperatureSensorFailure => 'Guasto sensore di temperatura';
+  String get errorRoomSensorSignalLost =>
+      'Segnale sensore ambiente perso - Passare a MODALITÀ MANUALE';
 
   @override
-  String get pressureSensorFailure => 'Guasto sensore di pressione';
+  String get errorPelletLidOpen =>
+      'Coperchio pellet aperto - Chiudere il coperchio';
 
   @override
-  String get feedMotorFailure => 'Guasto motore di alimentazione';
+  String get errorDoorOpen => 'Porta aperta - Chiudere la porta';
 
   @override
-  String get fanFailure => 'Guasto ventilatore';
+  String get errorPelletLidOrDoorOpen => 'Coperchio pellet o porta aperta';
 
   @override
-  String get temperatureTooHigh => 'Temperatura troppo alta';
+  String get errorNotEnoughLowPressure =>
+      'Pressione insufficiente - Controllare scarico';
 
   @override
-  String get ignitionProblem => 'Problema di accensione';
+  String get errorAirFlapsCalibrating =>
+      'Calibrazione alette aria - Attendere prego';
 
   @override
-  String get flameFailure => 'Guasto fiamma';
+  String get errorBurnBackFlapOpen =>
+      'Valvola antiritorno o gas combusti aperta';
 
   @override
-  String get doorOpen => 'Porta aperta';
-
-  @override
-  String get thermalOverload => 'Sovraccarico termico';
-
-  @override
-  String get combustionProblem => 'Problema di combustione';
+  String get errorStoveNotInPosition =>
+      'Stufa non in posizione - Controllare posizionamento';
 
   @override
   String systemError(String code) {
@@ -560,19 +560,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get noWarning => 'Nessun avviso';
 
   @override
-  String get pelletLevelLow => 'Livello pellet basso';
+  String get warningRoomSensorSignalLost => 'Segnale sensore ambiente perso';
 
   @override
-  String get maintenanceNeeded => 'Manutenzione necessaria';
+  String get warningPelletLidOpen => 'Coperchio pellet aperto';
 
   @override
-  String get cleaningRequired => 'Pulizia richiesta';
+  String get warningDoorOpen => 'Porta aperta';
 
   @override
-  String get ambientTemperatureHigh => 'Temperatura ambiente alta';
+  String get warningPelletLidOrDoorOpen => 'Coperchio pellet o porta aperta';
 
   @override
-  String get weakWiFiSignal => 'Segnale WiFi debole';
+  String get warningNotEnoughLowPressure => 'Pressione insufficiente';
+
+  @override
+  String get warningAirFlapsCalibrating => 'Calibrazione alette aria';
+
+  @override
+  String get warningBurnBackFlapOpen =>
+      'Valvola antiritorno o gas combusti aperta';
+
+  @override
+  String get warningStoveNotInPosition => 'Stufa non in posizione';
 
   @override
   String systemWarning(int code) {

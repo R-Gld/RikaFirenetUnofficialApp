@@ -519,34 +519,32 @@ class AppLocalizationsNl extends AppLocalizations {
       'Raadpleeg de gebruikershandleiding of neem contact op met de technische dienst.';
 
   @override
-  String get temperatureSensorFailure => 'Temperatuursensorfout';
+  String get errorRoomSensorSignalLost =>
+      'Kamersensor signaal verloren - Schakel over naar HANDMATIGE MODUS';
 
   @override
-  String get pressureSensorFailure => 'Druksensorfout';
+  String get errorPelletLidOpen => 'Pelletdeksel open - Sluit het deksel';
 
   @override
-  String get feedMotorFailure => 'Voedingsmotorfout';
+  String get errorDoorOpen => 'Deur open - Sluit de deur';
 
   @override
-  String get fanFailure => 'Ventilatorfout';
+  String get errorPelletLidOrDoorOpen => 'Pelletdeksel of deur open';
 
   @override
-  String get temperatureTooHigh => 'Temperatuur te hoog';
+  String get errorNotEnoughLowPressure =>
+      'Onvoldoende onderdruk - Controleer afvoer';
 
   @override
-  String get ignitionProblem => 'Ontstekingsprobleem';
+  String get errorAirFlapsCalibrating =>
+      'Luchtkleppen kalibreren - Even geduld';
 
   @override
-  String get flameFailure => 'Vlamstoring';
+  String get errorBurnBackFlapOpen => 'Terugbrandklep of rookgasklep open';
 
   @override
-  String get doorOpen => 'Deur open';
-
-  @override
-  String get thermalOverload => 'Thermische overbelasting';
-
-  @override
-  String get combustionProblem => 'Verbrandingsprobleem';
+  String get errorStoveNotInPosition =>
+      'Kachel niet in positie - Controleer plaatsing';
 
   @override
   String systemError(String code) {
@@ -557,19 +555,28 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noWarning => 'Geen waarschuwing';
 
   @override
-  String get pelletLevelLow => 'Pelletniveau laag';
+  String get warningRoomSensorSignalLost => 'Kamersensor signaal verloren';
 
   @override
-  String get maintenanceNeeded => 'Onderhoud nodig';
+  String get warningPelletLidOpen => 'Pelletdeksel open';
 
   @override
-  String get cleaningRequired => 'Reiniging vereist';
+  String get warningDoorOpen => 'Deur open';
 
   @override
-  String get ambientTemperatureHigh => 'Omgevingstemperatuur hoog';
+  String get warningPelletLidOrDoorOpen => 'Pelletdeksel of deur open';
 
   @override
-  String get weakWiFiSignal => 'Zwak WiFi-signaal';
+  String get warningNotEnoughLowPressure => 'Onvoldoende onderdruk';
+
+  @override
+  String get warningAirFlapsCalibrating => 'Luchtkleppen kalibreren';
+
+  @override
+  String get warningBurnBackFlapOpen => 'Terugbrandklep of rookgasklep open';
+
+  @override
+  String get warningStoveNotInPosition => 'Kachel niet in positie';
 
   @override
   String systemWarning(int code) {

@@ -1050,65 +1050,53 @@ abstract class AppLocalizations {
   /// **'Consult the user manual or contact technical service.'**
   String get consultManual;
 
-  /// No description provided for @temperatureSensorFailure.
+  /// No description provided for @errorRoomSensorSignalLost.
   ///
   /// In en, this message translates to:
-  /// **'Temperature sensor failure'**
-  String get temperatureSensorFailure;
+  /// **'Room sensor signal lost - Please switch to MANUAL MODE'**
+  String get errorRoomSensorSignalLost;
 
-  /// No description provided for @pressureSensorFailure.
+  /// No description provided for @errorPelletLidOpen.
   ///
   /// In en, this message translates to:
-  /// **'Pressure sensor failure'**
-  String get pressureSensorFailure;
+  /// **'Pellet lid open - Please close the pellet lid'**
+  String get errorPelletLidOpen;
 
-  /// No description provided for @feedMotorFailure.
+  /// No description provided for @errorDoorOpen.
   ///
   /// In en, this message translates to:
-  /// **'Feed motor failure'**
-  String get feedMotorFailure;
+  /// **'Door open - Please close the door'**
+  String get errorDoorOpen;
 
-  /// No description provided for @fanFailure.
+  /// No description provided for @errorPelletLidOrDoorOpen.
   ///
   /// In en, this message translates to:
-  /// **'Fan failure'**
-  String get fanFailure;
+  /// **'Pellet lid or door open'**
+  String get errorPelletLidOrDoorOpen;
 
-  /// No description provided for @temperatureTooHigh.
+  /// No description provided for @errorNotEnoughLowPressure.
   ///
   /// In en, this message translates to:
-  /// **'Temperature too high'**
-  String get temperatureTooHigh;
+  /// **'Not enough low pressure - Check exhaust'**
+  String get errorNotEnoughLowPressure;
 
-  /// No description provided for @ignitionProblem.
+  /// No description provided for @errorAirFlapsCalibrating.
   ///
   /// In en, this message translates to:
-  /// **'Ignition problem'**
-  String get ignitionProblem;
+  /// **'Air flaps calibrating - Please wait'**
+  String get errorAirFlapsCalibrating;
 
-  /// No description provided for @flameFailure.
+  /// No description provided for @errorBurnBackFlapOpen.
   ///
   /// In en, this message translates to:
-  /// **'Flame failure'**
-  String get flameFailure;
+  /// **'Burn back or flue gas flap open'**
+  String get errorBurnBackFlapOpen;
 
-  /// No description provided for @doorOpen.
+  /// No description provided for @errorStoveNotInPosition.
   ///
   /// In en, this message translates to:
-  /// **'Door open'**
-  String get doorOpen;
-
-  /// No description provided for @thermalOverload.
-  ///
-  /// In en, this message translates to:
-  /// **'Thermal overload'**
-  String get thermalOverload;
-
-  /// No description provided for @combustionProblem.
-  ///
-  /// In en, this message translates to:
-  /// **'Combustion problem'**
-  String get combustionProblem;
+  /// **'Stove not in position - Check stove placement'**
+  String get errorStoveNotInPosition;
 
   /// No description provided for @systemError.
   ///
@@ -1122,35 +1110,53 @@ abstract class AppLocalizations {
   /// **'No warning'**
   String get noWarning;
 
-  /// No description provided for @pelletLevelLow.
+  /// No description provided for @warningRoomSensorSignalLost.
   ///
   /// In en, this message translates to:
-  /// **'Pellet level low'**
-  String get pelletLevelLow;
+  /// **'Room sensor signal lost'**
+  String get warningRoomSensorSignalLost;
 
-  /// No description provided for @maintenanceNeeded.
+  /// No description provided for @warningPelletLidOpen.
   ///
   /// In en, this message translates to:
-  /// **'Maintenance needed'**
-  String get maintenanceNeeded;
+  /// **'Pellet lid open'**
+  String get warningPelletLidOpen;
 
-  /// No description provided for @cleaningRequired.
+  /// No description provided for @warningDoorOpen.
   ///
   /// In en, this message translates to:
-  /// **'Cleaning required'**
-  String get cleaningRequired;
+  /// **'Door open'**
+  String get warningDoorOpen;
 
-  /// No description provided for @ambientTemperatureHigh.
+  /// No description provided for @warningPelletLidOrDoorOpen.
   ///
   /// In en, this message translates to:
-  /// **'Ambient temperature high'**
-  String get ambientTemperatureHigh;
+  /// **'Pellet lid or door open'**
+  String get warningPelletLidOrDoorOpen;
 
-  /// No description provided for @weakWiFiSignal.
+  /// No description provided for @warningNotEnoughLowPressure.
   ///
   /// In en, this message translates to:
-  /// **'Weak WiFi signal'**
-  String get weakWiFiSignal;
+  /// **'Not enough low pressure'**
+  String get warningNotEnoughLowPressure;
+
+  /// No description provided for @warningAirFlapsCalibrating.
+  ///
+  /// In en, this message translates to:
+  /// **'Air flaps calibrating'**
+  String get warningAirFlapsCalibrating;
+
+  /// No description provided for @warningBurnBackFlapOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Burn back or flue gas flap open'**
+  String get warningBurnBackFlapOpen;
+
+  /// No description provided for @warningStoveNotInPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Stove not in position'**
+  String get warningStoveNotInPosition;
 
   /// No description provided for @systemWarning.
   ///

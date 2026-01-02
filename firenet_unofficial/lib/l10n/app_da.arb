@@ -245,5 +245,23 @@
   "configureAdvancedFeatures": "Konfigurer avancerede funktioner",
   "configureBackgroundNotifications": "Konfigurer baggrundsnotifikationer",
   "toggleInfoPanelVisibility": "Skift infopanelsynlighed",
-  "notifications": "Notifikationer"
+  "notifications": "Notifikationer",
+
+  "errorRoomSensorSignalLost": "Rumsensorsignal tabt - Skift til MANUEL TILSTAND",
+  "errorPelletLidOpen": "Pelletlåg åbent - Luk låget",
+  "errorDoorOpen": "Dør åben - Luk døren",
+  "errorPelletLidOrDoorOpen": "Pelletlåg eller dør åben",
+  "errorNotEnoughLowPressure": "Ikke nok undertryk - Kontroller udstødning",
+  "errorAirFlapsCalibrating": "Kalibrerer luftklapper - Vent venligst",
+  "errorBurnBackFlapOpen": "Tilbageslagsklap eller røggasklap åben",
+  "errorStoveNotInPosition": "Ovn ikke i position - Kontroller placering",
+
+  "warningRoomSensorSignalLost": "Rumsensorsignal tabt",
+  "warningPelletLidOpen": "Pelletlåg åbent",
+  "warningDoorOpen": "Dør åben",
+  "warningPelletLidOrDoorOpen": "Pelletlåg eller dør åben",
+  "warningNotEnoughLowPressure": "Ikke nok undertryk",
+  "warningAirFlapsCalibrating": "Kalibrerer luftklapper",
+  "warningBurnBackFlapOpen": "Tilbageslagsklap eller røggasklap åben",
+  "warningStoveNotInPosition": "Ovn ikke i position"
 }
