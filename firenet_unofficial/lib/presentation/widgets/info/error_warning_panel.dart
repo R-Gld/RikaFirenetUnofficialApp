@@ -17,54 +17,64 @@ class ErrorWarningPanel extends StatelessWidget {
   });
 
   /// Get error description from error code
+  /// Error codes are bit flags extracted from firmware V2.29
   String _getErrorDescription(BuildContext context, int code, int subCode) {
     final l10n = AppLocalizations.of(context)!;
-    // Basic mapping of known error codes
-    // Note: Complete mapping would require documentation from Rika
+
+    // Bit flags mapping from firmware analysis
     switch (code) {
       case 0:
         return l10n.noError;
       case 1:
-        return l10n.temperatureSensorFailure;
+        return l10n.errorRoomSensorSignalLost;
       case 2:
-        return l10n.pressureSensorFailure;
-      case 3:
-        return l10n.feedMotorFailure;
+        return l10n.errorPelletLidOpen;
       case 4:
-        return l10n.fanFailure;
-      case 5:
-        return l10n.temperatureTooHigh;
-      case 6:
-        return l10n.ignitionProblem;
-      case 7:
-        return l10n.flameFailure;
+        return l10n.errorDoorOpen;
       case 8:
-        return l10n.doorOpen;
-      case 9:
-        return l10n.thermalOverload;
-      case 10:
-        return l10n.combustionProblem;
+        return l10n.errorPelletLidOrDoorOpen;
+      case 16:
+        return l10n.errorPelletLidOpen; // Same as code 2, escalated from warning
+      case 32:
+        return l10n.errorNotEnoughLowPressure;
+      case 64:
+        return l10n.errorAirFlapsCalibrating;
+      case 128:
+        return l10n.errorBurnBackFlapOpen;
+      case 256:
+        return l10n.errorStoveNotInPosition;
       default:
         return l10n.systemError('$code${subCode != 0 ? "/$subCode" : ""}');
     }
   }
 
   /// Get warning description from warning code
+  /// Warning codes are bit flags extracted from firmware V2.29
   String _getWarningDescription(BuildContext context, int code) {
     final l10n = AppLocalizations.of(context)!;
+
+    // Bit flags mapping from firmware analysis
     switch (code) {
       case 0:
         return l10n.noWarning;
       case 1:
-        return l10n.pelletLevelLow;
+        return l10n.warningRoomSensorSignalLost;
       case 2:
-        return l10n.maintenanceNeeded;
-      case 3:
-        return l10n.cleaningRequired;
+        return l10n.warningPelletLidOpen;
       case 4:
-        return l10n.ambientTemperatureHigh;
-      case 5:
-        return l10n.weakWiFiSignal;
+        return l10n.warningDoorOpen;
+      case 8:
+        return l10n.warningPelletLidOrDoorOpen;
+      case 16:
+        return l10n.warningPelletLidOpen; // Same as code 2
+      case 32:
+        return l10n.warningNotEnoughLowPressure;
+      case 64:
+        return l10n.warningAirFlapsCalibrating;
+      case 128:
+        return l10n.warningBurnBackFlapOpen;
+      case 256:
+        return l10n.warningStoveNotInPosition;
       default:
         return l10n.systemWarning(code);
     }
