@@ -579,6 +579,9 @@ class AppLocalizationsDa extends AppLocalizations {
   String get door => 'Dør';
 
   @override
+  String get cover => 'Afdækning';
+
+  @override
   String get closed => 'Lukket';
 
   @override

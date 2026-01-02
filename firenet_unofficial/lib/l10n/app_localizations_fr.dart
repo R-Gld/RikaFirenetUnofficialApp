@@ -482,7 +482,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get showSafetyStatusPanelSubtitle =>
-      'Afficher le panneau sécurité (porte, WiFi, pression)';
+      'Afficher le panneau sécurité (porte, capot, WiFi, temp)';
 
   @override
   String get showSensorInfoPanel => 'Informations capteurs';
@@ -589,6 +589,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get door => 'Porte';
+
+  @override
+  String get cover => 'Capot';
 
   @override
   String get closed => 'Fermée';

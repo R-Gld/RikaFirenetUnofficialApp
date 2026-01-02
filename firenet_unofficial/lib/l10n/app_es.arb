@@ -269,6 +269,7 @@
   "currentTemperature": "Temperatura actual",
   "safetyAndDiagnostics": "Seguridad y diagnóstico",
   "door": "Puerta",
+  "cover": "Cubierta",
   "closed": "Cerrada",
   "open": "Abierta",
   "wifiSignal": "Señal WiFi",

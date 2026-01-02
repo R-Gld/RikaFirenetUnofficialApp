@@ -59,6 +59,18 @@ class SafetyStatusPanel extends StatelessWidget {
                 ),
                 const Divider(),
 
+                // Cover/Hood status
+                _buildStatusRow(
+                  context,
+                  icon: Icons.inventory_2,
+                  label: l10n.cover,
+                  value: sensors.inputCover ? l10n.closed : l10n.open,
+                  isGood: sensors.inputCover,
+                  goodColor: AppColors.statusActive,
+                  badColor: AppColors.statusWarning,
+                ),
+                const Divider(),
+
                 // WiFi signal
                 _buildWifiRow(
                   context,

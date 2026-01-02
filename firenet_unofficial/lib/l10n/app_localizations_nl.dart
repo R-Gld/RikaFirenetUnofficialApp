@@ -586,6 +586,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get door => 'Deur';
 
   @override
+  String get cover => 'Deksel';
+
+  @override
   String get closed => 'Gesloten';
 
   @override

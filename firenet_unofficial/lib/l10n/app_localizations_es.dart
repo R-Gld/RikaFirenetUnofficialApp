@@ -592,6 +592,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get door => 'Puerta';
 
   @override
+  String get cover => 'Cubierta';
+
+  @override
   String get closed => 'Cerrada';
 
   @override

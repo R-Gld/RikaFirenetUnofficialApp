@@ -975,7 +975,7 @@ abstract class AppLocalizations {
   /// No description provided for @showSafetyStatusPanelSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Show safety panel (door, WiFi, pressure)'**
+  /// **'Show safety panel (door, cover, WiFi, temp)'**
   String get showSafetyStatusPanelSubtitle;
 
   /// No description provided for @showSensorInfoPanel.
@@ -1175,6 +1175,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Door'**
   String get door;
+
+  /// No description provided for @cover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get cover;
 
   /// No description provided for @closed.
   ///

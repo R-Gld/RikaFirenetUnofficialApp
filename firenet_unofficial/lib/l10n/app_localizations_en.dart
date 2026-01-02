@@ -475,7 +475,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get showSafetyStatusPanelSubtitle =>
-      'Show safety panel (door, WiFi, pressure)';
+      'Show safety panel (door, cover, WiFi, temp)';
 
   @override
   String get showSensorInfoPanel => 'Sensor information';
@@ -581,6 +581,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get door => 'Door';
+
+  @override
+  String get cover => 'Cover';
 
   @override
   String get closed => 'Closed';
