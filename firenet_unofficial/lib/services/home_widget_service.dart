@@ -1,13 +1,21 @@
+import 'dart:io';
 import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
 import '../data/models/stove_state.dart';
 
 /// Service for managing home screen widget updates
+/// Note: Widget is only available on Android
 class HomeWidgetService {
   final Logger _logger = Logger();
 
   /// Updates the home widget with stove data
   Future<void> updateWidget(StoveData stoveData) async {
+    // Widget is only supported on Android
+    if (!Platform.isAndroid) {
+      _logger.d('Widget update skipped: not supported on this platform');
+      return;
+    }
+
     try {
       _logger.d('Updating widget with data for ${stoveData.name}');
 
@@ -57,6 +65,11 @@ class HomeWidgetService {
 
   /// Updates widget with error state
   Future<void> updateWidgetError(String errorMessage) async {
+    // Widget is only supported on Android
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     try {
       await HomeWidget.saveWidgetData<String>('error_message', errorMessage);
       await HomeWidget.saveWidgetData<bool>('has_error', true);
@@ -74,6 +87,11 @@ class HomeWidgetService {
 
   /// Clears widget data
   Future<void> clearWidget() async {
+    // Widget is only supported on Android
+    if (!Platform.isAndroid) {
+      return;
+    }
+
     try {
       await HomeWidget.saveWidgetData<String>('stove_name', 'Non connecté');
       await HomeWidget.saveWidgetData<bool>('has_error', false);
