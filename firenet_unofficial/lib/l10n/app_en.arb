@@ -233,16 +233,16 @@
   "errorCode": "Error code:",
   "warningCode": "Warning code:",
   "consultManual": "Consult the user manual or contact technical service.",
-  "temperatureSensorFailure": "Temperature sensor failure",
-  "pressureSensorFailure": "Pressure sensor failure",
-  "feedMotorFailure": "Feed motor failure",
-  "fanFailure": "Fan failure",
-  "temperatureTooHigh": "Temperature too high",
-  "ignitionProblem": "Ignition problem",
-  "flameFailure": "Flame failure",
-  "doorOpen": "Door open",
-  "thermalOverload": "Thermal overload",
-  "combustionProblem": "Combustion problem",
+
+  "errorRoomSensorSignalLost": "Room sensor signal lost - Please switch to MANUAL MODE",
+  "errorPelletLidOpen": "Pellet lid open - Please close the pellet lid",
+  "errorDoorOpen": "Door open - Please close the door",
+  "errorPelletLidOrDoorOpen": "Pellet lid or door open",
+  "errorNotEnoughLowPressure": "Not enough low pressure - Check exhaust",
+  "errorAirFlapsCalibrating": "Air flaps calibrating - Please wait",
+  "errorBurnBackFlapOpen": "Burn back or flue gas flap open",
+  "errorStoveNotInPosition": "Stove not in position - Check stove placement",
+
   "systemError": "System error (code: {code})",
   "@systemError": {
     "placeholders": {
@@ -251,12 +251,17 @@
       }
     }
   },
+
   "noWarning": "No warning",
-  "pelletLevelLow": "Pellet level low",
-  "maintenanceNeeded": "Maintenance needed",
-  "cleaningRequired": "Cleaning required",
-  "ambientTemperatureHigh": "Ambient temperature high",
-  "weakWiFiSignal": "Weak WiFi signal",
+  "warningRoomSensorSignalLost": "Room sensor signal lost",
+  "warningPelletLidOpen": "Pellet lid open",
+  "warningDoorOpen": "Door open",
+  "warningPelletLidOrDoorOpen": "Pellet lid or door open",
+  "warningNotEnoughLowPressure": "Not enough low pressure",
+  "warningAirFlapsCalibrating": "Air flaps calibrating",
+  "warningBurnBackFlapOpen": "Burn back or flue gas flap open",
+  "warningStoveNotInPosition": "Stove not in position",
+
   "systemWarning": "System warning (code: {code})",
   "@systemWarning": {
     "placeholders": {

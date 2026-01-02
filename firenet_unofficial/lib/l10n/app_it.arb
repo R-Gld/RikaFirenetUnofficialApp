@@ -332,5 +332,23 @@
   "configureAdvancedFeatures": "Configura funzioni avanzate",
   "configureBackgroundNotifications": "Configura notifiche in background",
   "toggleInfoPanelVisibility": "Attiva/disattiva visibilità pannello informazioni",
-  "notifications": "Notifiche"
+  "notifications": "Notifiche",
+
+  "errorRoomSensorSignalLost": "Segnale sensore ambiente perso - Passare a MODALITÀ MANUALE",
+  "errorPelletLidOpen": "Coperchio pellet aperto - Chiudere il coperchio",
+  "errorDoorOpen": "Porta aperta - Chiudere la porta",
+  "errorPelletLidOrDoorOpen": "Coperchio pellet o porta aperta",
+  "errorNotEnoughLowPressure": "Pressione insufficiente - Controllare scarico",
+  "errorAirFlapsCalibrating": "Calibrazione alette aria - Attendere prego",
+  "errorBurnBackFlapOpen": "Valvola antiritorno o gas combusti aperta",
+  "errorStoveNotInPosition": "Stufa non in posizione - Controllare posizionamento",
+
+  "warningRoomSensorSignalLost": "Segnale sensore ambiente perso",
+  "warningPelletLidOpen": "Coperchio pellet aperto",
+  "warningDoorOpen": "Porta aperta",
+  "warningPelletLidOrDoorOpen": "Coperchio pellet o porta aperta",
+  "warningNotEnoughLowPressure": "Pressione insufficiente",
+  "warningAirFlapsCalibrating": "Calibrazione alette aria",
+  "warningBurnBackFlapOpen": "Valvola antiritorno o gas combusti aperta",
+  "warningStoveNotInPosition": "Stufa non in posizione"
 }

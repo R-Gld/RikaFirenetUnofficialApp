@@ -525,34 +525,32 @@ class AppLocalizationsEs extends AppLocalizations {
       'Consulta el manual del usuario o contacta con el servicio técnico.';
 
   @override
-  String get temperatureSensorFailure => 'Fallo del sensor de temperatura';
+  String get errorRoomSensorSignalLost =>
+      'Señal del sensor de habitación perdida - Cambiar a MODO MANUAL';
 
   @override
-  String get pressureSensorFailure => 'Fallo del sensor de presión';
+  String get errorPelletLidOpen => 'Tapa de pellets abierta - Cerrar la tapa';
 
   @override
-  String get feedMotorFailure => 'Fallo del motor de alimentación';
+  String get errorDoorOpen => 'Puerta abierta - Cerrar la puerta';
 
   @override
-  String get fanFailure => 'Fallo del ventilador';
+  String get errorPelletLidOrDoorOpen => 'Tapa de pellets o puerta abierta';
 
   @override
-  String get temperatureTooHigh => 'Temperatura demasiado alta';
+  String get errorNotEnoughLowPressure =>
+      'Presión insuficiente - Verificar salida de humos';
 
   @override
-  String get ignitionProblem => 'Problema de encendido';
+  String get errorAirFlapsCalibrating =>
+      'Calibrando compuertas de aire - Espere por favor';
 
   @override
-  String get flameFailure => 'Fallo de llama';
+  String get errorBurnBackFlapOpen => 'Compuerta antiretorno o gases abierta';
 
   @override
-  String get doorOpen => 'Puerta abierta';
-
-  @override
-  String get thermalOverload => 'Sobrecarga térmica';
-
-  @override
-  String get combustionProblem => 'Problema de combustión';
+  String get errorStoveNotInPosition =>
+      'Estufa mal colocada - Verificar posición';
 
   @override
   String systemError(String code) {
@@ -563,19 +561,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noWarning => 'Sin advertencias';
 
   @override
-  String get pelletLevelLow => 'Nivel de pellets bajo';
+  String get warningRoomSensorSignalLost =>
+      'Señal del sensor de habitación perdida';
 
   @override
-  String get maintenanceNeeded => 'Mantenimiento necesario';
+  String get warningPelletLidOpen => 'Tapa de pellets abierta';
 
   @override
-  String get cleaningRequired => 'Limpieza requerida';
+  String get warningDoorOpen => 'Puerta abierta';
 
   @override
-  String get ambientTemperatureHigh => 'Temperatura ambiente alta';
+  String get warningPelletLidOrDoorOpen => 'Tapa de pellets o puerta abierta';
 
   @override
-  String get weakWiFiSignal => 'Señal WiFi débil';
+  String get warningNotEnoughLowPressure => 'Presión insuficiente';
+
+  @override
+  String get warningAirFlapsCalibrating => 'Calibrando compuertas de aire';
+
+  @override
+  String get warningBurnBackFlapOpen => 'Compuerta antiretorno o gases abierta';
+
+  @override
+  String get warningStoveNotInPosition => 'Estufa mal colocada';
 
   @override
   String systemWarning(int code) {

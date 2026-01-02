@@ -332,5 +332,23 @@
   "configureAdvancedFeatures": "Configurar funciones avanzadas",
   "configureBackgroundNotifications": "Configurar notificaciones en segundo plano",
   "toggleInfoPanelVisibility": "Alternar visibilidad del panel de información",
-  "notifications": "Notificaciones"
+  "notifications": "Notificaciones",
+
+  "errorRoomSensorSignalLost": "Señal del sensor de habitación perdida - Cambiar a MODO MANUAL",
+  "errorPelletLidOpen": "Tapa de pellets abierta - Cerrar la tapa",
+  "errorDoorOpen": "Puerta abierta - Cerrar la puerta",
+  "errorPelletLidOrDoorOpen": "Tapa de pellets o puerta abierta",
+  "errorNotEnoughLowPressure": "Presión insuficiente - Verificar salida de humos",
+  "errorAirFlapsCalibrating": "Calibrando compuertas de aire - Espere por favor",
+  "errorBurnBackFlapOpen": "Compuerta antiretorno o gases abierta",
+  "errorStoveNotInPosition": "Estufa mal colocada - Verificar posición",
+
+  "warningRoomSensorSignalLost": "Señal del sensor de habitación perdida",
+  "warningPelletLidOpen": "Tapa de pellets abierta",
+  "warningDoorOpen": "Puerta abierta",
+  "warningPelletLidOrDoorOpen": "Tapa de pellets o puerta abierta",
+  "warningNotEnoughLowPressure": "Presión insuficiente",
+  "warningAirFlapsCalibrating": "Calibrando compuertas de aire",
+  "warningBurnBackFlapOpen": "Compuerta antiretorno o gases abierta",
+  "warningStoveNotInPosition": "Estufa mal colocada"
 }
