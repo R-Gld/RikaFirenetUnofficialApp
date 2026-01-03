@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rika Firenet Unofficial</string>
+    <string name="widget_description">Mostra lo stato e la temperatura della tua stufa Rika</string>
+
+    <!-- Notifica del servizio in primo piano (Italiano) -->
+    <string name="foreground_service_channel_name">Monitoraggio in background</string>
+    <string name="foreground_service_channel_description">Mantiene attiva la connessione alla stufa</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Monitoraggio stufa in background</string>
+</resources>

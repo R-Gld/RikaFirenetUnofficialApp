@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rika Firenet Unofficial</string>
+    <string name="widget_description">Toont de status en temperatuur van uw Rika kachel</string>
+
+    <!-- Voorgrondservice melding (Nederlands) -->
+    <string name="foreground_service_channel_name">Achtergrond monitoring</string>
+    <string name="foreground_service_channel_description">Houdt de verbinding met de kachel actief</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Kachel monitoren op de achtergrond</string>
+</resources>

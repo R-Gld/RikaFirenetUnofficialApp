@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rika Firenet Unofficial</string>
+    <string name="widget_description">Affiche l\'état et la température de votre poêle Rika</string>
+
+    <!-- Notification du service au premier plan (Français) -->
+    <string name="foreground_service_channel_name">Surveillance en arrière-plan</string>
+    <string name="foreground_service_channel_description">Maintient la connexion au poêle active</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Surveillance du poêle en arrière-plan</string>
+</resources>

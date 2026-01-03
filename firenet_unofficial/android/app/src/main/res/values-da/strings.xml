@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rika Firenet Unofficial</string>
+    <string name="widget_description">Viser din Rika ovns status og temperatur</string>
+
+    <!-- Forgrundstjeneste notifikation (Dansk) -->
+    <string name="foreground_service_channel_name">Baggrundsovervågning</string>
+    <string name="foreground_service_channel_description">Holder forbindelsen til ovnen aktiv</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Overvåger ovn i baggrunden</string>
+</resources>

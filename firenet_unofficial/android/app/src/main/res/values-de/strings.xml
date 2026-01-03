@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rika Firenet Unofficial</string>
+    <string name="widget_description">Zeigt den Status und die Temperatur Ihres Rika-Ofens an</string>
+
+    <!-- Vordergrunddienst-Benachrichtigung (Deutsch) -->
+    <string name="foreground_service_channel_name">Hintergrundüberwachung</string>
+    <string name="foreground_service_channel_description">Hält die Verbindung zum Ofen aktiv</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Überwacht Ofen im Hintergrund</string>
+</resources>

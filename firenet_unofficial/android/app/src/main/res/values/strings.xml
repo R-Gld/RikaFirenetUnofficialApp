@@ -2,4 +2,10 @@
 <resources>
     <string name="app_name">Rika Firenet Unofficial</string>
     <string name="widget_description">Affiche l\'état et la température de votre poêle Rika</string>
+
+    <!-- Foreground service notification (English by default) -->
+    <string name="foreground_service_channel_name">Background Polling</string>
+    <string name="foreground_service_channel_description">Keeps connection to stove active</string>
+    <string name="foreground_service_notification_title">Rika Firenet</string>
+    <string name="foreground_service_notification_text">Monitoring stove in background</string>
 </resources>

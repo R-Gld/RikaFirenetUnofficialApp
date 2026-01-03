@@ -74,10 +74,10 @@ class PollingForegroundService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Background Polling",
+                getString(R.string.foreground_service_channel_name),
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Keeps connection to stove active"
+                description = getString(R.string.foreground_service_channel_description)
                 setShowBadge(false)
             }
 
@@ -96,8 +96,8 @@ class PollingForegroundService : Service() {
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Rika Firenet")
-            .setContentText("Monitoring stove in background")
+            .setContentTitle(getString(R.string.foreground_service_notification_title))
+            .setContentText(getString(R.string.foreground_service_notification_text))
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
