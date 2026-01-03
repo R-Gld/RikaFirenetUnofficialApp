@@ -10,6 +10,9 @@ _$NotificationSettingsImpl _$$NotificationSettingsImplFromJson(
   Map<String, dynamic> json,
 ) => _$NotificationSettingsImpl(
   enabled: json['enabled'] as bool? ?? false,
+  mode:
+      $enumDecodeNullable(_$NotificationModeEnumMap, json['mode']) ??
+      NotificationMode.simple,
   pollingIntervalMinutes:
       (json['pollingIntervalMinutes'] as num?)?.toInt() ?? 30,
   watchedFields:
@@ -27,8 +30,14 @@ Map<String, dynamic> _$$NotificationSettingsImplToJson(
   _$NotificationSettingsImpl instance,
 ) => <String, dynamic>{
   'enabled': instance.enabled,
+  'mode': _$NotificationModeEnumMap[instance.mode]!,
   'pollingIntervalMinutes': instance.pollingIntervalMinutes,
   'watchedFields': instance.watchedFields,
   'fieldThresholds': instance.fieldThresholds,
   'lastNotificationTime': instance.lastNotificationTime?.toIso8601String(),
+};
+
+const _$NotificationModeEnumMap = {
+  NotificationMode.simple: 'simple',
+  NotificationMode.advanced: 'advanced',
 };
