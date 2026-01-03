@@ -49,15 +49,11 @@ class HomeWidgetService {
         DateTime.now().millisecondsSinceEpoch,
       );
 
-      _logger.d('Widget data saved, triggering update');
-
       // Update the widget
       await HomeWidget.updateWidget(
         name: 'StoveStatusWidgetProvider',
         androidName: 'StoveStatusWidgetProvider',
       );
-
-      _logger.i('Widget updated successfully for ${stoveData.name}');
     } catch (e) {
       _logger.e('Failed to update widget: $e');
     }
