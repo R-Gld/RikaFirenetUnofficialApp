@@ -250,5 +250,20 @@
   "configureAdvancedFeatures": "Configurer les fonctionnalités avancées",
   "configureBackgroundNotifications": "Configurer les notifications en arrière-plan",
   "toggleInfoPanelVisibility": "Basculer la visibilité des panneaux d'information",
-  "notifications": "Notifications"
+  "notifications": "Notifications",
+
+  "statusFrostProtection": "Protection anti-gel",
+  "statusStoveOff": "Poêle éteint",
+  "statusStandby": "En veille",
+  "statusExternalRequest": "Demande externe",
+  "statusOff": "Éteint",
+  "statusIgnitionOn": "Allumage en cours",
+  "statusStartingUp": "Démarrage",
+  "statusRunning": "En fonctionnement",
+  "statusBigClean": "Grand nettoyage",
+  "statusCleaning": "Nettoyage",
+  "statusBurnOff": "Extinction",
+  "statusSplitLogCheck": "Vérification bûches",
+  "statusSplitLogMode": "Mode bûches",
+  "statusUnknown": "État inconnu ({state})"
 }

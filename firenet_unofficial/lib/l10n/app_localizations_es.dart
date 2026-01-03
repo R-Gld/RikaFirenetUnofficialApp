@@ -768,4 +768,48 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get notifications => 'Notificaciones';
+
+  @override
+  String get statusFrostProtection => 'Protección antiheladas';
+
+  @override
+  String get statusStoveOff => 'Estufa apagada';
+
+  @override
+  String get statusStandby => 'En espera';
+
+  @override
+  String get statusExternalRequest => 'Solicitud externa';
+
+  @override
+  String get statusOff => 'Apagada';
+
+  @override
+  String get statusIgnitionOn => 'Encendido en curso';
+
+  @override
+  String get statusStartingUp => 'Arrancando';
+
+  @override
+  String get statusRunning => 'En funcionamiento';
+
+  @override
+  String get statusBigClean => 'Limpieza profunda';
+
+  @override
+  String get statusCleaning => 'Limpieza';
+
+  @override
+  String get statusBurnOff => 'Apagado';
+
+  @override
+  String get statusSplitLogCheck => 'Verificación de leña';
+
+  @override
+  String get statusSplitLogMode => 'Modo leña';
+
+  @override
+  String statusUnknown(int state) {
+    return 'Estado desconocido ($state)';
+  }
 }
