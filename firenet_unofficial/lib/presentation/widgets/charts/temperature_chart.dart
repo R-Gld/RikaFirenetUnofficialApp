@@ -135,11 +135,14 @@ class TemperatureChart extends StatelessWidget {
 
   LineChartData _buildChartData(BuildContext context) {
     // Extract min/max values for Y axis scaling
+    // NOTE: Currently only showing room and target temperatures
+    // Flame temperature (~400°C) is hidden because it crushes the scale
+    // making room temps (~20°C) unreadable
     final roomTemps = dataPoints.map((p) => p.roomTemperature).toList();
     final targetTemps = dataPoints.map((p) => p.targetTemperature).toList();
-    final flameTemps = dataPoints.map((p) => p.flameTemperature.toDouble()).toList();
+    // final flameTemps = dataPoints.map((p) => p.flameTemperature.toDouble()).toList();
 
-    final allTemps = [...roomTemps, ...targetTemps, ...flameTemps];
+    final allTemps = [...roomTemps, ...targetTemps];
     final minTemp = allTemps.reduce((a, b) => a < b ? a : b);
     final maxTemp = allTemps.reduce((a, b) => a > b ? a : b);
 
@@ -270,47 +273,54 @@ class TemperatureChart extends StatelessWidget {
           isCurved: false,
           dotted: true,
         ),
-        // Flame temperature line
-        _buildLineChartBarData(
-          dataPoints: dataPoints.map((p) {
-            return FlSpot(
-              p.timestamp.millisecondsSinceEpoch.toDouble(),
-              p.flameTemperature.toDouble(),
-            );
-          }).toList(),
-          color: Colors.redAccent,
-          isCurved: true,
-          dotted: false,
-        ),
+        // FLAME TEMPERATURE HIDDEN - Crushes the scale (400°C vs 20°C)
+        // TODO: Add separate chart or dual Y-axis in future
+        // _buildLineChartBarData(
+        //   dataPoints: dataPoints.map((p) {
+        //     return FlSpot(
+        //       p.timestamp.millisecondsSinceEpoch.toDouble(),
+        //       p.flameTemperature.toDouble(),
+        //     );
+        //   }).toList(),
+        //   color: Colors.redAccent,
+        //   isCurved: true,
+        //   dotted: false,
+        // ),
       ],
       lineTouchData: LineTouchData(
         enabled: true,
         touchTooltipData: LineTouchTooltipData(
+          fitInsideHorizontally: true,
+          fitInsideVertically: true,
           getTooltipItems: (List<LineBarSpot> touchedSpots) {
-            return touchedSpots.map((spot) {
-              final timestamp = DateTime.fromMillisecondsSinceEpoch(
-                spot.x.toInt(),
-              );
-              final formatter = DateFormat('HH:mm');
+            if (touchedSpots.isEmpty) return [];
 
-              String label;
-              if (spot.barIndex == 0) {
-                label = 'Room';
-              } else if (spot.barIndex == 1) {
-                label = 'Target';
-              } else {
-                label = 'Flame';
-              }
+            // Get timestamp from first spot
+            final timestamp = DateTime.fromMillisecondsSinceEpoch(
+              touchedSpots.first.x.toInt(),
+            );
+            final formatter = DateFormat('HH:mm');
 
-              return LineTooltipItem(
-                '$label\n${spot.y.toStringAsFixed(1)}°C\n${formatter.format(timestamp)}',
-                TextStyle(
+            // Collect all values (room and target)
+            final roomTemp = touchedSpots.length > 0 ? touchedSpots[0].y : 0.0;
+            final targetTemp = touchedSpots.length > 1 ? touchedSpots[1].y : 0.0;
+
+            // Only show the first tooltip item with all info
+            return [
+              LineTooltipItem(
+                '${formatter.format(timestamp)}\n'
+                'Room: ${roomTemp.toStringAsFixed(1)}°C\n'
+                'Target: ${targetTemp.toStringAsFixed(1)}°C',
+                const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 12,
+                  fontSize: 11,
                 ),
-              );
-            }).toList();
+              ),
+              // Return null for other spots to avoid duplicate tooltips
+              if (touchedSpots.length > 1)
+                const LineTooltipItem('', TextStyle(fontSize: 0)),
+            ];
           },
         ),
       ),
@@ -352,12 +362,13 @@ class TemperatureChart extends StatelessWidget {
           label: 'Target Temperature',
           solid: false,
         ),
-        _buildLegendItem(
-          context,
-          color: Colors.redAccent,
-          label: 'Flame Temperature',
-          solid: true,
-        ),
+        // Flame temperature hidden - see lineBarsData comment
+        // _buildLegendItem(
+        //   context,
+        //   color: Colors.redAccent,
+        //   label: 'Flame Temperature',
+        //   solid: true,
+        // ),
       ],
     );
   }
