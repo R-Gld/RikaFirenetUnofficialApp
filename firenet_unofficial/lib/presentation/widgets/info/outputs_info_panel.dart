@@ -150,7 +150,6 @@ class OutputsInfoPanel extends StatelessWidget {
   }) {
     // Calculate progress (assume max RPM is around 2000 for visualization)
     final progress = (currentRpm / 2000).clamp(0.0, 1.0);
-    final isDifferent = currentRpm != targetRpm;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -167,7 +166,7 @@ class OutputsInfoPanel extends StatelessWidget {
                     ),
               ),
               Text(
-                isDifferent ? '$currentRpm → $targetRpm RPM' : '$currentRpm RPM',
+                '$currentRpm RPM',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,

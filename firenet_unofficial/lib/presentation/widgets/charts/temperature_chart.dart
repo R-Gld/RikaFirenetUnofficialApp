@@ -69,23 +69,24 @@ class TemperatureChart extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 Icons.show_chart,
-                size: 64,
+                size: 56,
                 color: isDarkMode ? Colors.grey[600] : Colors.grey[400],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               Text(
                 'No data available yet',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 6),
               Text(
                 'Data collection in progress...',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -93,7 +94,7 @@ class TemperatureChart extends StatelessWidget {
                       fontStyle: FontStyle.italic,
                     ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
               // Progress bar
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -106,7 +107,7 @@ class TemperatureChart extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
               // Data count
               Text(
                 '$count data points collected ($progressPercent%)',
@@ -115,7 +116,7 @@ class TemperatureChart extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 3),
               Text(
                 'Minimum $minDataPoints points needed for chart',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
