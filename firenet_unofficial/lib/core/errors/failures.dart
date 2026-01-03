@@ -34,3 +34,8 @@ class CacheFailure extends Failure {
 class ValidationFailure extends Failure {
   const ValidationFailure([super.message = 'Validation error']);
 }
+
+/// Database failure
+class DatabaseFailure extends Failure {
+  const DatabaseFailure([super.message = 'Database error occurred']);
+}

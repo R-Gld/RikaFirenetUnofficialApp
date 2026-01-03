@@ -8,6 +8,8 @@ import 'auth_providers.dart';
 import 'home_widget_provider.dart';
 import '../services/home_widget_service.dart';
 import 'rate_limiter_provider.dart';
+import 'database_provider.dart';
+import '../services/sensor_data_collector.dart';
 
 /// Provides StoveRepository
 final stoveRepositoryProvider = Provider<StoveRepository>((ref) {
@@ -71,6 +73,7 @@ final stoveStateProvider = StateNotifierProvider.family<
     stoveId: stoveId,
     stoveRepository: ref.watch(stoveRepositoryProvider),
     homeWidgetService: ref.watch(homeWidgetServiceProvider),
+    sensorDataCollector: ref.watch(sensorDataCollectorProvider),
   );
 });
 
@@ -79,13 +82,16 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
   final String _stoveId;
   final StoveRepository _stoveRepository;
   final HomeWidgetService homeWidgetService;
+  final SensorDataCollector _sensorDataCollector;
 
   StoveStateNotifier({
     required String stoveId,
     required StoveRepository stoveRepository,
     required this.homeWidgetService,
+    required SensorDataCollector sensorDataCollector,
   })  : _stoveId = stoveId,
         _stoveRepository = stoveRepository,
+        _sensorDataCollector = sensorDataCollector,
         super(const AsyncValue.loading()) {
     refreshState();
   }
@@ -116,10 +122,18 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
         // Update widget with error state
         homeWidgetService.updateWidgetError(failure.message);
       },
-      (stoveData) {
+      (stoveData) async {
         state = AsyncValue.data(stoveData);
         // Update widget with new data
         homeWidgetService.updateWidget(stoveData);
+
+        // Collect sensor data for historical tracking
+        try {
+          await _sensorDataCollector.collectReading(stoveData);
+        } catch (e) {
+          // Don't fail refresh if collection fails
+          // Logging handled in collector
+        }
       },
     );
   }
@@ -138,10 +152,17 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
-      (newState) {
+      (newState) async {
         state = AsyncValue.data(newState);
         // Update widget after controls update
         homeWidgetService.updateWidget(newState);
+
+        // Collect sensor data
+        try {
+          await _sensorDataCollector.collectReading(newState);
+        } catch (e) {
+          // Don't fail update if collection fails
+        }
       },
     );
   }
@@ -158,10 +179,17 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
-      (newState) {
+      (newState) async {
         state = AsyncValue.data(newState);
         // Update widget after power change
         homeWidgetService.updateWidget(newState);
+
+        // Collect sensor data
+        try {
+          await _sensorDataCollector.collectReading(newState);
+        } catch (e) {
+          // Don't fail update if collection fails
+        }
       },
     );
   }
@@ -178,10 +206,17 @@ class StoveStateNotifier extends StateNotifier<AsyncValue<StoveData>> {
       (failure) {
         state = AsyncValue.error(failure.message, StackTrace.current);
       },
-      (newState) {
+      (newState) async {
         state = AsyncValue.data(newState);
         // Update widget after temperature change
         homeWidgetService.updateWidget(newState);
+
+        // Collect sensor data
+        try {
+          await _sensorDataCollector.collectReading(newState);
+        } catch (e) {
+          // Don't fail update if collection fails
+        }
       },
     );
   }

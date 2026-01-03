@@ -18,6 +18,8 @@ import 'notification_service.dart';
 import 'stove_field_descriptor_service.dart';
 import 'home_widget_service.dart';
 import '../core/errors/exceptions.dart';
+import '../data/local/database.dart';
+import 'sensor_data_collector.dart';
 
 /// Background task callback - entry point for WorkManager
 ///
@@ -111,14 +113,27 @@ class BackgroundTaskHandler {
       final sensors = StoveSensors.fromJson(sensorsData);
 
       // 5a. Update home widget with latest data
+      StoveData? fullStoveData;
       try {
-        final fullStoveData = StoveData.fromJson(stoveData);
+        fullStoveData = StoveData.fromJson(stoveData);
         final widgetService = HomeWidgetService();
         await widgetService.updateWidget(fullStoveData);
         debugPrint('[BG-WORKER] Home widget updated');
       } catch (e) {
         debugPrint('[BG-WORKER] WARNING: Failed to update widget: ${e.runtimeType}');
         // Don't fail the whole task if widget update fails
+      }
+
+      // 5b. Collect sensor data for historical tracking
+      if (fullStoveData != null) {
+        try {
+          final collector = SensorDataCollector(AppDatabase());
+          await collector.collectReading(fullStoveData);
+          debugPrint('[BG-WORKER] Sensor data collected');
+        } catch (e) {
+          debugPrint('[BG-WORKER] WARNING: Failed to collect sensor data: ${e.runtimeType}');
+          // Don't fail whole task if collection fails
+        }
       }
 
       // 6. Create current snapshot with only watched fields
