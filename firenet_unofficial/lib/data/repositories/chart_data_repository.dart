@@ -42,6 +42,19 @@ class ChartDataRepository {
         );
       }).toList();
 
+      // Debug: Log first few data points to verify values
+      if (dataPoints.isNotEmpty) {
+        debugPrint('[ChartDataRepository] 🔍 Sample data points:');
+        for (var i = 0; i < dataPoints.length.clamp(0, 3); i++) {
+          final dp = dataPoints[i];
+          debugPrint(
+            '[ChartDataRepository]   [$i] Room: ${dp.roomTemperature.toStringAsFixed(1)}°C, '
+            'Target: ${dp.targetTemperature.toStringAsFixed(1)}°C, '
+            'Flame: ${dp.flameTemperature}°C',
+          );
+        }
+      }
+
       debugPrint(
         '[ChartDataRepository] Retrieved ${dataPoints.length} temperature data points',
       );

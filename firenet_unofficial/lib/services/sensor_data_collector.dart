@@ -32,6 +32,11 @@ class SensorDataCollector {
       // Parse target temperature from controls
       final targetTemp = stoveData.targetTemperature;
 
+      debugPrint('[SensorDataCollector] 🔍 DEBUG VALUES:');
+      debugPrint('[SensorDataCollector]   Room Temp: $roomTemp°C');
+      debugPrint('[SensorDataCollector]   Target Temp: $targetTemp°C');
+      debugPrint('[SensorDataCollector]   Flame Temp: ${sensors.inputFlameTemperature}°C');
+
       // Check for errors and warnings
       final hasError = sensors.statusError != 0;
       final hasWarning = sensors.statusWarning != 0;
