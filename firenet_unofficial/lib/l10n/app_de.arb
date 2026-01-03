@@ -292,5 +292,20 @@
   "batteryOptimizationRequired": "Akkuoptimierung erforderlich",
   "batteryOptimizationExplanation": "Um die Verbindung aktiv zu halten, wenn der Bildschirm gesperrt ist, muss die Akkuoptimierung für diese App deaktiviert werden. Dies gewährleistet zuverlässige Hintergrundaktualisierung.\n\nSie werden zu den Systemeinstellungen weitergeleitet, wo Sie diese Berechtigung erteilen können.",
   "batteryOptimizationStillEnabled": "Akkuoptimierung ist noch aktiviert. Bitte deaktivieren Sie sie in den Einstellungen, um kontinuierliche Aktualisierung zu verwenden.",
-  "openSettings": "Einstellungen öffnen"
+  "openSettings": "Einstellungen öffnen",
+
+  "charts": "Diagramme",
+  "chartsSubtitle": "Temperaturverlauf & Statistiken",
+  "temperatureEvolution24h": "Temperaturverlauf (24Std)",
+  "roomTargetAxis": "Raum / Ziel",
+  "flameAxis": "Flamme",
+  "noDataAvailableYet": "Noch keine Daten verfügbar",
+  "dataCollectionInProgress": "Datenerfassung läuft...",
+  "dataPointsCollected": "{count} Datenpunkte erfasst ({percent}%)",
+  "minimumPointsNeeded": "Mindestens {count} Punkte für Diagramm erforderlich",
+  "roomTemperature": "Raumtemperatur",
+  "targetTemperature": "Zieltemperatur",
+  "flameTemperature": "Flammentemperatur",
+  "failedToLoadChartData": "Diagrammdaten konnten nicht geladen werden",
+  "chartAutoUpdateInfo": "Historische Daten werden automatisch erfasst. Diagramm aktualisiert sich alle 10 Sekunden mit neuen Datenpunkten."
 }

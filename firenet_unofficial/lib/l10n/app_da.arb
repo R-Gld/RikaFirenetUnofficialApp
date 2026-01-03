@@ -292,5 +292,20 @@
   "batteryOptimizationRequired": "Batterioptimering påkrævet",
   "batteryOptimizationExplanation": "For at holde forbindelsen aktiv når skærmen er låst, skal batterioptimering deaktiveres for denne app. Dette sikrer pålidelig baggrundsopdatering.\n\nDu vil blive omdirigeret til systemindstillinger, hvor du kan give denne tilladelse.",
   "batteryOptimizationStillEnabled": "Batterioptimering er stadig aktiveret. Deaktiver det i indstillinger for at bruge kontinuerlig opdatering.",
-  "openSettings": "Åbn indstillinger"
+  "openSettings": "Åbn indstillinger",
+
+  "charts": "Diagrammer",
+  "chartsSubtitle": "Temperaturudvikling & statistik",
+  "temperatureEvolution24h": "Temperaturudvikling (24t)",
+  "roomTargetAxis": "Rum / Mål",
+  "flameAxis": "Flamme",
+  "noDataAvailableYet": "Ingen data tilgængelig endnu",
+  "dataCollectionInProgress": "Dataindsamling i gang...",
+  "dataPointsCollected": "{count} datapunkter indsamlet ({percent}%)",
+  "minimumPointsNeeded": "Minimum {count} punkter nødvendige for diagram",
+  "roomTemperature": "Rumtemperatur",
+  "targetTemperature": "Måltemperatur",
+  "flameTemperature": "Flammetemperatur",
+  "failedToLoadChartData": "Kunne ikke indlæse diagramdata",
+  "chartAutoUpdateInfo": "Historiske data indsamles automatisk. Diagrammet opdateres hvert 10. sekund med nye datapunkter."
 }

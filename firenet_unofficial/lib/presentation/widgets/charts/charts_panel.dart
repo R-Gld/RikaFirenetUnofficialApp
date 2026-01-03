@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/app_colors.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../../providers/chart_data_provider.dart';
 import 'temperature_chart.dart';
 
@@ -51,6 +52,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final chartDataAsync = ref.watch(temperatureChart24hProvider(widget.stoveId));
     final dataCountAsync = ref.watch(sensorReadingCount24hProvider(widget.stoveId));
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -74,13 +76,13 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
           color: isDark ? AppColors.primaryDark : AppColors.primary,
         ),
         title: Text(
-          'Charts',
+          l10n.charts,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
               ),
         ),
         subtitle: Text(
-          'Temperature evolution & statistics',
+          l10n.chartsSubtitle,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 color: AppColors.textSecondary,
               ),
@@ -93,7 +95,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
               children: [
                 // Section title
                 Text(
-                  'Temperature Evolution (24h)',
+                  l10n.temperatureEvolution24h,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: isDark ? AppColors.primaryDark : AppColors.primary,
@@ -108,7 +110,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
                     return TemperatureChart(
                       dataPoints: dataPoints,
                       isDarkMode: isDark,
-                      title: 'Temperature Evolution (24h)',
+                      title: l10n.temperatureEvolution24h,
                       dataCount: dataCount,
                     );
                   },
@@ -138,7 +140,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
                           ),
                           const SizedBox(height: 16),
                           Text(
-                            'Failed to load chart data',
+                            l10n.failedToLoadChartData,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                   color: Colors.red.withOpacity(0.7),
                                 ),
@@ -169,8 +171,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Historical data is collected automatically. '
-                          'Chart updates every 10 seconds with new data points.',
+                          l10n.chartAutoUpdateInfo,
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: isDark ? Colors.grey[300] : Colors.grey[700],
                               ),

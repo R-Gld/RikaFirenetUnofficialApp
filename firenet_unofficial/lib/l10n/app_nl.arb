@@ -379,5 +379,20 @@
   "batteryOptimizationRequired": "Batterijoptimalisatie vereist",
   "batteryOptimizationExplanation": "Om de verbinding actief te houden wanneer het scherm is vergrendeld, moet batterijoptimalisatie worden uitgeschakeld voor deze app. Dit zorgt voor betrouwbare achtergrondverversing.\n\nU wordt doorgestuurd naar systeeminstellingen waar u deze toestemming kunt verlenen.",
   "batteryOptimizationStillEnabled": "Batterijoptimalisatie is nog steeds ingeschakeld. Schakel het uit in de instellingen om continue verversing te gebruiken.",
-  "openSettings": "Open instellingen"
+  "openSettings": "Open instellingen",
+
+  "charts": "Grafieken",
+  "chartsSubtitle": "Temperatuurverloop & statistieken",
+  "temperatureEvolution24h": "Temperatuurverloop (24u)",
+  "roomTargetAxis": "Kamer / Doel",
+  "flameAxis": "Vlam",
+  "noDataAvailableYet": "Nog geen gegevens beschikbaar",
+  "dataCollectionInProgress": "Gegevensverzameling bezig...",
+  "dataPointsCollected": "{count} datapunten verzameld ({percent}%)",
+  "minimumPointsNeeded": "Minimum {count} punten nodig voor grafiek",
+  "roomTemperature": "Kamertemperatuur",
+  "targetTemperature": "Doeltemperatuur",
+  "flameTemperature": "Vlamtemperatuur",
+  "failedToLoadChartData": "Fout bij laden grafiekgegevens",
+  "chartAutoUpdateInfo": "Historische gegevens worden automatisch verzameld. Grafiek wordt elke 10 seconden bijgewerkt met nieuwe datapunten."
 }

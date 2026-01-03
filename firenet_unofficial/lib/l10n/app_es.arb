@@ -379,5 +379,20 @@
   "batteryOptimizationRequired": "Optimización de batería requerida",
   "batteryOptimizationExplanation": "Para mantener la conexión activa cuando la pantalla está bloqueada, se debe desactivar la optimización de batería para esta aplicación. Esto garantiza una actualización confiable en segundo plano.\n\nSerá redirigido a la configuración del sistema donde puede otorgar este permiso.",
   "batteryOptimizationStillEnabled": "La optimización de batería sigue activada. Desactívela en la configuración para usar actualización continua.",
-  "openSettings": "Abrir configuración"
+  "openSettings": "Abrir configuración",
+
+  "charts": "Gráficos",
+  "chartsSubtitle": "Evolución de temperatura & estadísticas",
+  "temperatureEvolution24h": "Evolución Temperatura (24h)",
+  "roomTargetAxis": "Sala / Objetivo",
+  "flameAxis": "Llama",
+  "noDataAvailableYet": "No hay datos disponibles aún",
+  "dataCollectionInProgress": "Recopilación de datos en curso...",
+  "dataPointsCollected": "{count} puntos de datos recopilados ({percent}%)",
+  "minimumPointsNeeded": "Mínimo {count} puntos necesarios para el gráfico",
+  "roomTemperature": "Temperatura ambiente",
+  "targetTemperature": "Temperatura objetivo",
+  "flameTemperature": "Temperatura llama",
+  "failedToLoadChartData": "Error al cargar datos del gráfico",
+  "chartAutoUpdateInfo": "Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 10 segundos con nuevos puntos de datos."
 }

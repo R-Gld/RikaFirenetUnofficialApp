@@ -4,6 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../data/models/chart_data.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
 
 /// Temperature evolution chart widget
@@ -28,9 +29,11 @@ class TemperatureChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     // Handle empty data
     if (dataPoints.isEmpty) {
-      return _buildEmptyState(context);
+      return _buildEmptyState(context, l10n);
     }
 
     return Column(
@@ -43,7 +46,7 @@ class TemperatureChart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Room / Target',
+                l10n.roomTargetAxis,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isDarkMode ? AppColors.primaryDark : AppColors.primary,
                       fontWeight: FontWeight.w500,
@@ -51,7 +54,7 @@ class TemperatureChart extends StatelessWidget {
                     ),
               ),
               Text(
-                'Flame',
+                l10n.flameAxis,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Colors.redAccent,
                       fontWeight: FontWeight.w500,
@@ -73,12 +76,12 @@ class TemperatureChart extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         // Legend
-        _buildLegend(context),
+        _buildLegend(context, l10n),
       ],
     );
   }
 
-  Widget _buildEmptyState(BuildContext context) {
+  Widget _buildEmptyState(BuildContext context, AppLocalizations l10n) {
     // Minimum data points needed for a meaningful chart (about 1 hour of data at 5s intervals)
     const int minDataPoints = 288; // 24h at 5min sampling
     final count = dataCount ?? 0;
@@ -108,14 +111,14 @@ class TemperatureChart extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'No data available yet',
+                l10n.noDataAvailableYet,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     ),
               ),
               const SizedBox(height: 6),
               Text(
-                'Data collection in progress...',
+                l10n.dataCollectionInProgress,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isDarkMode ? Colors.grey[500] : Colors.grey[500],
                       fontStyle: FontStyle.italic,
@@ -137,7 +140,7 @@ class TemperatureChart extends StatelessWidget {
               const SizedBox(height: 10),
               // Data count
               Text(
-                '$count data points collected ($progressPercent%)',
+                l10n.dataPointsCollected(count, progressPercent),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                       fontWeight: FontWeight.w500,
@@ -145,7 +148,7 @@ class TemperatureChart extends StatelessWidget {
               ),
               const SizedBox(height: 3),
               Text(
-                'Minimum $minDataPoints points needed for chart',
+                l10n.minimumPointsNeeded(minDataPoints),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: isDarkMode ? Colors.grey[500] : Colors.grey[500],
                       fontSize: 11,
@@ -414,7 +417,7 @@ class TemperatureChart extends StatelessWidget {
     );
   }
 
-  Widget _buildLegend(BuildContext context) {
+  Widget _buildLegend(BuildContext context, AppLocalizations l10n) {
     return Wrap(
       spacing: 16,
       runSpacing: 8,
@@ -422,19 +425,19 @@ class TemperatureChart extends StatelessWidget {
         _buildLegendItem(
           context,
           color: isDarkMode ? AppColors.primaryDark : AppColors.primary,
-          label: 'Room Temperature',
+          label: l10n.roomTemperature,
           solid: true,
         ),
         _buildLegendItem(
           context,
           color: isDarkMode ? AppColors.secondaryDark : AppColors.secondary,
-          label: 'Target Temperature',
+          label: l10n.targetTemperature,
           solid: false,
         ),
         _buildLegendItem(
           context,
           color: Colors.redAccent,
-          label: 'Flame Temperature',
+          label: l10n.flameTemperature,
           solid: true,
         ),
       ],

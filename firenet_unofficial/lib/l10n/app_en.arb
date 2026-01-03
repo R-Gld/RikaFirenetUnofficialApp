@@ -373,5 +373,37 @@
   "batteryOptimizationRequired": "Battery Optimization Required",
   "batteryOptimizationExplanation": "To keep the connection active when the screen is locked, battery optimization must be disabled for this app. This ensures reliable background polling.\n\nYou will be redirected to system settings where you can grant this permission.",
   "batteryOptimizationStillEnabled": "Battery optimization is still enabled. Please disable it in settings to use continuous polling.",
-  "openSettings": "Open Settings"
+  "openSettings": "Open Settings",
+
+  "charts": "Charts",
+  "chartsSubtitle": "Temperature evolution & statistics",
+  "temperatureEvolution24h": "Temperature Evolution (24h)",
+  "roomTargetAxis": "Room / Target",
+  "flameAxis": "Flame",
+  "noDataAvailableYet": "No data available yet",
+  "dataCollectionInProgress": "Data collection in progress...",
+  "dataPointsCollected": "{count} data points collected ({percent}%)",
+  "@dataPointsCollected": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "minimumPointsNeeded": "Minimum {count} points needed for chart",
+  "@minimumPointsNeeded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "roomTemperature": "Room Temperature",
+  "targetTemperature": "Target Temperature",
+  "flameTemperature": "Flame Temperature",
+  "failedToLoadChartData": "Failed to load chart data",
+  "chartAutoUpdateInfo": "Historical data is collected automatically. Chart updates every 10 seconds with new data points."
 }
