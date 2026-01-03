@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
 
 part 'database.g.dart';
 
@@ -409,6 +410,8 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File('${dbFolder.path}/firenet_sensors.db');
+    debugPrint('[AppDatabase] 📂 Opening database at: ${file.path}');
+    debugPrint('[AppDatabase] 📂 Database file exists: ${file.existsSync()}');
     return NativeDatabase(file);
   });
 }

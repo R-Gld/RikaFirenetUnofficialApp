@@ -18,10 +18,13 @@ class SensorDataCollector {
   ///
   /// Returns true if collection was successful, false otherwise
   Future<bool> collectReading(StoveData stoveData) async {
+    debugPrint('[SensorDataCollector] ===== COLLECT READING CALLED =====');
     try {
       final sensors = stoveData.sensors;
       final stoveId = stoveData.stoveID;
       final timestamp = DateTime.now().toUtc();
+
+      debugPrint('[SensorDataCollector] StoveID: $stoveId, Timestamp: $timestamp');
 
       // Parse room temperature (it's a string in the API)
       final roomTemp = double.tryParse(sensors.inputRoomTemperature) ?? 0.0;
@@ -53,14 +56,18 @@ class SensorDataCollector {
       );
 
       // Insert the reading
-      await _database.insertSensorReading(reading);
+      debugPrint('[SensorDataCollector] Attempting to insert reading into database...');
+      final insertedId = await _database.insertSensorReading(reading);
+      debugPrint('[SensorDataCollector] ✅ Successfully inserted reading with ID: $insertedId');
 
       // Track state transitions
       await _trackStateTransition(stoveId, sensors.statusMainState, timestamp);
 
+      // Verify insertion by counting total readings
+      final totalCount = await _database.getSensorReadingCount(stoveId);
       debugPrint(
-        '[SensorDataCollector] Collected reading for $stoveId - '
-        'State: ${sensors.statusMainState}, Temp: $roomTemp°C',
+        '[SensorDataCollector] ✅ Collected reading for $stoveId - '
+        'State: ${sensors.statusMainState}, Temp: $roomTemp°C, Total readings: $totalCount',
       );
 
       return true;
