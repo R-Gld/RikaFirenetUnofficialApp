@@ -9,6 +9,7 @@ import 'providers/api_client_provider.dart';
 import 'services/background_task_handler.dart';
 import 'services/notification_service.dart';
 import 'services/notification_orchestrator.dart';
+import 'services/foreground_service_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +37,10 @@ void main() async {
       overrides: [
         rikaApiClientProvider.overrideWithValue(apiClient),
       ],
-      child: const NotificationOrchestrator(
-        child: App(),
+      child: const ForegroundServiceManager(
+        child: NotificationOrchestrator(
+          child: App(),
+        ),
       ),
     ),
   );
