@@ -384,6 +384,7 @@
   "charts": "Grafieken",
   "chartsSubtitle": "Temperatuurverloop & statistieken",
   "temperatureEvolution24h": "Temperatuurverloop (24u)",
+  "stateTimelineTitle": "Kachel Status Tijdlijn (24u)",
   "roomTargetAxis": "Kamer / Doel",
   "flameAxis": "Vlam",
   "noDataAvailableYet": "Nog geen gegevens beschikbaar",

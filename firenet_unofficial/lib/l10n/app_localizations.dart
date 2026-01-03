@@ -1686,6 +1686,12 @@ abstract class AppLocalizations {
   /// **'Temperature Evolution (24h)'**
   String get temperatureEvolution24h;
 
+  /// No description provided for @stateTimelineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stove State Timeline (24h)'**
+  String get stateTimelineTitle;
+
   /// No description provided for @roomTargetAxis.
   ///
   /// In en, this message translates to:

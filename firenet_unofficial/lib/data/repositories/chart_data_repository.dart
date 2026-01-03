@@ -39,6 +39,7 @@ class ChartDataRepository {
           roomTemperature: reading.inputRoomTemperature,
           targetTemperature: reading.targetTemperature,
           flameTemperature: reading.inputFlameTemperature,
+          mainState: reading.statusMainState,
         );
       }).toList();
 
@@ -97,6 +98,7 @@ class ChartDataRepository {
           roomTemperature: reading.inputRoomTemperature,
           targetTemperature: reading.targetTemperature,
           flameTemperature: reading.inputFlameTemperature,
+          mainState: reading.statusMainState,
         );
       }).toList();
 

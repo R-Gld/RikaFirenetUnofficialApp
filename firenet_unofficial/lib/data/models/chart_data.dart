@@ -11,6 +11,7 @@ class TemperatureDataPoint with _$TemperatureDataPoint {
     required double roomTemperature,
     required double targetTemperature,
     required int flameTemperature,
+    required int mainState, // statusMainState for state timeline
   }) = _TemperatureDataPoint;
 
   factory TemperatureDataPoint.fromJson(Map<String, dynamic> json) =>

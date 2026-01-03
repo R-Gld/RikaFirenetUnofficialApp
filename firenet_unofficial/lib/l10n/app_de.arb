@@ -297,6 +297,7 @@
   "charts": "Diagramme",
   "chartsSubtitle": "Temperaturverlauf & Statistiken",
   "temperatureEvolution24h": "Temperaturverlauf (24Std)",
+  "stateTimelineTitle": "Ofenzustands-Zeitachse (24Std)",
   "roomTargetAxis": "Raum / Ziel",
   "flameAxis": "Flamme",
   "noDataAvailableYet": "Noch keine Daten verfügbar",

@@ -857,6 +857,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get temperatureEvolution24h => 'Temperatuurverloop (24u)';
 
   @override
+  String get stateTimelineTitle => 'Kachel Status Tijdlijn (24u)';
+
+  @override
   String get roomTargetAxis => 'Kamer / Doel';
 
   @override

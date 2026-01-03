@@ -284,6 +284,7 @@
   "charts": "Graphiques",
   "chartsSubtitle": "Évolution des températures & statistiques",
   "temperatureEvolution24h": "Évolution Température (24h)",
+  "stateTimelineTitle": "Chronologie des États du Poêle (24h)",
   "roomTargetAxis": "Pièce / Cible",
   "flameAxis": "Flamme",
   "noDataAvailableYet": "Aucune donnée disponible",
@@ -291,8 +292,6 @@
   "dataPointsCollected": "{count} points collectés ({percent}%)",
   "minimumPointsNeeded": "Minimum {count} points nécessaires pour le graphique",
   "roomTemperature": "Température pièce",
-  "targetTemperature": "Température cible",
-  "flameTemperature": "Température flamme",
   "failedToLoadChartData": "Échec du chargement des données",
   "chartAutoUpdateInfo": "Les données historiques sont collectées automatiquement. Le graphique se met à jour toutes les 4 secondes avec de nouveaux points."
 }

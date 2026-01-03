@@ -853,6 +853,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get temperatureEvolution24h => 'Temperature Evolution (24h)';
 
   @override
+  String get stateTimelineTitle => 'Stove State Timeline (24h)';
+
+  @override
   String get roomTargetAxis => 'Room / Target';
 
   @override

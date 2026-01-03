@@ -864,6 +864,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get temperatureEvolution24h => 'Evolución Temperatura (24h)';
 
   @override
+  String get stateTimelineTitle =>
+      'Línea de Tiempo del Estado de la Estufa (24h)';
+
+  @override
   String get roomTargetAxis => 'Sala / Objetivo';
 
   @override

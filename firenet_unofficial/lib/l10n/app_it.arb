@@ -384,6 +384,7 @@
   "charts": "Grafici",
   "chartsSubtitle": "Evoluzione temperatura & statistiche",
   "temperatureEvolution24h": "Evoluzione Temperatura (24h)",
+  "stateTimelineTitle": "Cronologia Stati della Stufa (24h)",
   "roomTargetAxis": "Ambiente / Obiettivo",
   "flameAxis": "Fiamma",
   "noDataAvailableYet": "Nessun dato disponibile ancora",

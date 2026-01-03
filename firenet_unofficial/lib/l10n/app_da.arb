@@ -297,6 +297,7 @@
   "charts": "Diagrammer",
   "chartsSubtitle": "Temperaturudvikling & statistik",
   "temperatureEvolution24h": "Temperaturudvikling (24t)",
+  "stateTimelineTitle": "Ovnens tilstandstidslinje (24t)",
   "roomTargetAxis": "Rum / Mål",
   "flameAxis": "Flamme",
   "noDataAvailableYet": "Ingen data tilgængelig endnu",

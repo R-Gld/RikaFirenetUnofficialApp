@@ -6,6 +6,7 @@ import '../../theme/app_colors.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../providers/chart_data_provider.dart';
 import 'temperature_chart.dart';
+import 'state_timeline_chart.dart';
 
 /// Charts panel widget for stove detail screen
 ///
@@ -122,6 +123,74 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
                   ),
                   error: (error, stack) => Container(
                     height: 250,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.red.withOpacity(0.3),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 48,
+                            color: Colors.red.withOpacity(0.7),
+                          ),
+                          const SizedBox(height: 16),
+                          Text(
+                            l10n.failedToLoadChartData,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: Colors.red.withOpacity(0.7),
+                                ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Divider
+                Divider(
+                  color: isDark ? Colors.grey[700] : Colors.grey[300],
+                  thickness: 1,
+                ),
+
+                const SizedBox(height: 24),
+
+                // State Timeline Section
+                Text(
+                  l10n.stateTimelineTitle,
+                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: isDark ? AppColors.primaryDark : AppColors.primary,
+                      ),
+                ),
+                const SizedBox(height: 16),
+
+                // State Timeline Chart
+                chartDataAsync.when(
+                  data: (dataPoints) {
+                    final dataCount = dataCountAsync.valueOrNull ?? 0;
+                    return StateTimelineChart(
+                      dataPoints: dataPoints,
+                      isDarkMode: isDark,
+                      title: l10n.stateTimelineTitle,
+                      dataCount: dataCount,
+                    );
+                  },
+                  loading: () => const SizedBox(
+                    height: 150,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                  error: (error, stack) => Container(
+                    height: 150,
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.red.withOpacity(0.3),

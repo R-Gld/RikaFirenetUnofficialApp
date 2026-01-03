@@ -863,6 +863,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get temperatureEvolution24h => 'Temperaturverlauf (24Std)';
 
   @override
+  String get stateTimelineTitle => 'Ofenzustands-Zeitachse (24Std)';
+
+  @override
   String get roomTargetAxis => 'Raum / Ziel';
 
   @override

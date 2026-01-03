@@ -384,6 +384,7 @@
   "charts": "Gráficos",
   "chartsSubtitle": "Evolución de temperatura & estadísticas",
   "temperatureEvolution24h": "Evolución Temperatura (24h)",
+  "stateTimelineTitle": "Línea de Tiempo del Estado de la Estufa (24h)",
   "roomTargetAxis": "Sala / Objetivo",
   "flameAxis": "Llama",
   "noDataAvailableYet": "No hay datos disponibles aún",

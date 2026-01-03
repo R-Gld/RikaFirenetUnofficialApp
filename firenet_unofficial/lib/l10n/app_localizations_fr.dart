@@ -179,7 +179,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stoveOff => 'Poêle éteint';
 
   @override
-  String get targetTemperature => 'Température cible';
+  String get targetTemperature => 'Température Cible';
 
   @override
   String get turnOnStoveToAdjustTemperature =>
@@ -625,7 +625,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sensorInformation => 'Informations capteurs';
 
   @override
-  String get flameTemperature => 'Température flamme';
+  String get flameTemperature => 'Température de flamme';
 
   @override
   String get ambientTemperature => 'Température ambiante';
@@ -865,6 +865,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get temperatureEvolution24h => 'Évolution Température (24h)';
+
+  @override
+  String get stateTimelineTitle => 'Chronologie des États du Poêle (24h)';
 
   @override
   String get roomTargetAxis => 'Pièce / Cible';

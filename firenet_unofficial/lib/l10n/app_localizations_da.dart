@@ -850,6 +850,9 @@ class AppLocalizationsDa extends AppLocalizations {
   String get temperatureEvolution24h => 'Temperaturudvikling (24t)';
 
   @override
+  String get stateTimelineTitle => 'Ovnens tilstandstidslinje (24t)';
+
+  @override
   String get roomTargetAxis => 'Rum / Mål';
 
   @override

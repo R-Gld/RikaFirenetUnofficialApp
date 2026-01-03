@@ -378,6 +378,7 @@
   "charts": "Charts",
   "chartsSubtitle": "Temperature evolution & statistics",
   "temperatureEvolution24h": "Temperature Evolution (24h)",
+  "stateTimelineTitle": "Stove State Timeline (24h)",
   "roomTargetAxis": "Room / Target",
   "flameAxis": "Flame",
   "noDataAvailableYet": "No data available yet",

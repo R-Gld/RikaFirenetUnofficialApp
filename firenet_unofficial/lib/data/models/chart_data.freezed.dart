@@ -25,6 +25,7 @@ mixin _$TemperatureDataPoint {
   double get roomTemperature => throw _privateConstructorUsedError;
   double get targetTemperature => throw _privateConstructorUsedError;
   int get flameTemperature => throw _privateConstructorUsedError;
+  int get mainState => throw _privateConstructorUsedError;
 
   /// Serializes this TemperatureDataPoint to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,6 +49,7 @@ abstract class $TemperatureDataPointCopyWith<$Res> {
     double roomTemperature,
     double targetTemperature,
     int flameTemperature,
+    int mainState,
   });
 }
 
@@ -73,6 +75,7 @@ class _$TemperatureDataPointCopyWithImpl<
     Object? roomTemperature = null,
     Object? targetTemperature = null,
     Object? flameTemperature = null,
+    Object? mainState = null,
   }) {
     return _then(
       _value.copyWith(
@@ -91,6 +94,10 @@ class _$TemperatureDataPointCopyWithImpl<
             flameTemperature: null == flameTemperature
                 ? _value.flameTemperature
                 : flameTemperature // ignore: cast_nullable_to_non_nullable
+                      as int,
+            mainState: null == mainState
+                ? _value.mainState
+                : mainState // ignore: cast_nullable_to_non_nullable
                       as int,
           )
           as $Val,
@@ -112,6 +119,7 @@ abstract class _$$TemperatureDataPointImplCopyWith<$Res>
     double roomTemperature,
     double targetTemperature,
     int flameTemperature,
+    int mainState,
   });
 }
 
@@ -133,6 +141,7 @@ class __$$TemperatureDataPointImplCopyWithImpl<$Res>
     Object? roomTemperature = null,
     Object? targetTemperature = null,
     Object? flameTemperature = null,
+    Object? mainState = null,
   }) {
     return _then(
       _$TemperatureDataPointImpl(
@@ -152,6 +161,10 @@ class __$$TemperatureDataPointImplCopyWithImpl<$Res>
             ? _value.flameTemperature
             : flameTemperature // ignore: cast_nullable_to_non_nullable
                   as int,
+        mainState: null == mainState
+            ? _value.mainState
+            : mainState // ignore: cast_nullable_to_non_nullable
+                  as int,
       ),
     );
   }
@@ -165,6 +178,7 @@ class _$TemperatureDataPointImpl implements _TemperatureDataPoint {
     required this.roomTemperature,
     required this.targetTemperature,
     required this.flameTemperature,
+    required this.mainState,
   });
 
   factory _$TemperatureDataPointImpl.fromJson(Map<String, dynamic> json) =>
@@ -178,10 +192,12 @@ class _$TemperatureDataPointImpl implements _TemperatureDataPoint {
   final double targetTemperature;
   @override
   final int flameTemperature;
+  @override
+  final int mainState;
 
   @override
   String toString() {
-    return 'TemperatureDataPoint(timestamp: $timestamp, roomTemperature: $roomTemperature, targetTemperature: $targetTemperature, flameTemperature: $flameTemperature)';
+    return 'TemperatureDataPoint(timestamp: $timestamp, roomTemperature: $roomTemperature, targetTemperature: $targetTemperature, flameTemperature: $flameTemperature, mainState: $mainState)';
   }
 
   @override
@@ -196,7 +212,9 @@ class _$TemperatureDataPointImpl implements _TemperatureDataPoint {
             (identical(other.targetTemperature, targetTemperature) ||
                 other.targetTemperature == targetTemperature) &&
             (identical(other.flameTemperature, flameTemperature) ||
-                other.flameTemperature == flameTemperature));
+                other.flameTemperature == flameTemperature) &&
+            (identical(other.mainState, mainState) ||
+                other.mainState == mainState));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -207,6 +225,7 @@ class _$TemperatureDataPointImpl implements _TemperatureDataPoint {
     roomTemperature,
     targetTemperature,
     flameTemperature,
+    mainState,
   );
 
   /// Create a copy of TemperatureDataPoint
@@ -233,6 +252,7 @@ abstract class _TemperatureDataPoint implements TemperatureDataPoint {
     required final double roomTemperature,
     required final double targetTemperature,
     required final int flameTemperature,
+    required final int mainState,
   }) = _$TemperatureDataPointImpl;
 
   factory _TemperatureDataPoint.fromJson(Map<String, dynamic> json) =
@@ -246,6 +266,8 @@ abstract class _TemperatureDataPoint implements TemperatureDataPoint {
   double get targetTemperature;
   @override
   int get flameTemperature;
+  @override
+  int get mainState;
 
   /// Create a copy of TemperatureDataPoint
   /// with the given fields replaced by the non-null parameter values.

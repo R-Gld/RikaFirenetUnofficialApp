@@ -13,6 +13,7 @@ _$TemperatureDataPointImpl _$$TemperatureDataPointImplFromJson(
   roomTemperature: (json['roomTemperature'] as num).toDouble(),
   targetTemperature: (json['targetTemperature'] as num).toDouble(),
   flameTemperature: (json['flameTemperature'] as num).toInt(),
+  mainState: (json['mainState'] as num).toInt(),
 );
 
 Map<String, dynamic> _$$TemperatureDataPointImplToJson(
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$TemperatureDataPointImplToJson(
   'roomTemperature': instance.roomTemperature,
   'targetTemperature': instance.targetTemperature,
   'flameTemperature': instance.flameTemperature,
+  'mainState': instance.mainState,
 };
 
 _$ConsumptionDataPointImpl _$$ConsumptionDataPointImplFromJson(
