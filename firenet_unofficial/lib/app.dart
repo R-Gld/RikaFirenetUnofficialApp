@@ -5,6 +5,7 @@ import 'l10n/app_localizations.dart';
 import 'providers/auth_providers.dart';
 import 'providers/settings_provider.dart';
 import 'providers/biometric_auth_provider.dart';
+import 'providers/app_lifecycle_provider.dart';
 import 'data/models/app_settings.dart';
 import 'presentation/theme/app_theme.dart';
 import 'presentation/screens/auth/login_screen.dart';
@@ -18,6 +19,9 @@ class App extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Initialize app lifecycle observer to manage polling intervals
+    ref.watch(appLifecycleProvider);
+
     final authState = ref.watch(authStateProvider);
     final settings = ref.watch(settingsProvider);
 

@@ -14,9 +14,14 @@ class PollingConfig {
     this.enabled = true,
   });
 
-  /// Foreground polling configuration (every 15 seconds)
+  /// Foreground polling configuration (when app is in foreground - every 5 seconds)
   const PollingConfig.foreground()
       : interval = ApiConstants.foregroundPollingInterval,
+        enabled = true;
+
+  /// Continuous polling configuration (when screen is locked - every 5 minutes)
+  const PollingConfig.continuous()
+      : interval = ApiConstants.continuousPollingInterval,
         enabled = true;
 
   /// Background polling configuration (every 60 seconds)
