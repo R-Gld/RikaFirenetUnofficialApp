@@ -35,8 +35,10 @@ class BackgroundPollingService {
       frequency: Duration(minutes: intervalMinutes),
       initialDelay: Duration(seconds: 30), // Start after 30s
       constraints: Constraints(
-        networkType: NetworkType.connected, // Require internet
+        networkType: NetworkType.notRequired, // Allow execution even if network seems disconnected
       ),
+      backoffPolicy: BackoffPolicy.linear,
+      backoffPolicyDelay: Duration(seconds: 30), // Retry after 30s on failure
       inputData: {
         'stoveId': stoveId,
       },
