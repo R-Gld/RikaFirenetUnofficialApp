@@ -879,5 +879,5 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get chartAutoUpdateInfo =>
-      'Historiske data indsamles automatisk. Diagrammet opdateres hvert 10. sekund med nye datapunkter.';
+      'Historiske data indsamles automatisk. Diagrammet opdateres hvert 4. sekund med nye datapunkter.';
 }

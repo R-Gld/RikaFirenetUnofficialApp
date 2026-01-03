@@ -1737,7 +1737,7 @@ abstract class AppLocalizations {
   /// No description provided for @chartAutoUpdateInfo.
   ///
   /// In en, this message translates to:
-  /// **'Historical data is collected automatically. Chart updates every 10 seconds with new data points.'**
+  /// **'Historical data is collected automatically. Chart updates every 4 seconds with new data points.'**
   String get chartAutoUpdateInfo;
 }
 

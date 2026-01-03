@@ -886,5 +886,5 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get chartAutoUpdateInfo =>
-      'Historische gegevens worden automatisch verzameld. Grafiek wordt elke 10 seconden bijgewerkt met nieuwe datapunten.';
+      'Historische gegevens worden automatisch verzameld. Grafiek wordt elke 4 seconden bijgewerkt met nieuwe datapunten.';
 }

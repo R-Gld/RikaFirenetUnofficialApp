@@ -893,5 +893,5 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chartAutoUpdateInfo =>
-      'Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 10 segundos con nuevos puntos de datos.';
+      'Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 4 segundos con nuevos puntos de datos.';
 }
