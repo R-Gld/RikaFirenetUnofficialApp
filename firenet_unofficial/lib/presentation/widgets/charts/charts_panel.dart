@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../theme/app_colors.dart';
@@ -7,7 +9,8 @@ import 'temperature_chart.dart';
 /// Charts panel widget for stove detail screen
 ///
 /// Displays temperature evolution chart in an expandable card
-class ChartsPanel extends ConsumerWidget {
+/// Auto-refreshes every 10 seconds to show new data points in real-time
+class ChartsPanel extends ConsumerStatefulWidget {
   final String stoveId;
 
   const ChartsPanel({
@@ -16,15 +19,56 @@ class ChartsPanel extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final chartDataAsync = ref.watch(temperatureChart24hProvider(stoveId));
-    final dataCountAsync = ref.watch(sensorReadingCount24hProvider(stoveId));
+  ConsumerState<ChartsPanel> createState() => _ChartsPanelState();
+}
+
+class _ChartsPanelState extends ConsumerState<ChartsPanel> {
+  Timer? _refreshTimer;
+  bool _isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start auto-refresh timer (every 10 seconds)
+    _startAutoRefresh();
+  }
+
+  @override
+  void dispose() {
+    _refreshTimer?.cancel();
+    super.dispose();
+  }
+
+  void _startAutoRefresh() {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+      if (mounted && _isExpanded) {
+        // Only refresh if panel is expanded (visible)
+        ref.invalidate(temperatureChart24hProvider(widget.stoveId));
+        ref.invalidate(sensorReadingCount24hProvider(widget.stoveId));
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final chartDataAsync = ref.watch(temperatureChart24hProvider(widget.stoveId));
+    final dataCountAsync = ref.watch(sensorReadingCount24hProvider(widget.stoveId));
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ExpansionTile(
         initiallyExpanded: false,
+        onExpansionChanged: (expanded) {
+          setState(() {
+            _isExpanded = expanded;
+          });
+          if (expanded) {
+            // Refresh immediately when expanded
+            ref.invalidate(temperatureChart24hProvider(widget.stoveId));
+            ref.invalidate(sensorReadingCount24hProvider(widget.stoveId));
+          }
+        },
         leading: Icon(
           Icons.show_chart,
           color: isDark ? AppColors.primaryDark : AppColors.primary,
@@ -126,7 +170,7 @@ class ChartsPanel extends ConsumerWidget {
                       Expanded(
                         child: Text(
                           'Historical data is collected automatically. '
-                          'Charts will populate as data is gathered.',
+                          'Chart updates every 10 seconds with new data points.',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: isDark ? Colors.grey[300] : Colors.grey[700],
                               ),
