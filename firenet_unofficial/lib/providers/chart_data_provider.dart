@@ -92,3 +92,13 @@ final hasSufficientChartDataProvider = FutureProvider.family<bool, String>(
     return repository.hasSufficientData(stoveId);
   },
 );
+
+/// Provides the count of sensor readings collected in the last 24 hours
+///
+/// This is used to show progress to the user while data is being collected
+final sensorReadingCount24hProvider = FutureProvider.family<int, String>(
+  (ref, stoveId) async {
+    final repository = ref.watch(chartDataRepositoryProvider);
+    return repository.getSensorReadingCount24h(stoveId);
+  },
+);

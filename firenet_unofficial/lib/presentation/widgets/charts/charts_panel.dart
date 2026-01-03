@@ -18,6 +18,7 @@ class ChartsPanel extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chartDataAsync = ref.watch(temperatureChart24hProvider(stoveId));
+    final dataCountAsync = ref.watch(sensorReadingCount24hProvider(stoveId));
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
@@ -59,10 +60,12 @@ class ChartsPanel extends ConsumerWidget {
                 // Chart
                 chartDataAsync.when(
                   data: (dataPoints) {
+                    final dataCount = dataCountAsync.valueOrNull ?? 0;
                     return TemperatureChart(
                       dataPoints: dataPoints,
                       isDarkMode: isDark,
                       title: 'Temperature Evolution (24h)',
+                      dataCount: dataCount,
                     );
                   },
                   loading: () => const SizedBox(

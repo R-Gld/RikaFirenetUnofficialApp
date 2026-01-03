@@ -204,4 +204,20 @@ class ChartDataRepository {
       return false;
     }
   }
+
+  /// Get the number of sensor readings collected in the last 24 hours
+  ///
+  /// Returns the count of data points available for chart display
+  Future<int> getSensorReadingCount24h(String stoveId) async {
+    try {
+      final now = DateTime.now();
+      final start = now.subtract(const Duration(hours: 24));
+      final readings = await _database.getSensorReadings(stoveId, start, now);
+
+      return readings.length;
+    } catch (e) {
+      debugPrint('[ChartDataRepository] ERROR: Failed to count sensor readings: $e');
+      return 0;
+    }
+  }
 }

@@ -14,12 +14,14 @@ class TemperatureChart extends StatelessWidget {
   final List<TemperatureDataPoint> dataPoints;
   final bool isDarkMode;
   final String title;
+  final int? dataCount;
 
   const TemperatureChart({
     super.key,
     required this.dataPoints,
     this.isDarkMode = false,
     this.title = 'Temperature Evolution',
+    this.dataCount,
   });
 
   @override
@@ -50,6 +52,12 @@ class TemperatureChart extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    // Minimum data points needed for a meaningful chart (about 1 hour of data at 5s intervals)
+    const int minDataPoints = 288; // 24h at 5min sampling
+    final count = dataCount ?? 0;
+    final progress = count / minDataPoints;
+    final progressPercent = (progress * 100).clamp(0, 100).toInt();
+
     return Container(
       height: 250,
       decoration: BoxDecoration(
@@ -60,30 +68,63 @@ class TemperatureChart extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.show_chart,
-              size: 64,
-              color: isDarkMode ? Colors.grey[600] : Colors.grey[400],
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'No data available yet',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.show_chart,
+                size: 64,
+                color: isDarkMode ? Colors.grey[600] : Colors.grey[400],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'No data available yet',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                    ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Data collection in progress...',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: isDarkMode ? Colors.grey[500] : Colors.grey[500],
+                      fontStyle: FontStyle.italic,
+                    ),
+              ),
+              const SizedBox(height: 24),
+              // Progress bar
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: LinearProgressIndicator(
+                  value: progress.clamp(0.0, 1.0),
+                  minHeight: 8,
+                  backgroundColor: isDarkMode ? Colors.grey[800] : Colors.grey[200],
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    isDarkMode ? AppColors.primaryDark : AppColors.primary,
                   ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Data collection in progress...',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isDarkMode ? Colors.grey[500] : Colors.grey[500],
-                    fontStyle: FontStyle.italic,
-                  ),
-            ),
-          ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              // Data count
+              Text(
+                '$count data points collected ($progressPercent%)',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
+                      fontWeight: FontWeight.w500,
+                    ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Minimum $minDataPoints points needed for chart',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: isDarkMode ? Colors.grey[500] : Colors.grey[500],
+                      fontSize: 11,
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
     );
