@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 /// Service to handle battery optimization settings
 class BatteryOptimizationService {
   static const MethodChannel _channel =
-      MethodChannel('com.example.firenet_unofficial/battery');
+      MethodChannel('fr.Rgld_.firenet_unofficial/battery');
 
   final Logger _logger = Logger();
 

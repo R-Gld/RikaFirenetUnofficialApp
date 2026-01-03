@@ -11,7 +11,7 @@ import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterFragmentActivity() {
-    private val BATTERY_CHANNEL = "com.example.firenet_unofficial/battery"
+    private val BATTERY_CHANNEL = "fr.Rgld_.firenet_unofficial/battery"
     private val POLLING_SERVICE_CHANNEL = "fr.rgld.firenet/polling_service"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
