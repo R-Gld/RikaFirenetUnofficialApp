@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -162,11 +164,18 @@ class TemperatureChart extends StatelessWidget {
     final safeTimeRange = maxX - minX;
     final bottomInterval = (safeTimeRange / 6).clamp(1.0, double.infinity);
 
+    // Calculate Y axis interval dynamically to avoid too many labels
+    // Target: ~5-6 labels on Y axis
+    final tempRange = yMax - yMin;
+    final rawYInterval = tempRange / 5;
+    // Round to nice values (5, 10, 20, 50, 100, etc.)
+    final yInterval = _calculateNiceInterval(rawYInterval);
+
     return LineChartData(
       gridData: FlGridData(
         show: true,
         drawVerticalLine: true,
-        horizontalInterval: 10,
+        horizontalInterval: yInterval,
         getDrawingHorizontalLine: (value) {
           return FlLine(
             color: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
@@ -212,7 +221,7 @@ class TemperatureChart extends StatelessWidget {
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 10,
+            interval: yInterval,
             reservedSize: 40,
             getTitlesWidget: (value, meta) {
               return Text(
@@ -351,6 +360,34 @@ class TemperatureChart extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// Calculate a "nice" interval for axis labels
+  ///
+  /// Rounds the raw interval to nice round numbers (5, 10, 20, 50, 100, etc.)
+  /// to make the chart more readable
+  double _calculateNiceInterval(double rawInterval) {
+    if (rawInterval <= 0) return 10; // Fallback to 10
+
+    // Find the magnitude (power of 10)
+    final magnitude = pow(10, (log(rawInterval) / ln10).floor()).toDouble();
+
+    // Normalize to 0-10 range
+    final normalized = rawInterval / magnitude;
+
+    // Round to nice values
+    double niceNormalized;
+    if (normalized < 1.5) {
+      niceNormalized = 1;
+    } else if (normalized < 3) {
+      niceNormalized = 2;
+    } else if (normalized < 7) {
+      niceNormalized = 5;
+    } else {
+      niceNormalized = 10;
+    }
+
+    return (niceNormalized * magnitude).clamp(1.0, double.infinity);
   }
 
   Widget _buildLegendItem(
