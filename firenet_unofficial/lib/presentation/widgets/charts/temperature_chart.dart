@@ -36,11 +36,36 @@ class TemperatureChart extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Axis labels
+        Padding(
+          padding: const EdgeInsets.only(left: 40, right: 56, top: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Room / Target',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: isDarkMode ? AppColors.primaryDark : AppColors.primary,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10,
+                    ),
+              ),
+              Text(
+                'Flame',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 10,
+                    ),
+              ),
+            ],
+          ),
+        ),
         // Chart
         SizedBox(
           height: 250,
           child: Padding(
-            padding: const EdgeInsets.only(right: 16, top: 16),
+            padding: const EdgeInsets.only(right: 16, top: 4),
             child: LineChart(
               _buildChartData(context),
             ),
@@ -134,22 +159,43 @@ class TemperatureChart extends StatelessWidget {
   }
 
   LineChartData _buildChartData(BuildContext context) {
-    // Extract min/max values for Y axis scaling
-    // NOTE: Currently only showing room and target temperatures
-    // Flame temperature (~400°C) is hidden because it crushes the scale
-    // making room temps (~20°C) unreadable
+    // Dual Y-axis implementation:
+    // Left axis: Room and target temperatures (15-30°C range)
+    // Right axis: Flame temperature (0-500°C range)
     final roomTemps = dataPoints.map((p) => p.roomTemperature).toList();
     final targetTemps = dataPoints.map((p) => p.targetTemperature).toList();
-    // final flameTemps = dataPoints.map((p) => p.flameTemperature.toDouble()).toList();
+    final flameTemps = dataPoints.map((p) => p.flameTemperature.toDouble()).toList();
 
+    // Calculate range for left axis (room/target)
     final allTemps = [...roomTemps, ...targetTemps];
     final minTemp = allTemps.reduce((a, b) => a < b ? a : b);
     final maxTemp = allTemps.reduce((a, b) => a > b ? a : b);
 
-    // Add padding to Y axis
+    // Calculate range for flame temperature (right axis)
+    final minFlame = flameTemps.reduce((a, b) => a < b ? a : b);
+    final maxFlame = flameTemps.reduce((a, b) => a > b ? a : b);
+
+    // Add padding to Y axis (left axis for room/target)
     // If all temps are the same, add ±5 range to avoid zero range
     final yMin = (minTemp - 5).floorToDouble();
     final yMax = (maxTemp + 5).ceilToDouble().clamp(yMin + 10, double.infinity);
+
+    // Flame axis range (right axis) - round to nice values
+    final flameYMin = (minFlame / 50).floor() * 50.0; // Round down to nearest 50
+    final flameYMax = ((maxFlame / 50).ceil() * 50.0).clamp(flameYMin + 100, double.infinity);
+
+    // Normalize flame temperatures to fit in the left axis range for display
+    // This allows dual Y-axis effect
+    double normalizeFlame(double flameTemp) {
+      if (flameYMax == flameYMin) return yMin;
+      return yMin + (flameTemp - flameYMin) / (flameYMax - flameYMin) * (yMax - yMin);
+    }
+
+    // Denormalize: convert from display Y to actual flame temperature
+    double denormalizeFlame(double displayY) {
+      if (yMax == yMin) return flameYMin;
+      return flameYMin + (displayY - yMin) / (yMax - yMin) * (flameYMax - flameYMin);
+    }
 
     // Get time range
     final startTime = dataPoints.first.timestamp;
@@ -194,8 +240,24 @@ class TemperatureChart extends StatelessWidget {
       ),
       titlesData: FlTitlesData(
         show: true,
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+        rightTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            interval: yInterval, // Use same visual interval as left
+            reservedSize: 50,
+            getTitlesWidget: (value, meta) {
+              // Convert display Y value to actual flame temperature
+              final flameValue = denormalizeFlame(value);
+              return Text(
+                '${flameValue.toInt()}°C',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.redAccent.withOpacity(0.8),
+                  fontWeight: FontWeight.w500,
+                ),
+              );
+            },
+          ),
         ),
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
@@ -273,19 +335,19 @@ class TemperatureChart extends StatelessWidget {
           isCurved: false,
           dotted: true,
         ),
-        // FLAME TEMPERATURE HIDDEN - Crushes the scale (400°C vs 20°C)
-        // TODO: Add separate chart or dual Y-axis in future
-        // _buildLineChartBarData(
-        //   dataPoints: dataPoints.map((p) {
-        //     return FlSpot(
-        //       p.timestamp.millisecondsSinceEpoch.toDouble(),
-        //       p.flameTemperature.toDouble(),
-        //     );
-        //   }).toList(),
-        //   color: Colors.redAccent,
-        //   isCurved: true,
-        //   dotted: false,
-        // ),
+        // Flame temperature line (normalized to fit in left axis scale)
+        // Actual values shown on right axis
+        _buildLineChartBarData(
+          dataPoints: dataPoints.map((p) {
+            return FlSpot(
+              p.timestamp.millisecondsSinceEpoch.toDouble(),
+              normalizeFlame(p.flameTemperature.toDouble()),
+            );
+          }).toList(),
+          color: Colors.redAccent,
+          isCurved: true,
+          dotted: false,
+        ),
       ],
       lineTouchData: LineTouchData(
         enabled: true,
@@ -301,16 +363,21 @@ class TemperatureChart extends StatelessWidget {
             );
             final formatter = DateFormat('HH:mm');
 
-            // Collect all values (room and target)
+            // Collect all values (room, target, and flame)
             final roomTemp = touchedSpots.length > 0 ? touchedSpots[0].y : 0.0;
             final targetTemp = touchedSpots.length > 1 ? touchedSpots[1].y : 0.0;
+            // Flame temp is normalized - denormalize it for display
+            final flameTemp = touchedSpots.length > 2
+                ? denormalizeFlame(touchedSpots[2].y)
+                : 0.0;
 
             // Only show the first tooltip item with all info
             return [
               LineTooltipItem(
                 '${formatter.format(timestamp)}\n'
                 'Room: ${roomTemp.toStringAsFixed(1)}°C\n'
-                'Target: ${targetTemp.toStringAsFixed(1)}°C',
+                'Target: ${targetTemp.toStringAsFixed(1)}°C\n'
+                'Flame: ${flameTemp.toStringAsFixed(0)}°C',
                 const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -319,6 +386,8 @@ class TemperatureChart extends StatelessWidget {
               ),
               // Return null for other spots to avoid duplicate tooltips
               if (touchedSpots.length > 1)
+                const LineTooltipItem('', TextStyle(fontSize: 0)),
+              if (touchedSpots.length > 2)
                 const LineTooltipItem('', TextStyle(fontSize: 0)),
             ];
           },
@@ -362,13 +431,12 @@ class TemperatureChart extends StatelessWidget {
           label: 'Target Temperature',
           solid: false,
         ),
-        // Flame temperature hidden - see lineBarsData comment
-        // _buildLegendItem(
-        //   context,
-        //   color: Colors.redAccent,
-        //   label: 'Flame Temperature',
-        //   solid: true,
-        // ),
+        _buildLegendItem(
+          context,
+          color: Colors.redAccent,
+          label: 'Flame Temperature',
+          solid: true,
+        ),
       ],
     );
   }
