@@ -307,5 +307,5 @@
   "targetTemperature": "Måltemperatur",
   "flameTemperature": "Flammetemperatur",
   "failedToLoadChartData": "Kunne ikke indlæse diagramdata",
-  "chartAutoUpdateInfo": "Historiske data indsamles automatisk. Diagrammet opdateres hvert 10. sekund med nye datapunkter."
+  "chartAutoUpdateInfo": "Historiske data indsamles automatisk. Diagrammet opdateres hvert 4. sekund med nye datapunkter."
 }

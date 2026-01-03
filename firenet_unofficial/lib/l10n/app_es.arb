@@ -394,5 +394,5 @@
   "targetTemperature": "Temperatura objetivo",
   "flameTemperature": "Temperatura llama",
   "failedToLoadChartData": "Error al cargar datos del gráfico",
-  "chartAutoUpdateInfo": "Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 10 segundos con nuevos puntos de datos."
+  "chartAutoUpdateInfo": "Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 4 segundos con nuevos puntos de datos."
 }

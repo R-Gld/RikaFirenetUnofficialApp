@@ -307,5 +307,5 @@
   "targetTemperature": "Zieltemperatur",
   "flameTemperature": "Flammentemperatur",
   "failedToLoadChartData": "Diagrammdaten konnten nicht geladen werden",
-  "chartAutoUpdateInfo": "Historische Daten werden automatisch erfasst. Diagramm aktualisiert sich alle 10 Sekunden mit neuen Datenpunkten."
+  "chartAutoUpdateInfo": "Historische Daten werden automatisch erfasst. Diagramm aktualisiert sich alle 4 Sekunden mit neuen Datenpunkten."
 }

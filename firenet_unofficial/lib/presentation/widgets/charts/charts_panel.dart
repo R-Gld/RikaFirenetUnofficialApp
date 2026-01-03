@@ -10,7 +10,7 @@ import 'temperature_chart.dart';
 /// Charts panel widget for stove detail screen
 ///
 /// Displays temperature evolution chart in an expandable card
-/// Auto-refreshes every 10 seconds to show new data points in real-time
+/// Auto-refreshes every 4 seconds to show new data points in real-time
 class ChartsPanel extends ConsumerStatefulWidget {
   final String stoveId;
 
@@ -30,7 +30,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
   @override
   void initState() {
     super.initState();
-    // Start auto-refresh timer (every 10 seconds)
+    // Start auto-refresh timer (every 4 seconds)
     _startAutoRefresh();
   }
 
@@ -41,7 +41,7 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
   }
 
   void _startAutoRefresh() {
-    _refreshTimer = Timer.periodic(const Duration(seconds: 10), (_) {
+    _refreshTimer = Timer.periodic(const Duration(seconds: 4), (_) {
       if (mounted && _isExpanded) {
         // Only refresh if panel is expanded (visible)
         ref.invalidate(temperatureChart24hProvider(widget.stoveId));

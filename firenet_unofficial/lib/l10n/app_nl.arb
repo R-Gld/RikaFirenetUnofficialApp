@@ -394,5 +394,5 @@
   "targetTemperature": "Doeltemperatuur",
   "flameTemperature": "Vlamtemperatuur",
   "failedToLoadChartData": "Fout bij laden grafiekgegevens",
-  "chartAutoUpdateInfo": "Historische gegevens worden automatisch verzameld. Grafiek wordt elke 10 seconden bijgewerkt met nieuwe datapunten."
+  "chartAutoUpdateInfo": "Historische gegevens worden automatisch verzameld. Grafiek wordt elke 4 seconden bijgewerkt met nieuwe datapunten."
 }

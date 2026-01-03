@@ -405,5 +405,5 @@
   "targetTemperature": "Target Temperature",
   "flameTemperature": "Flame Temperature",
   "failedToLoadChartData": "Failed to load chart data",
-  "chartAutoUpdateInfo": "Historical data is collected automatically. Chart updates every 10 seconds with new data points."
+  "chartAutoUpdateInfo": "Historical data is collected automatically. Chart updates every 4 seconds with new data points."
 }
