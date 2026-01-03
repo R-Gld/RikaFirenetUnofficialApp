@@ -798,4 +798,11 @@ class AppLocalizationsDa extends AppLocalizations {
   String statusUnknown(int state) {
     return 'Ukendt tilstand ($state)';
   }
+
+  @override
+  String get showChartsPanel => 'Vis diagrampanel';
+
+  @override
+  String get showChartsPanelSubtitle =>
+      'Vis temperaturudvikling og historiske datadiagrammer';
 }

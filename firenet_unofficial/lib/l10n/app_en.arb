@@ -359,5 +359,8 @@
         "type": "int"
       }
     }
-  }
+  },
+
+  "showChartsPanel": "Show Charts Panel",
+  "showChartsPanelSubtitle": "Display temperature evolution and historical data charts"
 }

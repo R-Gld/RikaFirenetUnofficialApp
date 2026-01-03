@@ -809,4 +809,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String statusUnknown(int state) {
     return 'Unbekannter Status ($state)';
   }
+
+  @override
+  String get showChartsPanel => 'Diagrammpanel anzeigen';
+
+  @override
+  String get showChartsPanelSubtitle =>
+      'Temperaturverlauf und historische Datendiagramme anzeigen';
 }

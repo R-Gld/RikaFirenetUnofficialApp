@@ -814,4 +814,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String statusUnknown(int state) {
     return 'État inconnu ($state)';
   }
+
+  @override
+  String get showChartsPanel => 'Afficher le panneau des graphiques';
+
+  @override
+  String get showChartsPanelSubtitle =>
+      'Afficher l\'évolution des températures et les graphiques de données historiques';
 }

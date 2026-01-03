@@ -805,4 +805,11 @@ class AppLocalizationsNl extends AppLocalizations {
   String statusUnknown(int state) {
     return 'Onbekende status ($state)';
   }
+
+  @override
+  String get showChartsPanel => 'Toon grafiekenpaneel';
+
+  @override
+  String get showChartsPanelSubtitle =>
+      'Toon temperatuurverloop en historische datagrafieken';
 }

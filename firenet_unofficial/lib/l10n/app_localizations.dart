@@ -1595,6 +1595,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown State ({state})'**
   String statusUnknown(int state);
+
+  /// No description provided for @showChartsPanel.
+  ///
+  /// In en, this message translates to:
+  /// **'Show Charts Panel'**
+  String get showChartsPanel;
+
+  /// No description provided for @showChartsPanelSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Display temperature evolution and historical data charts'**
+  String get showChartsPanelSubtitle;
 }
 
 class _AppLocalizationsDelegate

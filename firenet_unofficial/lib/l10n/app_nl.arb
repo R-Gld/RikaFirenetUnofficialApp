@@ -365,5 +365,8 @@
   "statusBurnOff": "Uitbranden",
   "statusSplitLogCheck": "Controle brandhout",
   "statusSplitLogMode": "Brandhoutmodus",
-  "statusUnknown": "Onbekende status ({state})"
+  "statusUnknown": "Onbekende status ({state})",
+
+  "showChartsPanel": "Toon grafiekenpaneel",
+  "showChartsPanelSubtitle": "Toon temperatuurverloop en historische datagrafieken"
 }

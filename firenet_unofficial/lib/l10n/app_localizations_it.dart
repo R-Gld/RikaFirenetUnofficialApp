@@ -811,4 +811,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String statusUnknown(int state) {
     return 'Stato sconosciuto ($state)';
   }
+
+  @override
+  String get showChartsPanel => 'Mostra pannello grafici';
+
+  @override
+  String get showChartsPanelSubtitle =>
+      'Visualizza evoluzione temperatura e grafici dati storici';
 }

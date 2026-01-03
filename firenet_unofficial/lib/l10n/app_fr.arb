@@ -265,5 +265,8 @@
   "statusBurnOff": "Extinction",
   "statusSplitLogCheck": "Vérification bûches",
   "statusSplitLogMode": "Mode bûches",
-  "statusUnknown": "État inconnu ({state})"
+  "statusUnknown": "État inconnu ({state})",
+
+  "showChartsPanel": "Afficher le panneau des graphiques",
+  "showChartsPanelSubtitle": "Afficher l'évolution des températures et les graphiques de données historiques"
 }

@@ -79,6 +79,18 @@ class InfoPanelsSettingsScreen extends ConsumerWidget {
                     );
               },
             ),
+            _buildSwitchTile(
+              context,
+              l10n: l10n,
+              title: l10n.showChartsPanel,
+              subtitle: l10n.showChartsPanelSubtitle,
+              value: settings.showChartsPanel,
+              onChanged: (value) {
+                ref.read(settingsProvider.notifier).updateSetting(
+                      (s) => s.copyWith(showChartsPanel: value),
+                    );
+              },
+            ),
           ],
         ),
       ),

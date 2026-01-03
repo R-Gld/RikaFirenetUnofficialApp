@@ -39,6 +39,7 @@ class AppSettings with _$AppSettings {
     @Default(true) bool showSensorInfoPanel,
     @Default(true) bool showOutputsInfoPanel,
     @Default(true) bool showStatisticsPanel,
+    @Default(true) bool showChartsPanel,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

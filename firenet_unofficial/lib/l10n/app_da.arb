@@ -278,5 +278,8 @@
   "statusBurnOff": "Slukker",
   "statusSplitLogCheck": "Brændetjek",
   "statusSplitLogMode": "Brændetilstand",
-  "statusUnknown": "Ukendt tilstand ({state})"
+  "statusUnknown": "Ukendt tilstand ({state})",
+
+  "showChartsPanel": "Vis diagrampanel",
+  "showChartsPanelSubtitle": "Vis temperaturudvikling og historiske datadiagrammer"
 }

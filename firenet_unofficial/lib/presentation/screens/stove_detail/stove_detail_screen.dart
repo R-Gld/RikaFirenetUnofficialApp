@@ -21,6 +21,7 @@ import '../../widgets/info/outputs_info_panel.dart';
 import '../../widgets/info/statistics_panel.dart';
 import '../../widgets/info/safety_status_panel.dart';
 import '../../widgets/info/error_warning_panel.dart';
+import '../../widgets/charts/charts_panel.dart';
 import '../../../providers/stove_providers.dart';
 import '../../../providers/polling_provider.dart';
 import '../../../providers/settings_provider.dart';
@@ -414,7 +415,11 @@ class StoveDetailScreen extends ConsumerWidget {
                   const SizedBox(height: 16),
                 ],
 
-
+                  // Charts panel (conditional - enabled in settings)
+                  if (settings.showChartsPanel) ...[
+                    ChartsPanel(stoveId: stoveId),
+                    const SizedBox(height: 8),
+                  ],
 
                   // Information panels (expandable)
                   // Error/Warning panel (conditional - visible only if active and enabled in settings)

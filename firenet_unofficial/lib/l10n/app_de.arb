@@ -278,5 +278,8 @@
   "warningNotEnoughLowPressure": "Nicht genug Unterdruck",
   "warningAirFlapsCalibrating": "Luftklappen kalibrieren",
   "warningBurnBackFlapOpen": "Rückbrandklappe oder Rauchgasklappe offen",
-  "warningStoveNotInPosition": "Ofen nicht in Position"
+  "warningStoveNotInPosition": "Ofen nicht in Position",
+
+  "showChartsPanel": "Diagrammpanel anzeigen",
+  "showChartsPanelSubtitle": "Temperaturverlauf und historische Datendiagramme anzeigen"
 }

@@ -365,5 +365,8 @@
   "statusBurnOff": "Apagado",
   "statusSplitLogCheck": "Verificación de leña",
   "statusSplitLogMode": "Modo leña",
-  "statusUnknown": "Estado desconocido ({state})"
+  "statusUnknown": "Estado desconocido ({state})",
+
+  "showChartsPanel": "Mostrar panel de gráficos",
+  "showChartsPanelSubtitle": "Mostrar evolución de temperatura y gráficos de datos históricos"
 }

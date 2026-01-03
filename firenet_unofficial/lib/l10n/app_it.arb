@@ -365,5 +365,8 @@
   "statusBurnOff": "Spegnimento",
   "statusSplitLogCheck": "Verifica legna",
   "statusSplitLogMode": "Modalità legna",
-  "statusUnknown": "Stato sconosciuto ({state})"
+  "statusUnknown": "Stato sconosciuto ({state})",
+
+  "showChartsPanel": "Mostra pannello grafici",
+  "showChartsPanelSubtitle": "Visualizza evoluzione temperatura e grafici dati storici"
 }
