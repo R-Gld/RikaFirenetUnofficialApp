@@ -142,12 +142,25 @@ class TemperatureChart extends StatelessWidget {
     final maxTemp = allTemps.reduce((a, b) => a > b ? a : b);
 
     // Add padding to Y axis
+    // If all temps are the same, add ±5 range to avoid zero range
     final yMin = (minTemp - 5).floorToDouble();
-    final yMax = (maxTemp + 5).ceilToDouble();
+    final yMax = (maxTemp + 5).ceilToDouble().clamp(yMin + 10, double.infinity);
 
     // Get time range
     final startTime = dataPoints.first.timestamp;
     final endTime = dataPoints.last.timestamp;
+
+    // Calculate time range and ensure interval is not zero
+    final timeRangeMs = endTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch;
+
+    // If time range is 0 (single point or very close points), expand the range
+    final minX = startTime.millisecondsSinceEpoch.toDouble();
+    final maxX = timeRangeMs > 0
+        ? endTime.millisecondsSinceEpoch.toDouble()
+        : minX + 3600000; // Add 1 hour if no range
+
+    final safeTimeRange = maxX - minX;
+    final bottomInterval = (safeTimeRange / 6).clamp(1.0, double.infinity);
 
     return LineChartData(
       gridData: FlGridData(
@@ -179,7 +192,7 @@ class TemperatureChart extends StatelessWidget {
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 30,
-            interval: (endTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch) / 6,
+            interval: bottomInterval,
             getTitlesWidget: (value, meta) {
               final timestamp = DateTime.fromMillisecondsSinceEpoch(value.toInt());
               final formatter = DateFormat('HH:mm');
@@ -219,8 +232,8 @@ class TemperatureChart extends StatelessWidget {
           color: isDarkMode ? Colors.grey[700]! : Colors.grey[300]!,
         ),
       ),
-      minX: startTime.millisecondsSinceEpoch.toDouble(),
-      maxX: endTime.millisecondsSinceEpoch.toDouble(),
+      minX: minX,
+      maxX: maxX,
       minY: yMin,
       maxY: yMax,
       lineBarsData: [
