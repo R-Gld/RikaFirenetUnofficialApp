@@ -8,6 +8,7 @@ import '../../../data/models/app_settings.dart';
 import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
 import '../../../providers/biometric_auth_provider.dart';
+import '../../../providers/auth_providers.dart';
 import 'advanced_controls_settings_screen.dart';
 import 'notifications_settings_screen.dart';
 import 'info_panels_settings_screen.dart';
@@ -94,6 +95,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                 ),
               ),
+
+            // Logout button
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text('Déconnexion'),
+              subtitle: const Text('Se déconnecter de l\'application'),
+              onTap: () => _showLogoutConfirmation(context, ref, l10n),
+            ),
 
             const Divider(height: 32),
 
@@ -471,5 +480,52 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         builder: (_) => const InfoPanelsSettingsScreen(),
       ),
     );
+  }
+
+  Future<void> _showLogoutConfirmation(
+    BuildContext context,
+    WidgetRef ref,
+    AppLocalizations l10n,
+  ) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Déconnexion'),
+        content: const Text('Voulez-vous vraiment vous déconnecter ?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Annuler'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Déconnexion'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true && context.mounted) {
+      // Show loading indicator
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+
+      // Perform logout
+      await ref.read(authStateProvider.notifier).logout();
+
+      // Pop loading indicator if still mounted
+      if (context.mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 }
