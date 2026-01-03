@@ -624,7 +624,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get sensorInformation => 'Información de sensores';
 
   @override
-  String get flameTemperature => 'Temperatura de llama';
+  String get flameTemperature => 'Temperatura llama';
 
   @override
   String get ambientTemperature => 'Temperatura ambiente';
@@ -853,4 +853,45 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get openSettings => 'Abrir configuración';
+
+  @override
+  String get charts => 'Gráficos';
+
+  @override
+  String get chartsSubtitle => 'Evolución de temperatura & estadísticas';
+
+  @override
+  String get temperatureEvolution24h => 'Evolución Temperatura (24h)';
+
+  @override
+  String get roomTargetAxis => 'Sala / Objetivo';
+
+  @override
+  String get flameAxis => 'Llama';
+
+  @override
+  String get noDataAvailableYet => 'No hay datos disponibles aún';
+
+  @override
+  String get dataCollectionInProgress => 'Recopilación de datos en curso...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count puntos de datos recopilados ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Mínimo $count puntos necesarios para el gráfico';
+  }
+
+  @override
+  String get roomTemperature => 'Temperatura ambiente';
+
+  @override
+  String get failedToLoadChartData => 'Error al cargar datos del gráfico';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Los datos históricos se recopilan automáticamente. El gráfico se actualiza cada 10 segundos con nuevos puntos de datos.';
 }

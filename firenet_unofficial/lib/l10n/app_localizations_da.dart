@@ -839,4 +839,45 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get openSettings => 'Åbn indstillinger';
+
+  @override
+  String get charts => 'Diagrammer';
+
+  @override
+  String get chartsSubtitle => 'Temperaturudvikling & statistik';
+
+  @override
+  String get temperatureEvolution24h => 'Temperaturudvikling (24t)';
+
+  @override
+  String get roomTargetAxis => 'Rum / Mål';
+
+  @override
+  String get flameAxis => 'Flamme';
+
+  @override
+  String get noDataAvailableYet => 'Ingen data tilgængelig endnu';
+
+  @override
+  String get dataCollectionInProgress => 'Dataindsamling i gang...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count datapunkter indsamlet ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Minimum $count punkter nødvendige for diagram';
+  }
+
+  @override
+  String get roomTemperature => 'Rumtemperatur';
+
+  @override
+  String get failedToLoadChartData => 'Kunne ikke indlæse diagramdata';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Historiske data indsamles automatisk. Diagrammet opdateres hvert 10. sekund med nye datapunkter.';
 }

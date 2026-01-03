@@ -1233,7 +1233,7 @@ abstract class AppLocalizations {
   /// No description provided for @flameTemperature.
   ///
   /// In en, this message translates to:
-  /// **'Flame temperature'**
+  /// **'Flame Temperature'**
   String get flameTemperature;
 
   /// No description provided for @ambientTemperature.
@@ -1667,6 +1667,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open Settings'**
   String get openSettings;
+
+  /// No description provided for @charts.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts'**
+  String get charts;
+
+  /// No description provided for @chartsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature evolution & statistics'**
+  String get chartsSubtitle;
+
+  /// No description provided for @temperatureEvolution24h.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature Evolution (24h)'**
+  String get temperatureEvolution24h;
+
+  /// No description provided for @roomTargetAxis.
+  ///
+  /// In en, this message translates to:
+  /// **'Room / Target'**
+  String get roomTargetAxis;
+
+  /// No description provided for @flameAxis.
+  ///
+  /// In en, this message translates to:
+  /// **'Flame'**
+  String get flameAxis;
+
+  /// No description provided for @noDataAvailableYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available yet'**
+  String get noDataAvailableYet;
+
+  /// No description provided for @dataCollectionInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Data collection in progress...'**
+  String get dataCollectionInProgress;
+
+  /// No description provided for @dataPointsCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} data points collected ({percent}%)'**
+  String dataPointsCollected(int count, int percent);
+
+  /// No description provided for @minimumPointsNeeded.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum {count} points needed for chart'**
+  String minimumPointsNeeded(int count);
+
+  /// No description provided for @roomTemperature.
+  ///
+  /// In en, this message translates to:
+  /// **'Room Temperature'**
+  String get roomTemperature;
+
+  /// No description provided for @failedToLoadChartData.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to load chart data'**
+  String get failedToLoadChartData;
+
+  /// No description provided for @chartAutoUpdateInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Historical data is collected automatically. Chart updates every 10 seconds with new data points.'**
+  String get chartAutoUpdateInfo;
 }
 
 class _AppLocalizationsDelegate

@@ -614,7 +614,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sensorInformation => 'Sensor Information';
 
   @override
-  String get flameTemperature => 'Flame temperature';
+  String get flameTemperature => 'Flame Temperature';
 
   @override
   String get ambientTemperature => 'Ambient temperature';
@@ -842,4 +842,45 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSettings => 'Open Settings';
+
+  @override
+  String get charts => 'Charts';
+
+  @override
+  String get chartsSubtitle => 'Temperature evolution & statistics';
+
+  @override
+  String get temperatureEvolution24h => 'Temperature Evolution (24h)';
+
+  @override
+  String get roomTargetAxis => 'Room / Target';
+
+  @override
+  String get flameAxis => 'Flame';
+
+  @override
+  String get noDataAvailableYet => 'No data available yet';
+
+  @override
+  String get dataCollectionInProgress => 'Data collection in progress...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count data points collected ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Minimum $count points needed for chart';
+  }
+
+  @override
+  String get roomTemperature => 'Room Temperature';
+
+  @override
+  String get failedToLoadChartData => 'Failed to load chart data';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Historical data is collected automatically. Chart updates every 10 seconds with new data points.';
 }

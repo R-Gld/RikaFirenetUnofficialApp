@@ -179,7 +179,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get stoveOff => 'Poêle éteint';
 
   @override
-  String get targetTemperature => 'Température Cible';
+  String get targetTemperature => 'Température cible';
 
   @override
   String get turnOnStoveToAdjustTemperature =>
@@ -625,7 +625,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sensorInformation => 'Informations capteurs';
 
   @override
-  String get flameTemperature => 'Température de flamme';
+  String get flameTemperature => 'Température flamme';
 
   @override
   String get ambientTemperature => 'Température ambiante';
@@ -856,4 +856,45 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get openSettings => 'Ouvrir les paramètres';
+
+  @override
+  String get charts => 'Graphiques';
+
+  @override
+  String get chartsSubtitle => 'Évolution des températures & statistiques';
+
+  @override
+  String get temperatureEvolution24h => 'Évolution Température (24h)';
+
+  @override
+  String get roomTargetAxis => 'Pièce / Cible';
+
+  @override
+  String get flameAxis => 'Flamme';
+
+  @override
+  String get noDataAvailableYet => 'Aucune donnée disponible';
+
+  @override
+  String get dataCollectionInProgress => 'Collecte de données en cours...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count points collectés ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Minimum $count points nécessaires pour le graphique';
+  }
+
+  @override
+  String get roomTemperature => 'Température pièce';
+
+  @override
+  String get failedToLoadChartData => 'Échec du chargement des données';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Les données historiques sont collectées automatiquement. Le graphique se met à jour toutes les 10 secondes avec de nouveaux points.';
 }

@@ -852,4 +852,46 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get openSettings => 'Einstellungen öffnen';
+
+  @override
+  String get charts => 'Diagramme';
+
+  @override
+  String get chartsSubtitle => 'Temperaturverlauf & Statistiken';
+
+  @override
+  String get temperatureEvolution24h => 'Temperaturverlauf (24Std)';
+
+  @override
+  String get roomTargetAxis => 'Raum / Ziel';
+
+  @override
+  String get flameAxis => 'Flamme';
+
+  @override
+  String get noDataAvailableYet => 'Noch keine Daten verfügbar';
+
+  @override
+  String get dataCollectionInProgress => 'Datenerfassung läuft...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count Datenpunkte erfasst ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Mindestens $count Punkte für Diagramm erforderlich';
+  }
+
+  @override
+  String get roomTemperature => 'Raumtemperatur';
+
+  @override
+  String get failedToLoadChartData =>
+      'Diagrammdaten konnten nicht geladen werden';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Historische Daten werden automatisch erfasst. Diagramm aktualisiert sich alle 10 Sekunden mit neuen Datenpunkten.';
 }

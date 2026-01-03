@@ -846,4 +846,45 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get openSettings => 'Open instellingen';
+
+  @override
+  String get charts => 'Grafieken';
+
+  @override
+  String get chartsSubtitle => 'Temperatuurverloop & statistieken';
+
+  @override
+  String get temperatureEvolution24h => 'Temperatuurverloop (24u)';
+
+  @override
+  String get roomTargetAxis => 'Kamer / Doel';
+
+  @override
+  String get flameAxis => 'Vlam';
+
+  @override
+  String get noDataAvailableYet => 'Nog geen gegevens beschikbaar';
+
+  @override
+  String get dataCollectionInProgress => 'Gegevensverzameling bezig...';
+
+  @override
+  String dataPointsCollected(int count, int percent) {
+    return '$count datapunten verzameld ($percent%)';
+  }
+
+  @override
+  String minimumPointsNeeded(int count) {
+    return 'Minimum $count punten nodig voor grafiek';
+  }
+
+  @override
+  String get roomTemperature => 'Kamertemperatuur';
+
+  @override
+  String get failedToLoadChartData => 'Fout bij laden grafiekgegevens';
+
+  @override
+  String get chartAutoUpdateInfo =>
+      'Historische gegevens worden automatisch verzameld. Grafiek wordt elke 10 seconden bijgewerkt met nieuwe datapunten.';
 }
