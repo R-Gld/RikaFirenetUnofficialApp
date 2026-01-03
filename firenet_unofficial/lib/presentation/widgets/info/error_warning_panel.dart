@@ -21,31 +21,32 @@ class ErrorWarningPanel extends StatelessWidget {
   String _getErrorDescription(BuildContext context, int code, int subCode) {
     final l10n = AppLocalizations.of(context)!;
 
-    // Bit flags mapping from firmware analysis
-    switch (code) {
-      case 0:
-        return l10n.noError;
-      case 1:
-        return l10n.errorRoomSensorSignalLost;
-      case 2:
-        return l10n.errorPelletLidOpen;
-      case 4:
-        return l10n.errorDoorOpen;
-      case 8:
-        return l10n.errorPelletLidOrDoorOpen;
-      case 16:
-        return l10n.errorPelletLidOpen; // Same as code 2, escalated from warning
-      case 32:
-        return l10n.errorNotEnoughLowPressure;
-      case 64:
-        return l10n.errorAirFlapsCalibrating;
-      case 128:
-        return l10n.errorBurnBackFlapOpen;
-      case 256:
-        return l10n.errorStoveNotInPosition;
-      default:
-        return l10n.systemError('$code${subCode != 0 ? "/$subCode" : ""}');
+    if (code == 0) return l10n.noError;
+
+    // Check for multiple bits set (combined errors)
+    final List<String> errors = [];
+
+    if ((code & 1) != 0) errors.add(l10n.errorRoomSensorSignalLost);
+    if ((code & 2) != 0) errors.add(l10n.errorPelletLidOpen);
+    if ((code & 4) != 0) errors.add(l10n.errorDoorOpen);
+    if ((code & 8) != 0 && (code & 2) == 0 && (code & 4) == 0) {
+      // Only show "pellet lid or door open" if bits 2 and 4 aren't already set
+      errors.add(l10n.errorPelletLidOrDoorOpen);
     }
+    if ((code & 16) != 0 && (code & 2) == 0) {
+      // Only add if bit 2 isn't already set
+      errors.add(l10n.errorPelletLidOpen);
+    }
+    if ((code & 32) != 0) errors.add(l10n.errorNotEnoughLowPressure);
+    if ((code & 64) != 0) errors.add(l10n.errorAirFlapsCalibrating);
+    if ((code & 128) != 0) errors.add(l10n.errorBurnBackFlapOpen);
+    if ((code & 256) != 0) errors.add(l10n.errorStoveNotInPosition);
+
+    if (errors.isEmpty) {
+      return l10n.systemError('$code${subCode != 0 ? "/$subCode" : ""}');
+    }
+
+    return errors.join(' + ');
   }
 
   /// Get warning description from warning code
@@ -53,31 +54,32 @@ class ErrorWarningPanel extends StatelessWidget {
   String _getWarningDescription(BuildContext context, int code) {
     final l10n = AppLocalizations.of(context)!;
 
-    // Bit flags mapping from firmware analysis
-    switch (code) {
-      case 0:
-        return l10n.noWarning;
-      case 1:
-        return l10n.warningRoomSensorSignalLost;
-      case 2:
-        return l10n.warningPelletLidOpen;
-      case 4:
-        return l10n.warningDoorOpen;
-      case 8:
-        return l10n.warningPelletLidOrDoorOpen;
-      case 16:
-        return l10n.warningPelletLidOpen; // Same as code 2
-      case 32:
-        return l10n.warningNotEnoughLowPressure;
-      case 64:
-        return l10n.warningAirFlapsCalibrating;
-      case 128:
-        return l10n.warningBurnBackFlapOpen;
-      case 256:
-        return l10n.warningStoveNotInPosition;
-      default:
-        return l10n.systemWarning(code);
+    if (code == 0) return l10n.noWarning;
+
+    // Check for multiple bits set (combined warnings)
+    final List<String> warnings = [];
+
+    if ((code & 1) != 0) warnings.add(l10n.warningRoomSensorSignalLost);
+    if ((code & 2) != 0) warnings.add(l10n.warningPelletLidOpen);
+    if ((code & 4) != 0) warnings.add(l10n.warningDoorOpen);
+    if ((code & 8) != 0 && (code & 2) == 0 && (code & 4) == 0) {
+      // Only show "pellet lid or door open" if bits 2 and 4 aren't already set
+      warnings.add(l10n.warningPelletLidOrDoorOpen);
     }
+    if ((code & 16) != 0 && (code & 2) == 0) {
+      // Only add if bit 2 isn't already set
+      warnings.add(l10n.warningPelletLidOpen);
+    }
+    if ((code & 32) != 0) warnings.add(l10n.warningNotEnoughLowPressure);
+    if ((code & 64) != 0) warnings.add(l10n.warningAirFlapsCalibrating);
+    if ((code & 128) != 0) warnings.add(l10n.warningBurnBackFlapOpen);
+    if ((code & 256) != 0) warnings.add(l10n.warningStoveNotInPosition);
+
+    if (warnings.isEmpty) {
+      return l10n.systemWarning(code);
+    }
+
+    return warnings.join(' + ');
   }
 
   @override
