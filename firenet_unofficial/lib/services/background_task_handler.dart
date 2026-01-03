@@ -126,13 +126,18 @@ class BackgroundTaskHandler {
 
       // 5b. Collect sensor data for historical tracking
       if (fullStoveData != null) {
+        AppDatabase? database;
         try {
-          final collector = SensorDataCollector(AppDatabase());
+          database = AppDatabase();
+          final collector = SensorDataCollector(database);
           await collector.collectReading(fullStoveData);
           debugPrint('[BG-WORKER] Sensor data collected');
         } catch (e) {
           debugPrint('[BG-WORKER] WARNING: Failed to collect sensor data: ${e.runtimeType}');
           // Don't fail whole task if collection fails
+        } finally {
+          // IMPORTANT: Close database connection to prevent locks
+          await database?.close();
         }
       }
 
