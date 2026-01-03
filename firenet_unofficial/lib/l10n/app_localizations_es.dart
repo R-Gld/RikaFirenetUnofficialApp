@@ -819,4 +819,38 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Mostrar evolución de temperatura y gráficos de datos históricos';
+
+  @override
+  String get backgroundPolling => 'Actualización en segundo plano';
+
+  @override
+  String get continuousPolling => 'Actualización continua';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Mantener conexión activa incluso con pantalla bloqueada (requiere exención de optimización de batería)';
+
+  @override
+  String get continuousPollingEnabled => 'Actualización continua activada';
+
+  @override
+  String get continuousPollingDisabled => 'Actualización continua desactivada';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'La actualización continua solo está disponible en Android';
+
+  @override
+  String get batteryOptimizationRequired => 'Optimización de batería requerida';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'Para mantener la conexión activa cuando la pantalla está bloqueada, se debe desactivar la optimización de batería para esta aplicación. Esto garantiza una actualización confiable en segundo plano.\n\nSerá redirigido a la configuración del sistema donde puede otorgar este permiso.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'La optimización de batería sigue activada. Desactívela en la configuración para usar actualización continua.';
+
+  @override
+  String get openSettings => 'Abrir configuración';
 }

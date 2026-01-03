@@ -1607,6 +1607,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Display temperature evolution and historical data charts'**
   String get showChartsPanelSubtitle;
+
+  /// No description provided for @backgroundPolling.
+  ///
+  /// In en, this message translates to:
+  /// **'Background Polling'**
+  String get backgroundPolling;
+
+  /// No description provided for @continuousPolling.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous Polling'**
+  String get continuousPolling;
+
+  /// No description provided for @continuousPollingSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep connection active even when screen is locked (requires battery optimization exemption)'**
+  String get continuousPollingSubtitle;
+
+  /// No description provided for @continuousPollingEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous polling enabled'**
+  String get continuousPollingEnabled;
+
+  /// No description provided for @continuousPollingDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous polling disabled'**
+  String get continuousPollingDisabled;
+
+  /// No description provided for @continuousPollingNotAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Continuous polling is only available on Android'**
+  String get continuousPollingNotAvailable;
+
+  /// No description provided for @batteryOptimizationRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery Optimization Required'**
+  String get batteryOptimizationRequired;
+
+  /// No description provided for @batteryOptimizationExplanation.
+  ///
+  /// In en, this message translates to:
+  /// **'To keep the connection active when the screen is locked, battery optimization must be disabled for this app. This ensures reliable background polling.\n\nYou will be redirected to system settings where you can grant this permission.'**
+  String get batteryOptimizationExplanation;
+
+  /// No description provided for @batteryOptimizationStillEnabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery optimization is still enabled. Please disable it in settings to use continuous polling.'**
+  String get batteryOptimizationStillEnabled;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Settings'**
+  String get openSettings;
 }
 
 class _AppLocalizationsDelegate

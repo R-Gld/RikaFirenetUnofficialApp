@@ -812,4 +812,38 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Toon temperatuurverloop en historische datagrafieken';
+
+  @override
+  String get backgroundPolling => 'Achtergrondverversing';
+
+  @override
+  String get continuousPolling => 'Continue verversing';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Houd verbinding actief zelfs met vergrendeld scherm (vereist uitzondering batterijoptimalisatie)';
+
+  @override
+  String get continuousPollingEnabled => 'Continue verversing ingeschakeld';
+
+  @override
+  String get continuousPollingDisabled => 'Continue verversing uitgeschakeld';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'Continue verversing is alleen beschikbaar op Android';
+
+  @override
+  String get batteryOptimizationRequired => 'Batterijoptimalisatie vereist';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'Om de verbinding actief te houden wanneer het scherm is vergrendeld, moet batterijoptimalisatie worden uitgeschakeld voor deze app. Dit zorgt voor betrouwbare achtergrondverversing.\n\nU wordt doorgestuurd naar systeeminstellingen waar u deze toestemming kunt verlenen.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'Batterijoptimalisatie is nog steeds ingeschakeld. Schakel het uit in de instellingen om continue verversing te gebruiken.';
+
+  @override
+  String get openSettings => 'Open instellingen';
 }

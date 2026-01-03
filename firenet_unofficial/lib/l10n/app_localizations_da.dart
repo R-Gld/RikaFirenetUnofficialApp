@@ -805,4 +805,38 @@ class AppLocalizationsDa extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Vis temperaturudvikling og historiske datadiagrammer';
+
+  @override
+  String get backgroundPolling => 'Baggrundsopdatering';
+
+  @override
+  String get continuousPolling => 'Kontinuerlig opdatering';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Hold forbindelsen aktiv selv når skærmen er låst (kræver undtagelse fra batterioptimering)';
+
+  @override
+  String get continuousPollingEnabled => 'Kontinuerlig opdatering aktiveret';
+
+  @override
+  String get continuousPollingDisabled => 'Kontinuerlig opdatering deaktiveret';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'Kontinuerlig opdatering er kun tilgængelig på Android';
+
+  @override
+  String get batteryOptimizationRequired => 'Batterioptimering påkrævet';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'For at holde forbindelsen aktiv når skærmen er låst, skal batterioptimering deaktiveres for denne app. Dette sikrer pålidelig baggrundsopdatering.\n\nDu vil blive omdirigeret til systemindstillinger, hvor du kan give denne tilladelse.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'Batterioptimering er stadig aktiveret. Deaktiver det i indstillinger for at bruge kontinuerlig opdatering.';
+
+  @override
+  String get openSettings => 'Åbn indstillinger';
 }

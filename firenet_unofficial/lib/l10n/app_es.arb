@@ -368,5 +368,16 @@
   "statusUnknown": "Estado desconocido ({state})",
 
   "showChartsPanel": "Mostrar panel de gráficos",
-  "showChartsPanelSubtitle": "Mostrar evolución de temperatura y gráficos de datos históricos"
+  "showChartsPanelSubtitle": "Mostrar evolución de temperatura y gráficos de datos históricos",
+
+  "backgroundPolling": "Actualización en segundo plano",
+  "continuousPolling": "Actualización continua",
+  "continuousPollingSubtitle": "Mantener conexión activa incluso con pantalla bloqueada (requiere exención de optimización de batería)",
+  "continuousPollingEnabled": "Actualización continua activada",
+  "continuousPollingDisabled": "Actualización continua desactivada",
+  "continuousPollingNotAvailable": "La actualización continua solo está disponible en Android",
+  "batteryOptimizationRequired": "Optimización de batería requerida",
+  "batteryOptimizationExplanation": "Para mantener la conexión activa cuando la pantalla está bloqueada, se debe desactivar la optimización de batería para esta aplicación. Esto garantiza una actualización confiable en segundo plano.\n\nSerá redirigido a la configuración del sistema donde puede otorgar este permiso.",
+  "batteryOptimizationStillEnabled": "La optimización de batería sigue activada. Desactívela en la configuración para usar actualización continua.",
+  "openSettings": "Abrir configuración"
 }

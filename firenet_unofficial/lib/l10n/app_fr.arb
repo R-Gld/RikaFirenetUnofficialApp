@@ -268,5 +268,16 @@
   "statusUnknown": "État inconnu ({state})",
 
   "showChartsPanel": "Afficher le panneau des graphiques",
-  "showChartsPanelSubtitle": "Afficher l'évolution des températures et les graphiques de données historiques"
+  "showChartsPanelSubtitle": "Afficher l'évolution des températures et les graphiques de données historiques",
+
+  "backgroundPolling": "Polling en arrière-plan",
+  "continuousPolling": "Polling continu",
+  "continuousPollingSubtitle": "Maintenir la connexion active même lorsque l'écran est verrouillé (nécessite l'exemption d'optimisation de la batterie)",
+  "continuousPollingEnabled": "Polling continu activé",
+  "continuousPollingDisabled": "Polling continu désactivé",
+  "continuousPollingNotAvailable": "Le polling continu n'est disponible que sur Android",
+  "batteryOptimizationRequired": "Optimisation de la batterie requise",
+  "batteryOptimizationExplanation": "Pour maintenir la connexion active lorsque l'écran est verrouillé, l'optimisation de la batterie doit être désactivée pour cette application. Cela garantit un polling fiable en arrière-plan.\n\nVous serez redirigé vers les paramètres système où vous pourrez accorder cette permission.",
+  "batteryOptimizationStillEnabled": "L'optimisation de la batterie est toujours activée. Veuillez la désactiver dans les paramètres pour utiliser le polling continu.",
+  "openSettings": "Ouvrir les paramètres"
 }

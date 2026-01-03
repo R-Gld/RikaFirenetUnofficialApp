@@ -25,6 +25,8 @@ _$AppSettingsImpl _$$AppSettingsImplFromJson(Map<String, dynamic> json) =>
       showOutputsInfoPanel: json['showOutputsInfoPanel'] as bool? ?? true,
       showStatisticsPanel: json['showStatisticsPanel'] as bool? ?? true,
       showChartsPanel: json['showChartsPanel'] as bool? ?? true,
+      continuousPollingEnabled:
+          json['continuousPollingEnabled'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$AppSettingsImplToJson(_$AppSettingsImpl instance) =>
@@ -44,6 +46,7 @@ Map<String, dynamic> _$$AppSettingsImplToJson(_$AppSettingsImpl instance) =>
       'showOutputsInfoPanel': instance.showOutputsInfoPanel,
       'showStatisticsPanel': instance.showStatisticsPanel,
       'showChartsPanel': instance.showChartsPanel,
+      'continuousPollingEnabled': instance.continuousPollingEnabled,
     };
 
 const _$AppThemeModeEnumMap = {

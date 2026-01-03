@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../l10n/app_localizations.dart';
@@ -9,6 +10,7 @@ import '../../../providers/settings_provider.dart';
 import '../../../providers/notification_settings_provider.dart';
 import '../../../providers/biometric_auth_provider.dart';
 import '../../../providers/auth_providers.dart';
+import '../../../services/battery_optimization_service.dart';
 import 'advanced_controls_settings_screen.dart';
 import 'notifications_settings_screen.dart';
 import 'info_panels_settings_screen.dart';
@@ -103,6 +105,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               subtitle: const Text('Se déconnecter de l\'application'),
               onTap: () => _showLogoutConfirmation(context, ref, l10n),
             ),
+
+            const Divider(height: 32),
+
+            // Background Polling Section
+            _buildSectionHeader(context, l10n.backgroundPolling),
+            _buildContinuousPollingToggle(context, ref, settings, l10n),
 
             const Divider(height: 32),
 
@@ -527,5 +535,138 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         Navigator.of(context).pop();
       }
     }
+  }
+
+  Widget _buildContinuousPollingToggle(
+    BuildContext context,
+    WidgetRef ref,
+    AppSettings settings,
+    AppLocalizations l10n,
+  ) {
+    // Only show on Android
+    if (!Platform.isAndroid) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Text(
+          l10n.continuousPollingNotAvailable,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppColors.textSecondary,
+                fontStyle: FontStyle.italic,
+              ),
+        ),
+      );
+    }
+
+    return SwitchListTile(
+      title: Text(l10n.continuousPolling),
+      subtitle: Text(l10n.continuousPollingSubtitle),
+      secondary: const Icon(Icons.sync, color: AppColors.primary),
+      value: settings.continuousPollingEnabled,
+      onChanged: (value) async {
+        if (value) {
+          // Check battery optimization status before enabling
+          final batteryService = BatteryOptimizationService();
+          final isOptimizationDisabled = await batteryService.isBatteryOptimizationDisabled();
+
+          if (!isOptimizationDisabled) {
+            // Show dialog explaining battery optimization requirement
+            if (!context.mounted) return;
+
+            final shouldProceed = await _showBatteryOptimizationDialog(context, l10n);
+
+            if (shouldProceed == true) {
+              // Request battery optimization exemption
+              await batteryService.requestDisableBatteryOptimization();
+
+              // Wait a bit for user to complete the action
+              await Future.delayed(const Duration(milliseconds: 500));
+
+              // Re-check status
+              final newStatus = await batteryService.isBatteryOptimizationDisabled();
+
+              if (newStatus && context.mounted) {
+                // Battery optimization disabled successfully - enable continuous polling
+                await ref.read(settingsProvider.notifier).updateSetting(
+                  (s) => s.copyWith(continuousPollingEnabled: true),
+                );
+
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.continuousPollingEnabled),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                }
+              } else if (context.mounted) {
+                // Battery optimization still enabled - show error
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(l10n.batteryOptimizationStillEnabled),
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: Colors.orange,
+                  ),
+                );
+              }
+            }
+          } else {
+            // Battery optimization already disabled - enable continuous polling
+            await ref.read(settingsProvider.notifier).updateSetting(
+              (s) => s.copyWith(continuousPollingEnabled: true),
+            );
+
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(l10n.continuousPollingEnabled),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            }
+          }
+        } else {
+          // Disable continuous polling
+          await ref.read(settingsProvider.notifier).updateSetting(
+            (s) => s.copyWith(continuousPollingEnabled: false),
+          );
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(l10n.continuousPollingDisabled),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          }
+        }
+      },
+    );
+  }
+
+  Future<bool?> _showBatteryOptimizationDialog(
+    BuildContext context,
+    AppLocalizations l10n,
+  ) {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.batteryOptimizationRequired),
+        content: Text(l10n.batteryOptimizationExplanation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(l10n.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+            ),
+            child: Text(l10n.openSettings),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -39,7 +39,9 @@ mixin _$AppSettings {
   bool get showSensorInfoPanel => throw _privateConstructorUsedError;
   bool get showOutputsInfoPanel => throw _privateConstructorUsedError;
   bool get showStatisticsPanel => throw _privateConstructorUsedError;
-  bool get showChartsPanel => throw _privateConstructorUsedError;
+  bool get showChartsPanel =>
+      throw _privateConstructorUsedError; // Background polling
+  bool get continuousPollingEnabled => throw _privateConstructorUsedError;
 
   /// Serializes this AppSettings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -74,6 +76,7 @@ abstract class $AppSettingsCopyWith<$Res> {
     bool showOutputsInfoPanel,
     bool showStatisticsPanel,
     bool showChartsPanel,
+    bool continuousPollingEnabled,
   });
 }
 
@@ -107,6 +110,7 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
     Object? showOutputsInfoPanel = null,
     Object? showStatisticsPanel = null,
     Object? showChartsPanel = null,
+    Object? continuousPollingEnabled = null,
   }) {
     return _then(
       _value.copyWith(
@@ -170,6 +174,10 @@ class _$AppSettingsCopyWithImpl<$Res, $Val extends AppSettings>
                 ? _value.showChartsPanel
                 : showChartsPanel // ignore: cast_nullable_to_non_nullable
                       as bool,
+            continuousPollingEnabled: null == continuousPollingEnabled
+                ? _value.continuousPollingEnabled
+                : continuousPollingEnabled // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -201,6 +209,7 @@ abstract class _$$AppSettingsImplCopyWith<$Res>
     bool showOutputsInfoPanel,
     bool showStatisticsPanel,
     bool showChartsPanel,
+    bool continuousPollingEnabled,
   });
 }
 
@@ -233,6 +242,7 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
     Object? showOutputsInfoPanel = null,
     Object? showStatisticsPanel = null,
     Object? showChartsPanel = null,
+    Object? continuousPollingEnabled = null,
   }) {
     return _then(
       _$AppSettingsImpl(
@@ -296,6 +306,10 @@ class __$$AppSettingsImplCopyWithImpl<$Res>
             ? _value.showChartsPanel
             : showChartsPanel // ignore: cast_nullable_to_non_nullable
                   as bool,
+        continuousPollingEnabled: null == continuousPollingEnabled
+            ? _value.continuousPollingEnabled
+            : continuousPollingEnabled // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -320,6 +334,7 @@ class _$AppSettingsImpl implements _AppSettings {
     this.showOutputsInfoPanel = true,
     this.showStatisticsPanel = true,
     this.showChartsPanel = true,
+    this.continuousPollingEnabled = false,
   });
 
   factory _$AppSettingsImpl.fromJson(Map<String, dynamic> json) =>
@@ -374,10 +389,14 @@ class _$AppSettingsImpl implements _AppSettings {
   @override
   @JsonKey()
   final bool showChartsPanel;
+  // Background polling
+  @override
+  @JsonKey()
+  final bool continuousPollingEnabled;
 
   @override
   String toString() {
-    return 'AppSettings(themeMode: $themeMode, appLocale: $appLocale, showEcoMode: $showEcoMode, showHeatingSchedule: $showHeatingSchedule, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel, showChartsPanel: $showChartsPanel)';
+    return 'AppSettings(themeMode: $themeMode, appLocale: $appLocale, showEcoMode: $showEcoMode, showHeatingSchedule: $showHeatingSchedule, showRoomPowerRequest: $showRoomPowerRequest, showConvectionFans: $showConvectionFans, showFrostProtection: $showFrostProtection, showTemperatureOffset: $showTemperatureOffset, showBakeTemperature: $showBakeTemperature, showErrorWarningPanel: $showErrorWarningPanel, showSafetyStatusPanel: $showSafetyStatusPanel, showSensorInfoPanel: $showSensorInfoPanel, showOutputsInfoPanel: $showOutputsInfoPanel, showStatisticsPanel: $showStatisticsPanel, showChartsPanel: $showChartsPanel, continuousPollingEnabled: $continuousPollingEnabled)';
   }
 
   @override
@@ -414,7 +433,12 @@ class _$AppSettingsImpl implements _AppSettings {
             (identical(other.showStatisticsPanel, showStatisticsPanel) ||
                 other.showStatisticsPanel == showStatisticsPanel) &&
             (identical(other.showChartsPanel, showChartsPanel) ||
-                other.showChartsPanel == showChartsPanel));
+                other.showChartsPanel == showChartsPanel) &&
+            (identical(
+                  other.continuousPollingEnabled,
+                  continuousPollingEnabled,
+                ) ||
+                other.continuousPollingEnabled == continuousPollingEnabled));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -436,6 +460,7 @@ class _$AppSettingsImpl implements _AppSettings {
     showOutputsInfoPanel,
     showStatisticsPanel,
     showChartsPanel,
+    continuousPollingEnabled,
   );
 
   /// Create a copy of AppSettings
@@ -469,6 +494,7 @@ abstract class _AppSettings implements AppSettings {
     final bool showOutputsInfoPanel,
     final bool showStatisticsPanel,
     final bool showChartsPanel,
+    final bool continuousPollingEnabled,
   }) = _$AppSettingsImpl;
 
   factory _AppSettings.fromJson(Map<String, dynamic> json) =
@@ -505,7 +531,9 @@ abstract class _AppSettings implements AppSettings {
   @override
   bool get showStatisticsPanel;
   @override
-  bool get showChartsPanel;
+  bool get showChartsPanel; // Background polling
+  @override
+  bool get continuousPollingEnabled;
 
   /// Create a copy of AppSettings
   /// with the given fields replaced by the non-null parameter values.

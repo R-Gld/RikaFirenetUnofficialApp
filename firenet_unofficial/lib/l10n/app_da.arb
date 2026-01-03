@@ -281,5 +281,16 @@
   "statusUnknown": "Ukendt tilstand ({state})",
 
   "showChartsPanel": "Vis diagrampanel",
-  "showChartsPanelSubtitle": "Vis temperaturudvikling og historiske datadiagrammer"
+  "showChartsPanelSubtitle": "Vis temperaturudvikling og historiske datadiagrammer",
+
+  "backgroundPolling": "Baggrundsopdatering",
+  "continuousPolling": "Kontinuerlig opdatering",
+  "continuousPollingSubtitle": "Hold forbindelsen aktiv selv når skærmen er låst (kræver undtagelse fra batterioptimering)",
+  "continuousPollingEnabled": "Kontinuerlig opdatering aktiveret",
+  "continuousPollingDisabled": "Kontinuerlig opdatering deaktiveret",
+  "continuousPollingNotAvailable": "Kontinuerlig opdatering er kun tilgængelig på Android",
+  "batteryOptimizationRequired": "Batterioptimering påkrævet",
+  "batteryOptimizationExplanation": "For at holde forbindelsen aktiv når skærmen er låst, skal batterioptimering deaktiveres for denne app. Dette sikrer pålidelig baggrundsopdatering.\n\nDu vil blive omdirigeret til systemindstillinger, hvor du kan give denne tilladelse.",
+  "batteryOptimizationStillEnabled": "Batterioptimering er stadig aktiveret. Deaktiver det i indstillinger for at bruge kontinuerlig opdatering.",
+  "openSettings": "Åbn indstillinger"
 }

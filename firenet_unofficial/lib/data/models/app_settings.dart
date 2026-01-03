@@ -40,6 +40,9 @@ class AppSettings with _$AppSettings {
     @Default(true) bool showOutputsInfoPanel,
     @Default(true) bool showStatisticsPanel,
     @Default(true) bool showChartsPanel,
+
+    // Background polling
+    @Default(false) bool continuousPollingEnabled,
   }) = _AppSettings;
 
   factory AppSettings.fromJson(Map<String, dynamic> json) =>

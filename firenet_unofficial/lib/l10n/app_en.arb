@@ -362,5 +362,16 @@
   },
 
   "showChartsPanel": "Show Charts Panel",
-  "showChartsPanelSubtitle": "Display temperature evolution and historical data charts"
+  "showChartsPanelSubtitle": "Display temperature evolution and historical data charts",
+
+  "backgroundPolling": "Background Polling",
+  "continuousPolling": "Continuous Polling",
+  "continuousPollingSubtitle": "Keep connection active even when screen is locked (requires battery optimization exemption)",
+  "continuousPollingEnabled": "Continuous polling enabled",
+  "continuousPollingDisabled": "Continuous polling disabled",
+  "continuousPollingNotAvailable": "Continuous polling is only available on Android",
+  "batteryOptimizationRequired": "Battery Optimization Required",
+  "batteryOptimizationExplanation": "To keep the connection active when the screen is locked, battery optimization must be disabled for this app. This ensures reliable background polling.\n\nYou will be redirected to system settings where you can grant this permission.",
+  "batteryOptimizationStillEnabled": "Battery optimization is still enabled. Please disable it in settings to use continuous polling.",
+  "openSettings": "Open Settings"
 }

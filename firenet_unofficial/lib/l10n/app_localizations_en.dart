@@ -808,4 +808,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Display temperature evolution and historical data charts';
+
+  @override
+  String get backgroundPolling => 'Background Polling';
+
+  @override
+  String get continuousPolling => 'Continuous Polling';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Keep connection active even when screen is locked (requires battery optimization exemption)';
+
+  @override
+  String get continuousPollingEnabled => 'Continuous polling enabled';
+
+  @override
+  String get continuousPollingDisabled => 'Continuous polling disabled';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'Continuous polling is only available on Android';
+
+  @override
+  String get batteryOptimizationRequired => 'Battery Optimization Required';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'To keep the connection active when the screen is locked, battery optimization must be disabled for this app. This ensures reliable background polling.\n\nYou will be redirected to system settings where you can grant this permission.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'Battery optimization is still enabled. Please disable it in settings to use continuous polling.';
+
+  @override
+  String get openSettings => 'Open Settings';
 }

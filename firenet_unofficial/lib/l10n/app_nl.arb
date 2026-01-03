@@ -368,5 +368,16 @@
   "statusUnknown": "Onbekende status ({state})",
 
   "showChartsPanel": "Toon grafiekenpaneel",
-  "showChartsPanelSubtitle": "Toon temperatuurverloop en historische datagrafieken"
+  "showChartsPanelSubtitle": "Toon temperatuurverloop en historische datagrafieken",
+
+  "backgroundPolling": "Achtergrondverversing",
+  "continuousPolling": "Continue verversing",
+  "continuousPollingSubtitle": "Houd verbinding actief zelfs met vergrendeld scherm (vereist uitzondering batterijoptimalisatie)",
+  "continuousPollingEnabled": "Continue verversing ingeschakeld",
+  "continuousPollingDisabled": "Continue verversing uitgeschakeld",
+  "continuousPollingNotAvailable": "Continue verversing is alleen beschikbaar op Android",
+  "batteryOptimizationRequired": "Batterijoptimalisatie vereist",
+  "batteryOptimizationExplanation": "Om de verbinding actief te houden wanneer het scherm is vergrendeld, moet batterijoptimalisatie worden uitgeschakeld voor deze app. Dit zorgt voor betrouwbare achtergrondverversing.\n\nU wordt doorgestuurd naar systeeminstellingen waar u deze toestemming kunt verlenen.",
+  "batteryOptimizationStillEnabled": "Batterijoptimalisatie is nog steeds ingeschakeld. Schakel het uit in de instellingen om continue verversing te gebruiken.",
+  "openSettings": "Open instellingen"
 }

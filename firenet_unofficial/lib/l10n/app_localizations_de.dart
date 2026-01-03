@@ -816,4 +816,40 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Temperaturverlauf und historische Datendiagramme anzeigen';
+
+  @override
+  String get backgroundPolling => 'Hintergrundaktualisierung';
+
+  @override
+  String get continuousPolling => 'Kontinuierliche Aktualisierung';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Verbindung aktiv halten, auch wenn der Bildschirm gesperrt ist (erfordert Ausnahme von Akkuoptimierung)';
+
+  @override
+  String get continuousPollingEnabled =>
+      'Kontinuierliche Aktualisierung aktiviert';
+
+  @override
+  String get continuousPollingDisabled =>
+      'Kontinuierliche Aktualisierung deaktiviert';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'Kontinuierliche Aktualisierung ist nur auf Android verfügbar';
+
+  @override
+  String get batteryOptimizationRequired => 'Akkuoptimierung erforderlich';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'Um die Verbindung aktiv zu halten, wenn der Bildschirm gesperrt ist, muss die Akkuoptimierung für diese App deaktiviert werden. Dies gewährleistet zuverlässige Hintergrundaktualisierung.\n\nSie werden zu den Systemeinstellungen weitergeleitet, wo Sie diese Berechtigung erteilen können.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'Akkuoptimierung ist noch aktiviert. Bitte deaktivieren Sie sie in den Einstellungen, um kontinuierliche Aktualisierung zu verwenden.';
+
+  @override
+  String get openSettings => 'Einstellungen öffnen';
 }

@@ -821,4 +821,39 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get showChartsPanelSubtitle =>
       'Afficher l\'évolution des températures et les graphiques de données historiques';
+
+  @override
+  String get backgroundPolling => 'Polling en arrière-plan';
+
+  @override
+  String get continuousPolling => 'Polling continu';
+
+  @override
+  String get continuousPollingSubtitle =>
+      'Maintenir la connexion active même lorsque l\'écran est verrouillé (nécessite l\'exemption d\'optimisation de la batterie)';
+
+  @override
+  String get continuousPollingEnabled => 'Polling continu activé';
+
+  @override
+  String get continuousPollingDisabled => 'Polling continu désactivé';
+
+  @override
+  String get continuousPollingNotAvailable =>
+      'Le polling continu n\'est disponible que sur Android';
+
+  @override
+  String get batteryOptimizationRequired =>
+      'Optimisation de la batterie requise';
+
+  @override
+  String get batteryOptimizationExplanation =>
+      'Pour maintenir la connexion active lorsque l\'écran est verrouillé, l\'optimisation de la batterie doit être désactivée pour cette application. Cela garantit un polling fiable en arrière-plan.\n\nVous serez redirigé vers les paramètres système où vous pourrez accorder cette permission.';
+
+  @override
+  String get batteryOptimizationStillEnabled =>
+      'L\'optimisation de la batterie est toujours activée. Veuillez la désactiver dans les paramètres pour utiliser le polling continu.';
+
+  @override
+  String get openSettings => 'Ouvrir les paramètres';
 }
