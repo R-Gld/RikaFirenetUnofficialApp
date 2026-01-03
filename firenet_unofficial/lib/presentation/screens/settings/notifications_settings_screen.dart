@@ -7,6 +7,7 @@ import '../../../providers/stove_providers.dart';
 import '../../../services/stove_field_descriptor_service.dart';
 import '../../../services/background_task_handler.dart';
 import '../../../services/permission_service.dart';
+import '../../../data/models/notification_settings.dart';
 
 /// Notifications settings screen
 class NotificationsSettingsScreen extends ConsumerWidget {
@@ -69,19 +70,106 @@ class NotificationsSettingsScreen extends ConsumerWidget {
 
               const Divider(indent: 16, endIndent: 16),
 
-              // Field selector header
+              // Mode selector
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text(
-                  l10n.watchedFields(notifSettings.watchedFields.length),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Mode de notification',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                    const SizedBox(height: 8),
+                    SegmentedButton<NotificationMode>(
+                      segments: const [
+                        ButtonSegment(
+                          value: NotificationMode.simple,
+                          label: Text('Simple'),
+                          icon: Icon(Icons.notifications_active),
+                        ),
+                        ButtonSegment(
+                          value: NotificationMode.advanced,
+                          label: Text('Avancé'),
+                          icon: Icon(Icons.tune),
+                        ),
+                      ],
+                      selected: {notifSettings.mode},
+                      onSelectionChanged: (Set<NotificationMode> newSelection) {
+                        ref
+                            .read(notificationSettingsProvider.notifier)
+                            .setMode(newSelection.first);
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      notifSettings.mode == NotificationMode.simple
+                          ? 'Notifications pré-configurées pour les événements importants (erreurs, changements d\'état)'
+                          : 'Surveillance personnalisée avec seuils configurables pour chaque capteur',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.textSecondary,
+                            fontStyle: FontStyle.italic,
+                          ),
+                    ),
+                  ],
                 ),
               ),
 
-              // Field selector by category
-              ..._buildFieldSelector(context, ref, notifSettings, l10n),
+              const Divider(indent: 16, endIndent: 16),
+
+              // Simple mode info or advanced mode field selector
+              if (notifSettings.mode == NotificationMode.simple) ...[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Card(
+                    color: AppColors.primary.withOpacity(0.1),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(Icons.info_outline, color: AppColors.primary),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Événements surveillés',
+                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: AppColors.primary,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          _buildSimpleModeEventItem(context, Icons.error, 'Erreurs',
+                              'Porte ouverte, capot ouvert, pression insuffisante, etc.'),
+                          _buildSimpleModeEventItem(context, Icons.warning, 'Avertissements',
+                              'Conditions nécessitant votre attention'),
+                          _buildSimpleModeEventItem(context, Icons.power_settings_new, 'Changements d\'état',
+                              'Allumage, extinction, nettoyage, etc.'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ] else ...[
+                // Field selector header
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text(
+                    l10n.watchedFields(notifSettings.watchedFields.length),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
+
+                // Field selector by category
+                ..._buildFieldSelector(context, ref, notifSettings, l10n),
+              ],
 
               const Divider(indent: 16, endIndent: 16, height: 24),
 
@@ -423,6 +511,43 @@ class NotificationsSettingsScreen extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSimpleModeEventItem(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String description,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, size: 20, color: AppColors.primary),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                Text(
+                  description,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                      ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

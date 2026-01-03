@@ -54,6 +54,12 @@ class NotificationSettingsNotifier extends StateNotifier<NotificationSettings> {
     await _saveSettings();
   }
 
+  /// Set notification mode (simple or advanced)
+  Future<void> setMode(NotificationMode mode) async {
+    state = state.copyWith(mode: mode);
+    await _saveSettings();
+  }
+
   /// Add a field to watch list
   Future<void> addWatchedField(String fieldName) async {
     if (!state.watchedFields.contains(fieldName)) {
