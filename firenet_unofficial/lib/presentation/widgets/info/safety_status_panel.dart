@@ -34,6 +34,14 @@ class SafetyStatusPanel extends StatelessWidget {
     final wifiBars = _getWifiSignalBars(sensors.statusWifiStrength);
     final wifiColor = _getWifiSignalColor(sensors.statusWifiStrength);
 
+    // Determine door and cover status from error/warning codes
+    // Warning/Error codes: 2 = pellet lid open, 4 = door open, 8 = either open
+    final isDoorOpen = (sensors.statusError & 4) != 0 || (sensors.statusWarning & 4) != 0;
+    final isCoverOpen = (sensors.statusError & 2) != 0 ||
+                        (sensors.statusWarning & 2) != 0 ||
+                        (sensors.statusError & 16) != 0 ||
+                        (sensors.statusWarning & 16) != 0;
+
     return Card(
       child: ExpansionTile(
         initiallyExpanded: false,
@@ -47,25 +55,25 @@ class SafetyStatusPanel extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Column(
               children: [
-                // Door status
+                // Door status (from error/warning codes)
                 _buildStatusRow(
                   context,
                   icon: Icons.door_front_door,
                   label: l10n.door,
-                  value: sensors.inputDoor ? l10n.closed : l10n.open,
-                  isGood: sensors.inputDoor,
+                  value: isDoorOpen ? l10n.open : l10n.closed,
+                  isGood: !isDoorOpen,
                   goodColor: AppColors.statusActive,
                   badColor: AppColors.statusWarning,
                 ),
                 const Divider(),
 
-                // Cover/Hood status
+                // Cover/Hood status (from error/warning codes)
                 _buildStatusRow(
                   context,
                   icon: Icons.inventory_2,
                   label: l10n.cover,
-                  value: sensors.inputCover ? l10n.closed : l10n.open,
-                  isGood: sensors.inputCover,
+                  value: isCoverOpen ? l10n.open : l10n.closed,
+                  isGood: !isCoverOpen,
                   goodColor: AppColors.statusActive,
                   badColor: AppColors.statusWarning,
                 ),
