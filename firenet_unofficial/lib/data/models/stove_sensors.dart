@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../l10n/app_localizations.dart';
 
 part 'stove_sensors.freezed.dart';
 part 'stove_sensors.g.dart';
@@ -132,52 +134,103 @@ class StoveSensors with _$StoveSensors {
   /// Parse room temperature to double
   double get roomTemperature => double.tryParse(inputRoomTemperature) ?? 0.0;
 
-  /// Gets human-readable status text based on status codes
-  String get statusText {
+  /// Gets human-readable status text based on status codes (localized)
+  String getStatusText(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     // Frost protection takes precedence
-    if (statusFrostStarted) return 'Frost Protection';
+    if (statusFrostStarted) return l10n.statusFrostProtection;
 
     switch (statusMainState) {
       case 1:
         // Off/Standby states
         switch (statusSubState) {
           case 0:
-            return 'Stove Off';
+            return l10n.statusStoveOff;
           case 1:
-            return 'Standby';
+            return l10n.statusStandby;
           case 2:
-            return 'External Request';
+            return l10n.statusExternalRequest;
           case 3:
-            return 'Standby';
+            return l10n.statusStandby;
           default:
-            return 'Off';
+            return l10n.statusOff;
         }
       case 2:
-        return 'Ignition On';
+        return l10n.statusIgnitionOn;
       case 3:
-        return 'Starting Up';
+        return l10n.statusStartingUp;
       case 4:
-        return 'Running';
+        return l10n.statusRunning;
       case 5:
         // Cleaning states
         if (statusSubState == 3 || statusSubState == 4) {
-          return 'Big Clean';
+          return l10n.statusBigClean;
         }
-        return 'Cleaning';
+        return l10n.statusCleaning;
       case 6:
-        return 'Burn Off';
+        return l10n.statusBurnOff;
       case 11:
       case 13:
       case 14:
       case 16:
       case 17:
       case 50:
-        return 'Split Log Check';
+        return l10n.statusSplitLogCheck;
       case 20:
       case 21:
-        return 'Split Log Mode';
+        return l10n.statusSplitLogMode;
       default:
-        return 'Unknown State ($statusMainState)';
+        return l10n.statusUnknown(statusMainState);
+    }
+  }
+
+  /// Gets status text in French (for widgets/background services without context)
+  String get statusText {
+    // Frost protection takes precedence
+    if (statusFrostStarted) return 'Protection anti-gel';
+
+    switch (statusMainState) {
+      case 1:
+        // Off/Standby states
+        switch (statusSubState) {
+          case 0:
+            return 'Poêle éteint';
+          case 1:
+            return 'En veille';
+          case 2:
+            return 'Demande externe';
+          case 3:
+            return 'En veille';
+          default:
+            return 'Éteint';
+        }
+      case 2:
+        return 'Allumage en cours';
+      case 3:
+        return 'Démarrage';
+      case 4:
+        return 'En fonctionnement';
+      case 5:
+        // Cleaning states
+        if (statusSubState == 3 || statusSubState == 4) {
+          return 'Grand nettoyage';
+        }
+        return 'Nettoyage';
+      case 6:
+        return 'Extinction';
+      case 11:
+      case 13:
+      case 14:
+      case 16:
+      case 17:
+      case 50:
+        return 'Vérification bûches';
+      case 20:
+      case 21:
+        return 'Mode bûches';
+      default:
+        return 'État inconnu ($statusMainState)';
     }
   }
 

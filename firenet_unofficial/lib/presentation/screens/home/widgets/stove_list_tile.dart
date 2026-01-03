@@ -92,7 +92,7 @@ class StoveListTile extends ConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        data.sensors.statusText,
+                        data.sensors.getStatusText(context),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                               color: AppColors.textSecondary,
                             ),
