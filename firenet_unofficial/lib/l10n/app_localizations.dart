@@ -1511,6 +1511,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Notifications'**
   String get notifications;
+
+  /// No description provided for @statusFrostProtection.
+  ///
+  /// In en, this message translates to:
+  /// **'Frost Protection'**
+  String get statusFrostProtection;
+
+  /// No description provided for @statusStoveOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Stove Off'**
+  String get statusStoveOff;
+
+  /// No description provided for @statusStandby.
+  ///
+  /// In en, this message translates to:
+  /// **'Standby'**
+  String get statusStandby;
+
+  /// No description provided for @statusExternalRequest.
+  ///
+  /// In en, this message translates to:
+  /// **'External Request'**
+  String get statusExternalRequest;
+
+  /// No description provided for @statusOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get statusOff;
+
+  /// No description provided for @statusIgnitionOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Ignition On'**
+  String get statusIgnitionOn;
+
+  /// No description provided for @statusStartingUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Starting Up'**
+  String get statusStartingUp;
+
+  /// No description provided for @statusRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Running'**
+  String get statusRunning;
+
+  /// No description provided for @statusBigClean.
+  ///
+  /// In en, this message translates to:
+  /// **'Big Clean'**
+  String get statusBigClean;
+
+  /// No description provided for @statusCleaning.
+  ///
+  /// In en, this message translates to:
+  /// **'Cleaning'**
+  String get statusCleaning;
+
+  /// No description provided for @statusBurnOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Burn Off'**
+  String get statusBurnOff;
+
+  /// No description provided for @statusSplitLogCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'Split Log Check'**
+  String get statusSplitLogCheck;
+
+  /// No description provided for @statusSplitLogMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Split Log Mode'**
+  String get statusSplitLogMode;
+
+  /// No description provided for @statusUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown State ({state})'**
+  String statusUnknown(int state);
 }
 
 class _AppLocalizationsDelegate

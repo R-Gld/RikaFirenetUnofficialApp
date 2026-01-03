@@ -350,5 +350,20 @@
   "warningNotEnoughLowPressure": "Onvoldoende onderdruk",
   "warningAirFlapsCalibrating": "Luchtkleppen kalibreren",
   "warningBurnBackFlapOpen": "Terugbrandklep of rookgasklep open",
-  "warningStoveNotInPosition": "Kachel niet in positie"
+  "warningStoveNotInPosition": "Kachel niet in positie",
+
+  "statusFrostProtection": "Vorstbeveiliging",
+  "statusStoveOff": "Kachel uit",
+  "statusStandby": "Stand-by",
+  "statusExternalRequest": "Externe aanvraag",
+  "statusOff": "Uit",
+  "statusIgnitionOn": "Ontsteking bezig",
+  "statusStartingUp": "Opstarten",
+  "statusRunning": "Actief",
+  "statusBigClean": "Grote schoonmaak",
+  "statusCleaning": "Schoonmaken",
+  "statusBurnOff": "Uitbranden",
+  "statusSplitLogCheck": "Controle brandhout",
+  "statusSplitLogMode": "Brandhoutmodus",
+  "statusUnknown": "Onbekende status ({state})"
 }

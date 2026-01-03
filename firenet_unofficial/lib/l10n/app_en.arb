@@ -337,5 +337,27 @@
   "configureAdvancedFeatures": "Configure advanced features",
   "configureBackgroundNotifications": "Configure background notifications",
   "toggleInfoPanelVisibility": "Toggle info panel visibility",
-  "notifications": "Notifications"
+  "notifications": "Notifications",
+
+  "statusFrostProtection": "Frost Protection",
+  "statusStoveOff": "Stove Off",
+  "statusStandby": "Standby",
+  "statusExternalRequest": "External Request",
+  "statusOff": "Off",
+  "statusIgnitionOn": "Ignition On",
+  "statusStartingUp": "Starting Up",
+  "statusRunning": "Running",
+  "statusBigClean": "Big Clean",
+  "statusCleaning": "Cleaning",
+  "statusBurnOff": "Burn Off",
+  "statusSplitLogCheck": "Split Log Check",
+  "statusSplitLogMode": "Split Log Mode",
+  "statusUnknown": "Unknown State ({state})",
+  "@statusUnknown": {
+    "placeholders": {
+      "state": {
+        "type": "int"
+      }
+    }
+  }
 }

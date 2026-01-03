@@ -761,4 +761,48 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get notifications => 'Meldingen';
+
+  @override
+  String get statusFrostProtection => 'Vorstbeveiliging';
+
+  @override
+  String get statusStoveOff => 'Kachel uit';
+
+  @override
+  String get statusStandby => 'Stand-by';
+
+  @override
+  String get statusExternalRequest => 'Externe aanvraag';
+
+  @override
+  String get statusOff => 'Uit';
+
+  @override
+  String get statusIgnitionOn => 'Ontsteking bezig';
+
+  @override
+  String get statusStartingUp => 'Opstarten';
+
+  @override
+  String get statusRunning => 'Actief';
+
+  @override
+  String get statusBigClean => 'Grote schoonmaak';
+
+  @override
+  String get statusCleaning => 'Schoonmaken';
+
+  @override
+  String get statusBurnOff => 'Uitbranden';
+
+  @override
+  String get statusSplitLogCheck => 'Controle brandhout';
+
+  @override
+  String get statusSplitLogMode => 'Brandhoutmodus';
+
+  @override
+  String statusUnknown(int state) {
+    return 'Onbekende status ($state)';
+  }
 }

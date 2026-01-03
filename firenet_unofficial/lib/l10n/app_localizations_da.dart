@@ -754,4 +754,48 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get notifications => 'Notifikationer';
+
+  @override
+  String get statusFrostProtection => 'Frostbeskyttelse';
+
+  @override
+  String get statusStoveOff => 'Ovn slukket';
+
+  @override
+  String get statusStandby => 'Standby';
+
+  @override
+  String get statusExternalRequest => 'Ekstern anmodning';
+
+  @override
+  String get statusOff => 'Slukket';
+
+  @override
+  String get statusIgnitionOn => 'Tænding i gang';
+
+  @override
+  String get statusStartingUp => 'Starter op';
+
+  @override
+  String get statusRunning => 'Kører';
+
+  @override
+  String get statusBigClean => 'Stor rengøring';
+
+  @override
+  String get statusCleaning => 'Rengøring';
+
+  @override
+  String get statusBurnOff => 'Slukker';
+
+  @override
+  String get statusSplitLogCheck => 'Brændetjek';
+
+  @override
+  String get statusSplitLogMode => 'Brændetilstand';
+
+  @override
+  String statusUnknown(int state) {
+    return 'Ukendt tilstand ($state)';
+  }
 }

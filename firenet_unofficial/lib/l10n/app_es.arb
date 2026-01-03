@@ -350,5 +350,20 @@
   "warningNotEnoughLowPressure": "Presión insuficiente",
   "warningAirFlapsCalibrating": "Calibrando compuertas de aire",
   "warningBurnBackFlapOpen": "Compuerta antiretorno o gases abierta",
-  "warningStoveNotInPosition": "Estufa mal colocada"
+  "warningStoveNotInPosition": "Estufa mal colocada",
+
+  "statusFrostProtection": "Protección antiheladas",
+  "statusStoveOff": "Estufa apagada",
+  "statusStandby": "En espera",
+  "statusExternalRequest": "Solicitud externa",
+  "statusOff": "Apagada",
+  "statusIgnitionOn": "Encendido en curso",
+  "statusStartingUp": "Arrancando",
+  "statusRunning": "En funcionamiento",
+  "statusBigClean": "Limpieza profunda",
+  "statusCleaning": "Limpieza",
+  "statusBurnOff": "Apagado",
+  "statusSplitLogCheck": "Verificación de leña",
+  "statusSplitLogMode": "Modo leña",
+  "statusUnknown": "Estado desconocido ({state})"
 }

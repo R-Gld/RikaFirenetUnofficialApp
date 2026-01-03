@@ -263,5 +263,20 @@
   "warningNotEnoughLowPressure": "Ikke nok undertryk",
   "warningAirFlapsCalibrating": "Kalibrerer luftklapper",
   "warningBurnBackFlapOpen": "Tilbageslagsklap eller røggasklap åben",
-  "warningStoveNotInPosition": "Ovn ikke i position"
+  "warningStoveNotInPosition": "Ovn ikke i position",
+
+  "statusFrostProtection": "Frostbeskyttelse",
+  "statusStoveOff": "Ovn slukket",
+  "statusStandby": "Standby",
+  "statusExternalRequest": "Ekstern anmodning",
+  "statusOff": "Slukket",
+  "statusIgnitionOn": "Tænding i gang",
+  "statusStartingUp": "Starter op",
+  "statusRunning": "Kører",
+  "statusBigClean": "Stor rengøring",
+  "statusCleaning": "Rengøring",
+  "statusBurnOff": "Slukker",
+  "statusSplitLogCheck": "Brændetjek",
+  "statusSplitLogMode": "Brændetilstand",
+  "statusUnknown": "Ukendt tilstand ({state})"
 }
