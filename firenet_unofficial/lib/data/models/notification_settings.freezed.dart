@@ -24,14 +24,17 @@ mixin _$NotificationSettings {
   /// Master switch to enable/disable all notifications
   bool get enabled => throw _privateConstructorUsedError;
 
+  /// Notification mode (simple or advanced)
+  NotificationMode get mode => throw _privateConstructorUsedError;
+
   /// Polling interval in minutes (15, 30, 45, 60)
   int get pollingIntervalMinutes => throw _privateConstructorUsedError;
 
-  /// List of sensor field names to watch for changes
+  /// List of sensor field names to watch for changes (advanced mode only)
   /// Example: ["statusMainState", "inputRoomTemperature", "statusError"]
   List<String> get watchedFields => throw _privateConstructorUsedError;
 
-  /// Optional thresholds for numeric fields
+  /// Optional thresholds for numeric fields (advanced mode only)
   /// Example: {"inputRoomTemperature": {"min": 18.0, "max": 24.0}}
   Map<String, dynamic> get fieldThresholds =>
       throw _privateConstructorUsedError;
@@ -58,6 +61,7 @@ abstract class $NotificationSettingsCopyWith<$Res> {
   @useResult
   $Res call({
     bool enabled,
+    NotificationMode mode,
     int pollingIntervalMinutes,
     List<String> watchedFields,
     Map<String, dynamic> fieldThresholds,
@@ -84,6 +88,7 @@ class _$NotificationSettingsCopyWithImpl<
   @override
   $Res call({
     Object? enabled = null,
+    Object? mode = null,
     Object? pollingIntervalMinutes = null,
     Object? watchedFields = null,
     Object? fieldThresholds = null,
@@ -95,6 +100,10 @@ class _$NotificationSettingsCopyWithImpl<
                 ? _value.enabled
                 : enabled // ignore: cast_nullable_to_non_nullable
                       as bool,
+            mode: null == mode
+                ? _value.mode
+                : mode // ignore: cast_nullable_to_non_nullable
+                      as NotificationMode,
             pollingIntervalMinutes: null == pollingIntervalMinutes
                 ? _value.pollingIntervalMinutes
                 : pollingIntervalMinutes // ignore: cast_nullable_to_non_nullable
@@ -128,6 +137,7 @@ abstract class _$$NotificationSettingsImplCopyWith<$Res>
   @useResult
   $Res call({
     bool enabled,
+    NotificationMode mode,
     int pollingIntervalMinutes,
     List<String> watchedFields,
     Map<String, dynamic> fieldThresholds,
@@ -150,6 +160,7 @@ class __$$NotificationSettingsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? enabled = null,
+    Object? mode = null,
     Object? pollingIntervalMinutes = null,
     Object? watchedFields = null,
     Object? fieldThresholds = null,
@@ -161,6 +172,10 @@ class __$$NotificationSettingsImplCopyWithImpl<$Res>
             ? _value.enabled
             : enabled // ignore: cast_nullable_to_non_nullable
                   as bool,
+        mode: null == mode
+            ? _value.mode
+            : mode // ignore: cast_nullable_to_non_nullable
+                  as NotificationMode,
         pollingIntervalMinutes: null == pollingIntervalMinutes
             ? _value.pollingIntervalMinutes
             : pollingIntervalMinutes // ignore: cast_nullable_to_non_nullable
@@ -187,6 +202,7 @@ class __$$NotificationSettingsImplCopyWithImpl<$Res>
 class _$NotificationSettingsImpl implements _NotificationSettings {
   const _$NotificationSettingsImpl({
     this.enabled = false,
+    this.mode = NotificationMode.simple,
     this.pollingIntervalMinutes = 30,
     final List<String> watchedFields = const [],
     final Map<String, dynamic> fieldThresholds = const {},
@@ -202,16 +218,21 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
   @JsonKey()
   final bool enabled;
 
+  /// Notification mode (simple or advanced)
+  @override
+  @JsonKey()
+  final NotificationMode mode;
+
   /// Polling interval in minutes (15, 30, 45, 60)
   @override
   @JsonKey()
   final int pollingIntervalMinutes;
 
-  /// List of sensor field names to watch for changes
+  /// List of sensor field names to watch for changes (advanced mode only)
   /// Example: ["statusMainState", "inputRoomTemperature", "statusError"]
   final List<String> _watchedFields;
 
-  /// List of sensor field names to watch for changes
+  /// List of sensor field names to watch for changes (advanced mode only)
   /// Example: ["statusMainState", "inputRoomTemperature", "statusError"]
   @override
   @JsonKey()
@@ -221,11 +242,11 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
     return EqualUnmodifiableListView(_watchedFields);
   }
 
-  /// Optional thresholds for numeric fields
+  /// Optional thresholds for numeric fields (advanced mode only)
   /// Example: {"inputRoomTemperature": {"min": 18.0, "max": 24.0}}
   final Map<String, dynamic> _fieldThresholds;
 
-  /// Optional thresholds for numeric fields
+  /// Optional thresholds for numeric fields (advanced mode only)
   /// Example: {"inputRoomTemperature": {"min": 18.0, "max": 24.0}}
   @override
   @JsonKey()
@@ -241,7 +262,7 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
 
   @override
   String toString() {
-    return 'NotificationSettings(enabled: $enabled, pollingIntervalMinutes: $pollingIntervalMinutes, watchedFields: $watchedFields, fieldThresholds: $fieldThresholds, lastNotificationTime: $lastNotificationTime)';
+    return 'NotificationSettings(enabled: $enabled, mode: $mode, pollingIntervalMinutes: $pollingIntervalMinutes, watchedFields: $watchedFields, fieldThresholds: $fieldThresholds, lastNotificationTime: $lastNotificationTime)';
   }
 
   @override
@@ -250,6 +271,7 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
         (other.runtimeType == runtimeType &&
             other is _$NotificationSettingsImpl &&
             (identical(other.enabled, enabled) || other.enabled == enabled) &&
+            (identical(other.mode, mode) || other.mode == mode) &&
             (identical(other.pollingIntervalMinutes, pollingIntervalMinutes) ||
                 other.pollingIntervalMinutes == pollingIntervalMinutes) &&
             const DeepCollectionEquality().equals(
@@ -269,6 +291,7 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
   int get hashCode => Object.hash(
     runtimeType,
     enabled,
+    mode,
     pollingIntervalMinutes,
     const DeepCollectionEquality().hash(_watchedFields),
     const DeepCollectionEquality().hash(_fieldThresholds),
@@ -296,6 +319,7 @@ class _$NotificationSettingsImpl implements _NotificationSettings {
 abstract class _NotificationSettings implements NotificationSettings {
   const factory _NotificationSettings({
     final bool enabled,
+    final NotificationMode mode,
     final int pollingIntervalMinutes,
     final List<String> watchedFields,
     final Map<String, dynamic> fieldThresholds,
@@ -309,16 +333,20 @@ abstract class _NotificationSettings implements NotificationSettings {
   @override
   bool get enabled;
 
+  /// Notification mode (simple or advanced)
+  @override
+  NotificationMode get mode;
+
   /// Polling interval in minutes (15, 30, 45, 60)
   @override
   int get pollingIntervalMinutes;
 
-  /// List of sensor field names to watch for changes
+  /// List of sensor field names to watch for changes (advanced mode only)
   /// Example: ["statusMainState", "inputRoomTemperature", "statusError"]
   @override
   List<String> get watchedFields;
 
-  /// Optional thresholds for numeric fields
+  /// Optional thresholds for numeric fields (advanced mode only)
   /// Example: {"inputRoomTemperature": {"min": 18.0, "max": 24.0}}
   @override
   Map<String, dynamic> get fieldThresholds;
