@@ -59,7 +59,6 @@ class _ChartsPanelState extends ConsumerState<ChartsPanel> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ExpansionTile(
         initiallyExpanded: false,
         onExpansionChanged: (expanded) {
