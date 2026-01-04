@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 import '../../../data/models/chart_data.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../theme/app_colors.dart';
@@ -35,11 +34,7 @@ class StateTimelineChart extends StatelessWidget {
         const SizedBox(height: 16),
 
         // Chart
-        Container(
-          height: 150,
-          padding: const EdgeInsets.only(right: 16, top: 16, bottom: 16),
-          child: _buildChart(context),
-        ),
+        _buildTimelineChart(context, l10n),
       ],
     );
   }
@@ -104,93 +99,127 @@ class StateTimelineChart extends StatelessWidget {
     );
   }
 
-  Widget _buildChart(BuildContext context) {
-    // Group consecutive same states into blocks
+  Widget _buildTimelineChart(BuildContext context, AppLocalizations l10n) {
     final blocks = _createStateBlocks();
 
-    return BarChart(
-      BarChartData(
-        alignment: BarChartAlignment.start,
-        barGroups: blocks.asMap().entries.map((entry) {
-          final block = entry.value;
-          return BarChartGroupData(
-            x: entry.key,
-            barRods: [
-              BarChartRodData(
-                toY: 1,
-                color: _getStateColor(block.state),
-                width: block.duration.inSeconds.toDouble(),
-                borderRadius: BorderRadius.zero,
+    debugPrint('[StateTimelineChart] Created ${blocks.length} state blocks');
+    for (var i = 0; i < blocks.length; i++) {
+      debugPrint('[StateTimelineChart]   Block $i: state=${blocks[i].state}, duration=${blocks[i].duration.inMinutes}min, color=${_getStateColor(blocks[i].state)}');
+    }
+
+    if (blocks.isEmpty) {
+      return const SizedBox(height: 100);
+    }
+
+    // Calculate total duration
+    final totalDuration = blocks.fold<Duration>(
+      Duration.zero,
+      (sum, block) => sum + block.duration,
+    );
+
+    return Container(
+      height: 100,
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final width = constraints.maxWidth;
+
+          return Column(
+            children: [
+              // Timeline bars
+              Expanded(
+                child: Stack(
+                  children: blocks.map((block) {
+                    final blockWidth = (block.duration.inSeconds / totalDuration.inSeconds) * width;
+                    final blockStart = blocks
+                        .where((b) => b.startTime.isBefore(block.startTime))
+                        .fold<Duration>(Duration.zero, (sum, b) => sum + b.duration);
+                    final left = (blockStart.inSeconds / totalDuration.inSeconds) * width;
+
+                    return Positioned(
+                      left: left,
+                      top: 20,
+                      width: blockWidth,
+                      height: 40,
+                      child: GestureDetector(
+                        onTap: () {
+                          _showBlockTooltip(context, block, l10n);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: _getStateColor(block.state),
+                            border: Border.all(
+                              color: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+                              width: 0.5,
+                            ),
+                          ),
+                          child: Center(
+                            child: blockWidth > 50
+                                ? Text(
+                                    _formatDuration(block.duration),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : null,
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
               ),
-            ],
-          );
-        }).toList(),
-        titlesData: FlTitlesData(
-          show: true,
-          leftTitles: AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          rightTitles: AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          topTitles: AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              getTitlesWidget: (value, meta) {
-                if (value.toInt() >= blocks.length) return const SizedBox.shrink();
-                final block = blocks[value.toInt()];
-                return Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    _formatTime(block.startTime),
+
+              // Time labels
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    _formatTime(dataPoints.first.timestamp),
                     style: TextStyle(
                       fontSize: 10,
                       color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     ),
                   ),
-                );
-              },
-            ),
-          ),
-        ),
-        gridData: FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-        barTouchData: BarTouchData(
-          enabled: true,
-          touchTooltipData: BarTouchTooltipData(
-            getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              if (groupIndex >= blocks.length) return null;
-              final block = blocks[groupIndex];
-              final l10n = AppLocalizations.of(context)!;
-              return BarTooltipItem(
-                '${_getStateLabel(block.state, l10n)}\n',
-                TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                children: [
-                  TextSpan(
-                    text: '${_formatTime(block.startTime)} - ${_formatTime(block.endTime)}\n',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                  TextSpan(
-                    text: _formatDuration(block.duration),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.normal,
+                  Text(
+                    _formatTime(dataPoints.last.timestamp),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: isDarkMode ? Colors.grey[400] : Colors.grey[600],
                     ),
                   ),
                 ],
-              );
-            },
-          ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  void _showBlockTooltip(BuildContext context, _StateBlock block, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(_getStateLabel(block.state, l10n)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('${_formatTime(block.startTime)} - ${_formatTime(block.endTime)}'),
+            const SizedBox(height: 8),
+            Text(_formatDuration(block.duration)),
+          ],
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }
